@@ -1,0 +1,11 @@
+{
+    "name": "AdminFrontEnd",
+    "dependencies": {
+        "angular": "~1.4.9",
+        "angular-bootstrap": "~1.1.0",
+        "angular-file-upload": "~2.2.0",
+        "pdfobject": "^1.2.0",
+        "angular-utf8-base64": "~0.0.5",
+        "ngstorage": "^0.3.10"
+    }
+}
