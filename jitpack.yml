@@ -1,0 +1,5 @@
+jdk:
+  - oraclejdk8
+install:
+   - cd Backend/com-qnium-common-backend
+   - mvn clean install -DskipTests
