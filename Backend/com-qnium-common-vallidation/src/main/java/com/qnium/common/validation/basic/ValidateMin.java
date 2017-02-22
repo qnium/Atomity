@@ -37,7 +37,7 @@ public class ValidateMin implements IValidator{
 
     @Override
     public String getJSCode() {
-        return String.format("function validator(object, err) { if (object > %d) { err = '%s'; return false}; else return true; }", min, error);
+        return String.format("object >= %d", min, error);
     }
 
     @Override

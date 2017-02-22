@@ -6,7 +6,7 @@
 package com.qnium.common.backend.assets.dataobjects;
 
 import java.util.List;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *

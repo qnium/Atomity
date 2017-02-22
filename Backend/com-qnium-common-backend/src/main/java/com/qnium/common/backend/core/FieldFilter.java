@@ -9,9 +9,20 @@ package com.qnium.common.backend.core;
  *
  * @author
  */
-public class FieldFilter
+public class FieldFilter<T>
 {
     public String field;
     public String operation;
-    public Object value;
+    public T value;
+    
+    public FieldFilter()
+    {
+    }
+    
+    public FieldFilter(String field, String operation, T value)
+    {
+        this.field = field;
+        this.operation = operation;
+        this.value = value;
+    }
 }

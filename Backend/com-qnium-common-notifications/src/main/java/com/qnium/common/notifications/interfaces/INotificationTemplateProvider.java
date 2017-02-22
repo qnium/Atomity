@@ -10,5 +10,5 @@ package com.qnium.common.notifications.interfaces;
  * @author nbv
  */
 public interface INotificationTemplateProvider {
-    public String getTemplateByChannel(Class notificationClass, String channelName);
+    public String getTemplateByChannel(Object notification, String channelName);
 }

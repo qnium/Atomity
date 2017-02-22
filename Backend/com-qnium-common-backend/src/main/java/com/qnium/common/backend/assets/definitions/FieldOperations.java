@@ -17,4 +17,5 @@ public class FieldOperations {
     public static final String SORT = "sort"; // true value for ascending
     public static final String DISTINCT = "distinct";
     public static final String IN = "in";
+    public static final String NE = "ne";
 }

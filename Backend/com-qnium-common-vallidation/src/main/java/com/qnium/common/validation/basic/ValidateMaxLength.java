@@ -37,7 +37,7 @@ public class ValidateMaxLength implements IValidator{
 
     @Override
     public String getJSCode() {
-        return String.format("object.length <= %d", max);
+        return String.format("object.toString().length <= %d", max);
     }
 
     @Override

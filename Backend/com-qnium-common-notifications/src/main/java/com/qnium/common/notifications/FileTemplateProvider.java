@@ -23,9 +23,9 @@ public class FileTemplateProvider implements INotificationTemplateProvider {
             new ArrayList<>();
 
     @Override
-    public String getTemplateByChannel(Class notificationClass, String channelName) {
+    public String getTemplateByChannel(Object notification, String channelName) {
         Optional<NotificationConfiguration> found = notificationConfigs.stream()
-                .filter(n -> n._notificationClass == notificationClass 
+                .filter(n -> n._notificationClass == notification.getClass()
                         && n.getTemplateByChannel(channelName)!=null)
                 .findAny();
         

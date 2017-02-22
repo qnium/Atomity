@@ -13,22 +13,24 @@ import com.qnium.common.backend.assets.interfaces.IHandler;
 import com.qnium.common.backend.assets.dataobjects.CollectionResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.dataobjects.ReadRequestParameters;
+import com.qnium.common.backend.assets.handlers.base.BaseReadHandler;
+import com.qnium.common.backend.assets.interfaces.IAfterRequestHandler;
+import com.qnium.common.backend.assets.interfaces.IBeforeRequestHandler;
 import com.qnium.common.backend.exceptions.CommonException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Drozhin
  */
-public class ReadHandler implements IHandler {
-
-    public ReadHandler() throws Exception {   
-    }
-
+public class ReadHandler extends BaseReadHandler {
     
     @Override
-    public Object process(Object request) throws IOException, CommonException {
+    public CollectionResponseMessage processRequest(RequestMessage<ReadRequestParameters> request) throws IOException, CommonException {
         try
         {
+            
             RequestMessage<ReadRequestParameters> req = (RequestMessage<ReadRequestParameters>)request;
                         
             IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(req.entityName);

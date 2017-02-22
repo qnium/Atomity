@@ -23,8 +23,8 @@ public class StandardNotificationTemplateProvider implements INotificationTempla
 
     //Gets template for defined notification by selected channel, returns null if no template found
     @Override
-    public String getTemplateByChannel(Class notificationClass, String channelName) {
-        Optional<NotificationConfiguration> found = _notificationConfigs.stream().filter( n -> n._notificationClass == notificationClass && n.getTemplateByChannel(channelName)!=null ).findAny();
+    public String getTemplateByChannel(Object notification, String channelName) {
+        Optional<NotificationConfiguration> found = _notificationConfigs.stream().filter( n -> n._notificationClass == notification.getClass() && n.getTemplateByChannel(channelName)!=null ).findAny();
         if (found.isPresent())
         {
             return found.get().getTemplateByChannel(channelName);
