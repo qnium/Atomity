@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<pluginGroups>
+	</pluginGroups>
+	<proxies>
+	</proxies>
+
+	<servers>
+		<server>
+			<id>qnium-maven-releases</id>
+			<username>ci</username>
+			<password>sa23dfFFsdp_</password>
+		</server>
+		<server>
+			<id>qnium-maven-snapshots</id>
+			<username>ci</username>
+			<password>sa23dfFFsdp_</password>>
+		</server>
+	</servers>
+  
+	<mirrors>
+	</mirrors>
+  
+	<profiles>
+		<profile>
+			<id>qnium-profile</id>
+			<repositories>
+				<repository>
+					<id>qnium-maven-releases</id>
+					<name>QNIUM Maven releases</name>
+					<url>http://mvn.qnium.com/repository/maven-releases/</url>
+				</repository>
+				<repository>
+					<id>qnium-maven-snapshots</id>
+					<name>QNIUM Maven snapshots</name>
+					<url>http://mvn.qnium.com/repository/maven-snapshots/</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>qnium-profile</activeProfile>
+	</activeProfiles>
+  
+</settings>
