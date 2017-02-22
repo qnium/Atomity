@@ -18,7 +18,7 @@
 		<server>
 			<id>qnium-maven-snapshots</id>
 			<username>ci</username>
-			<password>sa23dfFFsdp_</password>>
+			<password>sa23dfFFsdp_</password>
 		</server>
 	</servers>
   
