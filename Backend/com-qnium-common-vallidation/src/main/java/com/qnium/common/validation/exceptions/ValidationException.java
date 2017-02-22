@@ -12,7 +12,7 @@ package com.qnium.common.validation.exceptions;
 public class ValidationException extends Exception {
 
     public ValidationException(String string) {
-        super(string);
+        super("Validation error: " + string);
     }
     
 }

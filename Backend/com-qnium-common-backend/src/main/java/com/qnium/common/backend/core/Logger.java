@@ -13,5 +13,5 @@ import org.slf4j.LoggerFactory;
  * @author Drozhin
  */
 public class Logger {
-    public static org.slf4j.Logger log = LoggerFactory.getLogger("CommonLogger");
+    public static org.slf4j.Logger log = LoggerFactory.getLogger(Logger.class);
 }

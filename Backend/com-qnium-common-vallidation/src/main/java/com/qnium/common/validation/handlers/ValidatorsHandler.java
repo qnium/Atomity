@@ -16,7 +16,7 @@ import com.qnium.common.backend.exceptions.CommonException;
 import com.qnium.common.validation.ValidationManager;
 import java.io.IOException;
 import java.util.List;
-import com.fasterxml.jackson.core.type.TypeReference;
+import org.codehaus.jackson.type.TypeReference;
 
 /**
  *

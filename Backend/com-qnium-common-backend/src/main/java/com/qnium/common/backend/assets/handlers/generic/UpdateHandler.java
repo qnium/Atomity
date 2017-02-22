@@ -14,18 +14,20 @@ import com.qnium.common.backend.assets.interfaces.IHandler;
 import com.qnium.common.backend.assets.dataobjects.CountResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.dataobjects.UpdateRequestParameters;
-import com.qnium.common.backend.assets.handlers.base.BaseUpdateHandler;
 import com.qnium.common.backend.exceptions.CommonException;
 
 /**
  *
  * @author
  */
-public class UpdateHandler extends BaseUpdateHandler {
+public class UpdateHandler implements IHandler {
 
+    public UpdateHandler() throws Exception {
+        super();
+    }
     
     @Override
-    public CountResponseMessage processRequest(RequestMessage<UpdateRequestParameters> request) throws IOException, CommonException {
+    public Object process(Object request) throws IOException, CommonException {
         try
         {
             RequestMessage<UpdateRequestParameters> req = (RequestMessage<UpdateRequestParameters>)request;

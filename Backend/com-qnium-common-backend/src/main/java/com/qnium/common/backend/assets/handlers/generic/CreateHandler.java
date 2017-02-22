@@ -12,18 +12,20 @@ import com.qnium.common.backend.assets.interfaces.IHandler;
 import com.qnium.common.backend.assets.dataobjects.CountResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.CreateRequestParameters;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
-import com.qnium.common.backend.assets.handlers.base.BaseCreateHandler;
 import com.qnium.common.backend.exceptions.CommonException;
 
 /**
  *
  * @author Drozhin
  */
-public class CreateHandler extends BaseCreateHandler {
+public class CreateHandler implements IHandler {
 
-   
+    public CreateHandler() throws Exception {
+    }
+    
     @Override
-    public CountResponseMessage processRequest(RequestMessage<CreateRequestParameters> request) throws IOException, CommonException {
+    public Object process(Object request) throws IOException, CommonException 
+    {
        try
        {
            RequestMessage<CreateRequestParameters> req = (RequestMessage<CreateRequestParameters>)request;

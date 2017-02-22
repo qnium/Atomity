@@ -13,7 +13,7 @@ import com.qnium.common.validation.basic.ValidateMax;
  * @author nbv
  */
 public class TestEntityMax {
-    @FieldValidator(validator = ValidateMax.class, param = "123", errorMessage = "Max value is: \"%d\"")
+    @FieldValidator(validator = ValidateMax.class, param = "123", errorMessage = "Max value is: %d")
     public String testString;
     @FieldValidator(validator = ValidateMax.class, param = "511", errorMessage = "Max value is: %d")
     public int testInt;

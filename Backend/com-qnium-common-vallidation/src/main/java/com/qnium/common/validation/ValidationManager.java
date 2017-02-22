@@ -5,10 +5,6 @@
  */
 package com.qnium.common.validation;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.qnium.common.validation.data.ValidatorItem;
 import com.qnium.common.validation.exceptions.ValidationException;
 import java.io.IOException;
@@ -17,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
@@ -43,20 +40,12 @@ public class ValidationManager {
     public static String serializeObject(Object object) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
-        mapper.disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS);
-        mapper.registerModule(new JavaTimeModule());
         return mapper.writeValueAsString(object);
     }
     
     public static Object deserializeObject(String data, Class objectClass) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
-        mapper.disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS);
-        mapper.registerModule(new JavaTimeModule());
         return mapper.readValue(data, objectClass);
     }
     
@@ -78,7 +67,7 @@ public class ValidationManager {
                 try{
                     IValidator valInstance = (IValidator) validator.validator().newInstance();
                     valInstance.init(validator.param(), validator.errorMessage());
-                    jsCodeBuilder.append( String.format("if ( %s ) err = null; else err=\"%s\"; if (err != null) return err;", valInstance.getJSCode(), valInstance.getError().replace("\"", "\\\"")));
+                    jsCodeBuilder.append( String.format("if ( %s ) err = null; else err='%s'; if (err != null) return err;", valInstance.getJSCode(), valInstance.getError()));
                 } catch(Exception ex)
                 {
                     
@@ -112,7 +101,7 @@ public class ValidationManager {
                         
                         value = f.get(object);
                   
-                        valInstance.validate(value != null ? value.toString() : "");
+                        valInstance.validate(value != null ? value.toString() : null);
                     } catch(ValidationException exVal)
                     {
                         throw exVal;

@@ -6,8 +6,8 @@
 
 package com.qnium.common.backend.core;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.qnium.common.backend.assets.interfaces.IHandler;
+import org.codehaus.jackson.type.TypeReference;
 
 /**
  *

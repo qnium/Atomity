@@ -24,18 +24,17 @@ import java.util.stream.Collectors;
  */
 public class NotificationManager {
     
-    private ArrayList<INotificationTemplateProvider> _templateProviders;
+    private INotificationTemplateProvider _templateProvider;
     private INotificationContactsProvider _contactProvider;
     private ArrayList<INotificationAdapter> _adapters;
     
     private NotificationManager() {
-        _templateProviders = new ArrayList();
-        _templateProviders.add(new INotificationTemplateProvider() {
+        _templateProvider = new INotificationTemplateProvider() {
             @Override
-            public String getTemplateByChannel(Object notification, String channelName) {
+            public String getTemplateByChannel(Class notificationClass, String channelName) {
                 return null;
             }
-        });
+        };
         
         _contactProvider = ( notification ) -> { return new ArrayList<NotificationContact>(); };
         
@@ -48,7 +47,7 @@ public class NotificationManager {
     
     public void registerTemplateProvider(INotificationTemplateProvider provider)
     {
-        _templateProviders.add(provider);
+        _templateProvider = provider;
     }
     
     public void registerNotificationAdapter(INotificationAdapter adapter)
@@ -88,32 +87,23 @@ public class NotificationManager {
         for( INotificationAdapter adapter : _adapters )
         {
             String channel = adapter.getChannel();
-            String template = null;
-            for(INotificationTemplateProvider templProv : _templateProviders) {
-                template = templProv.getTemplateByChannel(notification, channel);
-                if(template != null){
-                    break;
-                }
-            }
+            String template = _templateProvider.getTemplateByChannel(notification.getClass(), channel);
             
-            if(template != null)
-            {            
-                NotificationContact [] contacts = (NotificationContact[]) _contactProvider.getNotificationRecepients(notification).stream().filter( n -> n.channel.equals(channel)).toArray(NotificationContact[]::new);
-
-                String message = fillTemplate(notification, template);
-
-                if (!perContactData)
+            NotificationContact [] contacts = (NotificationContact[]) _contactProvider.getNotificationRecepients(notification).stream().filter( n -> n.channel.equals(channel)).toArray(NotificationContact[]::new);
+            
+            String message = fillTemplate(notification, template);
+            
+            if (!perContactData)
+            {
+                adapter.sendNotification(contacts, message);
+            }
+            else{
+                for ( NotificationContact contact: contacts)
                 {
-                    adapter.sendNotification(contacts, message, notification);
-                }
-                else{
-                    for ( NotificationContact contact: contacts)
-                    {
-                        message = fillTemplate(contact, message);
-                        NotificationContact[] contactArray = new NotificationContact[1];
-                        contactArray[0] = contact;
-                        adapter.sendNotification(contactArray, message, notification);
-                    }
+                    message = fillTemplate(contact, message);
+                    NotificationContact[] contactArray = new NotificationContact[1];
+                    contactArray[0] = contact;
+                    adapter.sendNotification(contactArray, message);
                 }
             }
         }
@@ -127,13 +117,7 @@ public class NotificationManager {
                 .filter( a -> a.getChannel().equals(channel))
                 .collect(Collectors.toList());
         
-        String template = null;
-        for(INotificationTemplateProvider templProv : _templateProviders) {
-            template = templProv.getTemplateByChannel(notification, channel);
-            if(template != null){
-                break;
-            }
-        }
+        String template = _templateProvider.getTemplateByChannel(notification.getClass(), channel);
         String message = fillTemplate(notification, template);
         message = fillTemplate(contact, message);
         
@@ -141,7 +125,7 @@ public class NotificationManager {
         {
             NotificationContact[] contactArray = new NotificationContact[1];
             contactArray[0] = contact;
-            adapter.sendNotification(contactArray, message, notification);
+            adapter.sendNotification(contactArray, message);
         }
         
     }

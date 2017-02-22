@@ -29,7 +29,7 @@ public class TestAdapter implements INotificationAdapter {
     IHandlerInterceptor _handler;
             
     @Override
-    public void sendNotification(NotificationContact[] contactList, String notificationText, Object notification) {
+    public void sendNotification(NotificationContact[] contactList, String notificationText) {
         for(NotificationContact contact: contactList)
             _handler.handle(contact.contactID, notificationText);
     }

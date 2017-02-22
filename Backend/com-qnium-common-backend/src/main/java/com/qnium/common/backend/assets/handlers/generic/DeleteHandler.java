@@ -12,17 +12,20 @@ import com.qnium.common.backend.assets.interfaces.IHandler;
 import com.qnium.common.backend.assets.dataobjects.CountResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.DeleteRequestParameters;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
-import com.qnium.common.backend.assets.handlers.base.BaseDeleteHandler;
 import com.qnium.common.backend.exceptions.CommonException;
 
 /**
  *
  * @author
  */
-public class DeleteHandler extends BaseDeleteHandler {
+public class DeleteHandler implements IHandler {
+
+    public DeleteHandler() throws Exception {
+    }
     
     @Override
-     public CountResponseMessage processRequest(RequestMessage<DeleteRequestParameters> request) throws IOException, CommonException {
+    public Object process(Object request) throws IOException, CommonException
+    {
        try
        {
            RequestMessage<DeleteRequestParameters> req = (RequestMessage<DeleteRequestParameters>)request;
@@ -40,5 +43,4 @@ public class DeleteHandler extends BaseDeleteHandler {
            throw new IOException(ex);
        }
     }    
-     
 }
