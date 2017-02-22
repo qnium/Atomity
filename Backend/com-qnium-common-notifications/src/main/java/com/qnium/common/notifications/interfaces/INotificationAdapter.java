@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface INotificationAdapter {
     public String getChannel();
-    public void sendNotification(NotificationContact [] contactList, String notificationText);
+    public void sendNotification(NotificationContact [] contactList, String notificationText, Object notification);
 }

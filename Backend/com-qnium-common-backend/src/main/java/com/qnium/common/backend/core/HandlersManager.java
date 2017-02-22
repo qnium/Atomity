@@ -6,14 +6,7 @@
 
 package com.qnium.common.backend.core;
 
-import com.qnium.common.backend.assets.dataobjects.CountResponseMessage;
-import com.qnium.common.backend.assets.dataobjects.RequestMessage;
-import com.qnium.common.backend.assets.dataobjects.UpdateRequestParameters;
-import com.qnium.common.backend.assets.interfaces.IHandler;
 import java.util.HashMap;
-import net.jodah.typetools.TypeResolver;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 
 public class HandlersManager {

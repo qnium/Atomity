@@ -9,7 +9,6 @@ import com.qnium.common.validation.IValidator;
 import com.qnium.common.validation.exceptions.ValidationException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.eclipse.jetty.util.log.Log;
 
 /**
  *
@@ -35,20 +34,20 @@ public class ValidateRegEx implements IValidator{
 
     @Override
     public void validate(String object) throws ValidationException {
-        Matcher matcher = pattern.matcher(object);
-	if (!matcher.matches())
-            throw new ValidationException(error);
+        if(object != null && !object.isEmpty()){
+            Matcher matcher = pattern.matcher(object);
+            if (!matcher.matches())
+                throw new ValidationException(error);
+        }
     }
 
     @Override
     public String getJSCode() {
-        return String.format("object.match(/%s/)", regEx);
+        return String.format("object != undefined && object != null && object != '' ? object.match(/%s/) : true", regEx);
     }
 
     @Override
     public String getError() {
         return error;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    }    
 }

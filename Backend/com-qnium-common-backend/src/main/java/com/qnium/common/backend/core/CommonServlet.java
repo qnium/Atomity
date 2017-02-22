@@ -6,6 +6,13 @@
 
 package com.qnium.common.backend.core;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.dataobjects.ResponseMessage;
 import com.qnium.common.backend.exceptions.CommonException;
@@ -17,8 +24,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
 
 /**
  *
@@ -40,8 +45,12 @@ public class CommonServlet extends HttpServlet
         String action = "";
         
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.AUTO_DETECT_GETTERS, false);
-        mapper.configure(SerializationConfig.Feature.AUTO_DETECT_IS_GETTERS, false);
+        mapper.disable(MapperFeature.AUTO_DETECT_GETTERS);
+        mapper.disable(MapperFeature.AUTO_DETECT_IS_GETTERS);
+        mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
+        mapper.disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS);
+        mapper.registerModule(new JavaTimeModule());
         BufferedReader requestReader = null;
         try
         {

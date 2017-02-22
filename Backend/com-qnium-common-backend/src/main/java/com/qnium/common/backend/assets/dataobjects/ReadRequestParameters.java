@@ -5,9 +5,9 @@
  */
 package com.qnium.common.backend.assets.dataobjects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.qnium.common.backend.core.FieldFilter;
 import java.util.List;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *

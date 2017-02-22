@@ -37,7 +37,7 @@ public class ValidateMinLength implements IValidator{
 
     @Override
     public String getJSCode() {
-        return String.format("object.length >= %d", min);
+        return String.format("object.toString().length >= %d", min);
     }
 
     @Override

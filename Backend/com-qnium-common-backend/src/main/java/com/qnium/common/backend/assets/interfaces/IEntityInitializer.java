@@ -11,7 +11,7 @@ import com.qnium.common.backend.core.EntityManager;
  *
  * @author Drozhin
  */
-public interface IEntityInitializer
+public interface IEntityInitializer<T>
 {
-    void initialize(EntityManager em) throws Exception;
+    void initialize(EntityManager<T> em) throws Exception;
 }

@@ -20,7 +20,11 @@ public class CommonException extends Exception
     }
     
     public CommonException(int errorCode, String message){
-        super(message);
+        this(errorCode, message, null);
+    }
+    
+    public CommonException(int errorCode, String message, Throwable cause){
+        super(message, cause);
         this.errorCode = errorCode;
     }
 }
