@@ -1,17 +1,18 @@
-<html>
-    <head>
-        <!--<link href="../../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
-    </head>
-    <body>
-        <div class="modal-content"> 
-            <div class="modal-header"> 
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ok()">×</button>                 
-                <h4 class="modal-title" ng-bind="title"></h4> 
-            </div>
-            <div class="modal-body text-center" ng-bind="message"></div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
-            </div>
-        </div>
-    </body>
-</html>
+
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" ng-click="ok()">
+        &times;
+</button>     
+    <h4 class="modal-title" ng-bind="title">Title</h4>
+</div>
+<div class="modal-body col-md-12">
+    <div class="col-md-12 text-center">
+        <div class="form-group">
+            <span ng-bind-html="message"></span>
+        </div>                             
+    </div>
+</div>
+<div class="modal-footer q-centr">
+    <button type="button" class="btn q-button" ng-click="ok()">OK</button>
+</div>
+

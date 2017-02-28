@@ -53,11 +53,15 @@
             }).result;
         };
         
-        this.prompt = function (title, description, initialValue) {
+        this.prompt = function (options) {
+            options = options || {};
+            var size = options.size || 'md';
             var ctrl = function($scope, $uibModalInstance) {
-                $scope.title = title || '';
-                $scope.description = description || '';
-                $scope.value = initialValue || '';
+                $scope.title = options.title || '';
+                $scope.description = options.description || '';
+                $scope.value = options.initialValue || '';
+                $scope.acceptLabel = options.acceptLabel || 'OK';
+                $scope.cancelLabel = options.cancelLabel || 'Cancel';
 
                 $scope.ok = function() {
                   $uibModalInstance.close($scope.value);
@@ -69,8 +73,9 @@
             };
             
             return $uibModal.open({
-               templateUrl: templatePath + '/text-input.html',
-               controller: ctrl
+                templateUrl: templatePath + '/text-input.html',
+                controller: ctrl,
+                size: size
             }).result;
         };
     }

@@ -2,27 +2,29 @@
     angular.module('CommonFrontend')
         .controller('GridPanelController', GridPanelController);
     
-    GridPanelController.$inject = ['$scope', '$attrs', '$uibModal', 'DataProviderService', 'DialogService'];
+    GridPanelController.$inject = ['$rootScope', '$scope', '$attrs', '$uibModal', 'DataProviderService', 'DialogService'];
     
     /**
      * Universal controller for grid panels that allows to view data
      * and manipulate it.
      */
-    function GridPanelController($scope, $attrs, $uibModal, DataProviderService, DialogService) {    
+    function GridPanelController($rootScope, $scope, $attrs, $uibModal, DataProviderService, DialogService) {    
         $scope.updateInProgress = false;
         $scope.currentPage = 1;
-        $scope.pageCount = 2;
+        $scope.pageCount = 1;
         $scope.selectedRecord = null;
         $scope.modalParameters = {};
         $scope.progressMessage = '';
         $scope.waitLoggedInEvent = false;
         $scope.pageLength = 10;
+        $scope.validationError = null;
         
         $scope.pageButtons = [];
-        
+        $scope.entitiesToUpdate = null;        
 
         $scope.filters = {};
         $scope.sorting = null;
+        $scope.onAfterRead = null;
         
         var entity = null;
         var activatedFilters = [];
@@ -34,24 +36,53 @@
          */
         var readAction = 'read';
 
+        var useDummyRows = true;
+
+        /**
+         * Container for custom grid data. Allows to set grid data
+         * from child scopes. 
+         */
+        $scope.gridData = {};
+
         $scope.pageData = [];
+
+        /**
+         * Contains grid row models. Each row model contains an object from
+         * pageData which is presented by that row, and other row-specific
+         * things (e.g. selection flag, dummy flag).
+         */
+        $scope.pageRows = [];
+
+        /**
+         * Similar to 'updateInProgress' but true only for the first grid data
+         * update after filter changes. Not true during auto-refresh.
+         */
+        $scope.filtersUpdated = false;
+
+        /**
+         * ID for auto-refresh interval process.
+         */
+        var autoRefreshIntervalId = null;
 
         $scope.editRecord = function(record) {
             $scope.selectedRecord = record;
+            $scope.validationError = null;
             showDialog(record, $scope.modalParameters.editTemplateUrl)
             .then(function(result){
-                $scope.refresh();
+                $scope.sendRefreshEvent($scope.entitiesToUpdate);
             });
         };
         
         $scope.createRecord = function() {
+            $scope.validationError = null;
             showDialog(defaultData, $scope.modalParameters.addTemplateUrl)
             .then(function(result){
-                $scope.refresh();
+                $scope.sendRefreshEvent($scope.entitiesToUpdate);
             });
         };
 
         $scope.deleteRecord = function(record) {
+            $scope.validationError = null;
            DialogService.confirm("Delete record?")
            .then(function() {
                 $scope.progressMessage = "Deleting data...";
@@ -64,7 +95,7 @@
                 if (result.error) {
                     DialogService.alert(result.error, 'Error');
                 } else {
-                    $scope.refresh();
+                    $scope.sendRefreshEvent($scope.entitiesToUpdate);
                 }
            });
         };
@@ -72,9 +103,42 @@
         $scope.showCustomDialog = function(record, templateUrl) {
             showDialog(record, templateUrl)
             .then(function(result){
+                $scope.sendRefreshEvent($scope.entitiesToUpdate);
                 $scope.refresh();
             });
-        }
+        };
+
+        $scope.executeCustomAction = function(action, payload, params) {
+            $scope.progressMessage = "Executing custom action...";
+            $scope.updateInProgress = true;
+            $scope.validationError = null;
+            DataProviderService.executeAction(entity, action, payload)
+            .then(function(result){
+                $scope.updateInProgress = false;
+                if(result.error){
+                    $scope.validationError = result.error;
+                }
+                if(params) {
+                    if(params.entitiesToUpdate){
+                        $rootScope.$broadcast('UpdateEntityEvent', params.entitiesToUpdate);
+                    }
+                    if(params.dialogUrl){
+                        showDialog(result, params.dialogUrl)
+                        .then(function(result){
+                            $scope.refresh();
+                        });
+                    }
+                    if(params.noRefresh != true){
+                        $scope.refresh();
+                    }
+                    if(params.closeOnSuccess == true && !$scope.validationError){
+                        $scope.cancel();
+                    }
+                } else{
+                    $scope.refresh();
+                }
+            });
+        };
 
         function updatePageButtons()
         {
@@ -110,7 +174,7 @@
             $scope.progressMessage = "Loading data...";
             $scope.updateInProgress = true;
             
-            DataProviderService.executeAction(entity, readAction, {
+            return DataProviderService.executeAction(entity, readAction, {
                 order: null,
                 filter: getArray($scope.filters),
                 startIndex: $scope.pageLength * ($scope.currentPage - 1),
@@ -125,6 +189,11 @@
                     updatePageCount(result.totalCounter);
                     updatePageButtons();
                     fillPage(result.data);
+                    $scope.totalCounter = result.totalCounter;
+                    $rootScope.$broadcast('ReadCompletedEvent', entity);
+                    if($scope.onAfterRead){
+                        $scope.$eval($scope.onAfterRead);
+                    }
                 }
             });
         };
@@ -184,6 +253,40 @@
             }
             $scope.refresh();
         };
+
+        $scope.filterDataByDay = function(startFieldName, endFieldName, date, count) {
+            var minTime = new Date(date);
+            minTime.setHours(0);
+            minTime.setMinutes(0);
+            minTime.setSeconds(0);
+            var maxTime = new Date(date);
+            maxTime.setDate(date.getDate() + 1);
+            maxTime.setHours(0);
+            maxTime.setMinutes(0);
+            maxTime.setSeconds(0);
+            return $scope.filterDataByTime(startFieldName, endFieldName, minTime, maxTime, count);
+        };
+
+        $scope.filterDataByTime = function(startFieldName, endFieldName, minTime, maxTime, count) {
+            var filteredData = $scope.pageData.filter(function(item){
+                return item[endFieldName] > minTime && item[startFieldName] < maxTime; 
+            });
+            if (count) {
+                filteredData = filteredData.slice(0, count);
+            }
+            return filteredData;
+        };
+
+        $scope.setSelectionForAll = function(selected) {
+            return $scope.pageRows
+                .forEach(function(r) {r.selected = selected; });
+        };
+        
+        $scope.getSelectedData = function() {
+            return $scope.pageRows
+                .filter(function(r) { return r.selected; })
+                .map(function(r) { return r.data; });
+        };
         
         function getArray(obj) {
             var result = [];
@@ -211,7 +314,12 @@
                 controller: 'GridModalController',
                 size: 'md',
                 resolve: {
-                    DialogData: dialogData
+                    DialogData: function() {
+                        return dialogData;
+                    },
+                    EntityName: function() {
+                        return entity;
+                    }
                 }
             });
 
@@ -223,16 +331,30 @@
         }
         
         function fillPage(data) {
-            var dummyRecords = $scope.pageLength - data.length;
-            $scope.pageData = data;
-            for (var i = 0; i < dummyRecords; i++) {
-               $scope.pageData.push({id: i+0.1, dummy: true});
+            if(!angular.equals($scope.pageData, data)) {
+                var dummyRecords = $scope.pageLength - data.length;
+                $scope.pageData = data;
+                if (useDummyRows) {
+                    for (var i = 0; i < dummyRecords; i++) {
+                        $scope.pageData.push({id: i+0.1, dummy: true});
+                    }
+                }
+
+                $scope.pageRows = $scope.pageData.map(generatePageRow);
             }
+        }
+
+        function generatePageRow(data) {
+            return {
+                selected: false,
+                dummy: data.dummy,
+                data: data
+            };
         }
         
         function refreshIfChanged(newVal, oldVal) {
             if (newVal != oldVal) {
-                $scope.refresh();
+                initGridRefresh();
             }
         }
         
@@ -244,6 +366,22 @@
                         $scope.$watch('filters["' + key + '"].value', refreshIfChanged);
                     }
                 }
+            });
+        }
+
+        function initGridRefresh() {
+            if (autoRefreshIntervalId) {
+                clearInterval(autoRefreshIntervalId);
+            }
+            initAutorefresh();
+
+            $scope.filtersUpdated = true;
+            //$scope.pageData = [];
+            $scope.refresh()
+            .then(function(){
+                $scope.filtersUpdated = false;
+            }, function(){
+                $scope.filtersUpdated = false;
             });
         }
         
@@ -292,6 +430,8 @@
             pageButtonsCount = pb ? parseInt(pb, 10) : 10;
             $scope.pageButtonsCount = pageButtonsCount;
             $scope.waitLoggedInEvent = $attrs.waitLoggedInEvent;
+            useDummyRows = $attrs.useDummyRows ? $scope.$eval($attrs.useDummyRows) : true;
+            $scope.onAfterRead = $attrs.onAfterRead;
             
             var defaultFilters = $attrs.defaultFilters ?
                 $scope.$eval($attrs.defaultFilters) :
@@ -299,19 +439,48 @@
             initDefaultFilters(defaultFilters);
             
             readAction = $attrs.readAction ? $attrs.readAction : 'read';
+            $scope.entitiesToUpdate = eval($attrs.entitiesToUpdate);
             
             fillPage([]);
             initSorting(sortingField);
             initFilterWatch();
             if($scope.waitLoggedInEvent !== "true"){
-                $scope.refresh();
+                initGridRefresh();
+            }
+        }
+
+        function initAutorefresh() {
+            var refreshInterval = parseInt($attrs.autoRefreshInterval, 10);
+            if(!!refreshInterval) {
+                autoRefreshIntervalId = setInterval(function() {
+                    if(!$scope.waitLoggedInEvent || $scope.waitLoggedInEvent && $scope.isLoggedIn){
+                        $scope.refresh();
+                    }
+                }, refreshInterval * 1000);
+            }
+        }
+
+        $scope.sendRefreshEvent = function(entitiesToUpdate) {
+            $rootScope.$broadcast('UpdateEntityEvent', [entity]);
+            if(entitiesToUpdate) {
+                $rootScope.$broadcast('UpdateEntityEvent', entitiesToUpdate);
             }
         }
         
         $scope.$on('LoggedInEvent', function (e, arg) {
-            $scope.refresh();
+            initGridRefresh();
         });
         
+        $scope.$on('UpdateEntityEvent', function (e, arg) {
+            if(arg) {
+                for(i = 0; i < arg.length; i++) {
+                    if(arg[i] == entity) {
+                        $scope.refresh();
+                    }
+                }
+            }            
+        });
+
         init();
     }
 })();

@@ -13,7 +13,7 @@
                 return sessionKey != null;
             },
             
-            getUsername: function() {
+            getEmail: function() {
                 return sessionEmail;
             },
             
@@ -23,11 +23,11 @@
                     action: 'logout',
                     sessionKey: sessionKey
                 }).then(function(response){
-                    if (!response.data.error) {
+                    if (!response.data.errorCode != 0) {
                         //return;
                     }
                     else {
-                        return $q.reject(new Error(response.data.error));
+                        return $q.reject(response.data);
                     }
                 });
             },
@@ -38,11 +38,11 @@
                     action: 'checkSession',
                     sessionKey: sessionKey
                 }).then(function(response){
-                    if (!response.data.error) {
+                    if (!response.data.errorCode != 0) {
                         return response.data.result;
                     }
                     else {
-                        return $q.reject(new Error(response.data.error));
+                        return $q.reject(response.data);
                     }
                 });
             },
@@ -57,15 +57,13 @@
                         password: password
                     }
                 }).then(function(response){
-                    if (!response.data.error) {
-                        sessionKey = response.data.result;
-                        if (sessionKey != null) {
-                            sessionEmail = email;
-                        }
+                    var sKey = response.data.result;
+                    if(sKey){
+                        sessionKey = sKey;
+                        sessionEmail = email;
                         return sessionKey;
-                    }
-                    else {
-                        return $q.reject(new Error(response.data.error));
+                    } else {
+                        return $q.reject(response.data);
                     }
                 });
             },
@@ -77,7 +75,12 @@
 			
 			init: function(config) {
 				appConfig = config;
-			}
+			},
+
+            setSessionInfo: function(info) {
+                sessionKey = info.key;
+                sessionEmail = info.email;
+            }
         };
     });
 })(angular);

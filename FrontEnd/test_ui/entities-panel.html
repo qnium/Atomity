@@ -1,0 +1,120 @@
+<div class="container" style="padding-top: 20px; " data-entity="employee" data-auto-refresh-interval="1000" data-default-sorting-field="{field: 'id', value: true}" data-page-length="10" data-wait-logged-in-event="false" data-edit-template-url="test_templates/edit-entity.html" data-add-template-url="test_templates/add-entity.html" ng-controller="GridPanelController">
+    <div class="row" style="display: block; height: 100%;">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filter</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <label>Email</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="exampleInputEmail" placeholder="Email" ng-controller="SimpleFilterController" data-field="email" data-operation="like" ng-model="filter.value">
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-control q-cursor" ng-controller="SelectFilterController" data-entity="department" data-read-action="read" data-field="departmentId" ng-model="selectedItem" data-filter-value="selectedItem.id" data-default-option="{id: null, name: 'any'}" ng-options="department.name for department in itemList track by department.id"> 
+                        </select>
+                    </div>
+                    <form role="form" class="form-group">
+                        <label>Departments</label>
+                        <input type="text" ng-controller="RelatedFilterController" data-related-entity-name="department" data-field="departmentId" data-read-related-entities-action="readRelatedEntities" data-related-entity-field="name" data-related-entity-operation="like" class="form-control" ng-model="textInput" ng-change="filterValue = textInput.split(',')" placeholder="Type comma separated departments">
+                    </form>
+                </div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-repeat pull-right icon-button" ng-class="{'gly-spin': UpdateInProgress}" ng-click="refresh()"></span>Employees
+                </div>
+                <div class="qTableHolder table-responsive">
+                    <table class="table qgrid table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">
+                                </th>
+                                <th class="col-md-1" ng-click="toggleSorting('id')">
+                                    №
+                                </th>
+                                <th class="col-md-1" ng-click="toggleSorting('id')">
+                                    Id
+                                    <a href="" class="pad5"> <i ng-show="sorting.field == 'id'" class="fa q-text-blue pad5 fa-lg" ng-class="{'fa-caret-down': sorting.value,'fa-caret-up': !sorting.value}"></i></a>
+                                </th>
+                                <th class="col-md-3" ng-click="toggleSorting('email')">
+                                    E-mail
+                                    <a href="" class="pad5"> <i ng-show="sorting.field == 'email'" class="fa q-text-blue pad5 fa-lg" ng-class="{'fa-caret-down': sorting.value,'fa-caret-up': !sorting.value}"></i></a>
+                                </th>
+                                <th class="col-md-3" ng-click="toggleSorting('department.id')">
+                                    Department
+                                    <a href="" class="pad5"> <i ng-show="sorting.field == 'department.id'" class="fa q-text-blue pad5 fa-lg" ng-class="{'fa-caret-down': sorting.value,'fa-caret-up': !sorting.value}"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="record in pageData" ng-class="{'qrow-dummy': record.dummy}">
+                                <td>
+                                    <span class="badge row-button" ng-click="editRecord(record)" title="Редактировать"><span class="glyphicon glyphicon-pencil"><br></span></span>
+                                    <span ng-click="deleteRecord(record)" class="badge row-button" title="Удалить"><span class="glyphicon glyphicon-trash"><br></span></span>
+                                </td>
+                                <td ng-bind="pageLength*(currentPage-1)+$index+1"></td>
+                                <td ng-bind="record.id"></td>
+                                <td ng-bind="record.email"></td>
+                                <td ng-bind="record.department.name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-show="UpdateInProgress" class="qoverlay text-center">
+                        <div class="row" style="height: 100%;">
+                            <div class="col-md-4 col-md-offset-4" style="height: 30%;">
+                            </div>
+                            <div class="col-sm-4 col-sm-offset-4 col-md-offset-4 col-md-4 col-lg-4 col-lg-offset-4 col-xs-offset-1 col-xs-10">
+                                <h3 style="display: block;" ng-bind="ProgressMessage"></h3>
+                                <i class="fa  fa-refresh fa-3x fa-spin"></i>
+                            </div>
+                            <div class="col-md-4 col-xs-offset-4" style="height: 30%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="pageData[0].dummy&&!UpdateInProgress" class="qoverlay text-center">
+                        <div class="row" style="height: 100%;">
+                            <div class="col-md-4 col-md-offset-4" style="height: 30%;">
+                            </div>
+                            <div class="col-sm-4 col-sm-offset-4 col-md-offset-4 col-md-4 col-lg-4 col-lg-offset-4 col-xs-offset-1 col-xs-10">
+                                <h3 style="display: block;">Нет данных</h3>
+                            </div>
+                            <div class="col-md-4 col-xs-offset-4" style="height: 30%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <div style="position: absolute;">
+                        <button title="Создать нового пользователя" ng-click="createRecord()" style="margin-right: 8px;" type="button" class="btn btn-default pull-left">
+                            <span style="margin-left: 2px;" class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                    <ul class="pagination">
+                        <li ng-class="{disabled: !prevPageAvailable()}" ng-click="previous()">
+                            <a href="#">&laquo;</a>
+                        </li>
+                        <li>
+                            <a>
+                                <input type="number" class="form-control" style="float: left; width: 40px; height: 20px; padding: 0; text-align: center" size="1" ng-model="currentPage" ng-blur="refresh()">
+                            </a>
+                        </li>
+                        <li>
+                            <a style="pointer-events: none;">of</a>
+                        </li>
+                        <li>
+                            <a style="pointer-events: none;"><span ng-bind='pageCount'>0</span></a>
+                        </li>
+                        <li ng-class="{disabled: !nextPageAvailable()}" ng-click="next()">
+                            <a href="#">&raquo;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

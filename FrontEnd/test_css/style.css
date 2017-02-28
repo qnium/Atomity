@@ -1,0 +1,84 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+.modal-backdrop {
+  bottom: 0;
+}
+.modal {
+  display: block;
+}
+.row-button:hover {
+  background-color: white;
+  color: black;
+}
+
+.row-button {
+    visibility: hidden;
+}
+
+.row-button a {
+    color: white;
+}
+
+.qgrid tbody tr:hover,
+.qgrid.table-striped tbody tr:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+.qrow-dummy {
+  visibility: hidden;
+}
+.qgrid tbody tr:hover .badge {
+  visibility: visible;
+}
+.pagination {
+  margin: 0 !important;
+}
+.icon-button:hover {
+  color: #ffffff;
+}
+.qTableHolder {
+  position: relative;
+}
+.qoverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  z-index: 1000;
+  color: black;
+  display: inline-block;
+}
+.qnodata {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  color: white;
+  display: inline-block;
+}
+
+.q-remove-image-button {
+    margin-top: 0.3em;
+}
+
+select.form-control.disabled, select.form-control[disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: .65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.q-cursor {
+  cursor: pointer;
+}

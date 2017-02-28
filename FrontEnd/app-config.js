@@ -10,5 +10,7 @@ var appConfig = {
 //    reportsEndpoint: 'http://example.com:8080/reports',
     
 //  Path to templates for modal dialogs (alert, confirm, prompt).
-    templatePath: '/templates'
+    templatePath: '/templates',
+    appName: 'Example App',
+    appUrl: 'http://localhost:8082'
 };

@@ -2,11 +2,9 @@
     angular.module('CommonFrontend')
         .factory('FileStoreService', FileStoreService);
     
-    FileStoreService.$inject = ['$http', 'FileUploader', 'DialogService'];
-    
-    function FileStoreService($http, FileUploader, DialogService) {
+    function FileStoreService($http, $rootScope, FileUploader, DialogService) {
         
-        var sessionKey = "upload_allow";
+        var sessionKey = null;
         var appConfig = null;  
 
         return {
@@ -15,16 +13,16 @@
             init: init
         };
         
-        function getDownloadUrl(fileRecordId, tempAccountType, tempAccountId, doc) {
-            return appConfig.filesEndpoint + '?id=' + fileRecordId + '&sessionKey=' + tempAccountType + ';' + tempAccountId;
-        }        
-        
-        function setSessionKey(key) {
-            sessionKey = key;
+        // fileName is used to help a browser to save a file, it does not affect server side
+        function getDownloadUrl(fileRecordId, fileName) {
+            return appConfig.filesEndpoint + '/' + fileName + '?id=' + fileRecordId + '&sessionKey=' + sessionKey;
         }
         
         function init(config) {
             appConfig = config;
+            $rootScope.$on('LoggedInEvent', function (e, data) {
+                sessionKey = data.key;
+            });
         }
         
         function getUploader()
@@ -39,12 +37,16 @@
             
             uploader.onSuccessItem = function(fileItem, fileRecordId, status, headers) {
                 if(this.onCompleteFunction != undefined){
-                    this.onCompleteFunction(fileRecordId);
+                    this.onCompleteFunction(fileRecordId, fileItem);
                 }
             };
             
             uploader.onErrorItem = function(fileItem, response, status, headers) {
-                DialogService.alert("Status code: " + status, "Uploading error..." );
+                if(this.onErrorItemFunction != undefined){
+                    this.onErrorItemFunction(fileItem, response, status, headers);
+                } else {
+                    DialogService.alert(response, "Uploading error..." );
+                }
             };
             
             uploader.onProgressAll = function(progress){

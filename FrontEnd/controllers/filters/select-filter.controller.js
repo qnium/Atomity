@@ -58,13 +58,18 @@
             if (defaultOptionName) {
                 defaultOption = {
                     id: null,
-                    name: defaultOption
+                    name: defaultOptionName
                 };
             }
             else {
                 defaultOption = $scope.$eval($attrs.defaultOption|| 'null');
             }
             var valueExpression = $attrs.filterValue || 'selectedItem';
+
+            if(defaultOption && !$scope.selectedItem) {
+                $scope.selectedItem = defaultOption; 
+            }
+
             initOptions(entity, defaultOption, additionalFilters, readAction);
             initFilter(field, valueExpression);
         }

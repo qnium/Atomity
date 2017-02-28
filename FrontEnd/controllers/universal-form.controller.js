@@ -2,7 +2,7 @@
     angular.module('CommonFrontend')
         .controller('UniversalFormController', UniversalFormController);
     
-    UniversalFormController.$inject = ['$scope', '$attrs', '$uibModal', '$location', 'DataProviderService'];
+    UniversalFormController.$inject = ['$rootScope', '$scope', '$attrs', '$uibModal', '$location', '$interpolate', 'DataProviderService'];
     
     
     /**
@@ -10,7 +10,7 @@
      * rules. Type of managed entity defines the rules and fields of data 
      * object.
      */
-    function UniversalFormController($scope, $attrs, $uibModal, $location, DataProviderService) {
+    function UniversalFormController($rootScope, $scope, $attrs, $uibModal, $location, $interpolate, DataProviderService) {
         /**
          * Name of entity that is used for all requests needed for the form.
          */
@@ -124,6 +124,7 @@
                         $scope.actionAllowed = true;
                     }
                     else {
+                        $rootScope.$broadcast('UpdateEntityEvent', $scope.entitiesToUpdate);
                         if (typeof $scope.onFormSuccess === 'function') {
                             $scope.onFormSuccess();
                             if(dialogUrl != undefined) {
@@ -135,10 +136,12 @@
                 });
             } else {
                 if(dialogUrl != undefined) {
+                    $scope.actionInProgress = false;
+                    $scope.actionDone = true;
                     showDialog(dialogData || {}, dialogUrl)
-                    .then(function(){
+                    .then(function(result){
                         $scope.onFormSuccess();
-                    })
+                    });
                 } else{
                     $scope.onFormSuccess();                    
                 }
@@ -151,7 +154,10 @@
                 controller: 'GridModalController',
                 size: 'md',
                 resolve: {
-                    DialogData: dialogData
+                    DialogData: dialogData,
+                    EntityName: function() {
+                        return entityName;
+                    }
                 }
             });
 
@@ -234,8 +240,10 @@
          * as ng-init method in template.
          */
         function init() {
-            entityName = $attrs.entity;
-            if (!entityName) {
+            if ($attrs.entity) {
+                entityName = $interpolate($attrs.entity)($scope);
+            }
+            else {
                 throw new Error("Entity must be set for the form controller");
             }
             
@@ -256,7 +264,7 @@
             
             if ($attrs.formValidate != undefined)
             {
-                validationOn = $attrs.formValidate;
+                validationOn = eval($attrs.formValidate);
             }
             
             if (validationOn)
@@ -266,6 +274,14 @@
                     
                     return enableFormValidation(rules);
                 });
+            }
+
+            $scope.entitiesToUpdate = eval($attrs.entitiesToUpdate);
+
+            if ($attrs.formSuccess) {
+                $scope.onFormSuccess = function() {
+                    $scope.$eval($attrs.formSuccess);
+                };
             }
             
         }

@@ -24,6 +24,7 @@
             $scope.relatedEntityName = $attrs.relatedEntityName;
             $scope.readRelatedEntitiesAction = $attrs.readRelatedEntitiesAction;
             $scope.relatedEntityField = $attrs.relatedEntityField;
+            $scope.relatedEntityOperation = $attrs.relatedEntityOperation || 'like';
             
             field = $attrs.field;
             createFilter(field, op);
@@ -37,13 +38,13 @@
             delete $scope.filters[field + operation];
         }
         
-        $scope.$watch('filterValue', function(oldVal, newVal)
+        $scope.$watchCollection('filterValue', function(oldVal, newVal)
         {
             if(oldVal !== newVal)
             {
                 var filter = {
                     field: $scope.relatedEntityField,
-                    operation: 'like',
+                    operation: $scope.relatedEntityOperation,
                     value: $scope.filterValue == "" ? undefined : $scope.filterValue
                 }
                 DataProviderService.executeAction($scope.relatedEntityName, 
@@ -51,6 +52,30 @@
                                                   filter)
                 .then(function(response){
                     $scope.filters[$scope.filter.field + $scope.filter.operation].value = response.result;
+                });
+            }
+        });
+        
+        $scope.$watch('filterValue', function(oldVal, newVal)
+        {
+            if(oldVal !== newVal)
+            {
+                var filter = {
+                    field: $scope.relatedEntityField,
+                    operation: $scope.relatedEntityOperation,
+                    value: $scope.filterValue == "" ? undefined : $scope.filterValue
+                }
+                DataProviderService.executeAction($scope.relatedEntityName, 
+                                                  $scope.readRelatedEntitiesAction,
+                                                  filter)
+                .then(function(response){
+                    var value;
+                    if (angular.isDefined(response.result)) {
+                        value = response.result;
+                    } else if (angular.isDefined(response.data)) {
+                        value = response.data;
+                    }
+                    $scope.filters[$scope.filter.field + $scope.filter.operation].value = value;
                 });
             }
         });

@@ -5,7 +5,7 @@
         $scope.accountType = $attrs.accountType;
         $scope.isLoggedIn = false;
         
-        $window.onload = function()
+        $window.addEventListener('load', function()
         {
             var sessionInfo = $localStorage[makeStorageKey()];
             if(sessionInfo != undefined) {
@@ -20,10 +20,11 @@
                     setError(err);
                 });
             }
-        }
+        });
         
         function initLoginInfo(sessionInfo){
             DataProviderService.setSessionKey(sessionInfo.key);
+            AuthService.setSessionInfo(sessionInfo);
             $scope.password = "";
             $scope.isLoggedIn = true;
             $scope.email = sessionInfo.email;
@@ -96,23 +97,11 @@
             return "sessionKey-" + $scope.accountType;
         }
         
-        $scope.forgotPassword = function() 
+        $scope.forgotPassword = function(entityName, email) 
         {
-            var entityName;
-            
-            if($scope.accountType == 'CUSTOMER'){
-                entityName = 'customers';
-            }
-            if($scope.accountType == 'MERCHANT'){
-                entityName = 'merchantUsers';
-            }
-            if($scope.accountType == 'ADMIN'){
-                entityName = 'users';
-            }
-            
             if($scope.isLoggedIn)
             {
-                DataProviderService.executeAction(entityName, 'requestPasswordReset', $scope.email)
+                DataProviderService.executeAction(entityName, 'requestPasswordReset', email)
                 .then(function(response){
                     var msg = response.error || 'Password reset started. Please check your inbox for futher instructions.';
                     DialogService.alert(msg, 'Password reset');
@@ -121,7 +110,7 @@
                 DialogService.prompt({
                     title: 'Password reset',
                     description: 'Please enter your email address',
-                    initialValue: $scope.email,
+                    initialValue: email,
                     acceptLabel: 'Reset password',
                     size: 'sm'
                 }).then(function(email){
@@ -131,6 +120,6 @@
                     DialogService.alert(msg, 'Password reset');
                 });
             }
-        }
+        }    
     });
 })(angular);
