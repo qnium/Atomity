@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Test</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="test_css/justified-nav.css" rel="stylesheet">
+    <link href="test_css/style.css" rel="stylesheet" type="text/css">
+    <link href="test_css/glyph-spin.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+
+<body ng-app="CommonFrontend">
+    <div class="container" ng-controller="LoginCtrl" id="LoginRoot">
+        <h3 class="text-muted" ng-bind="appConfig.appTitle"></h3>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user pull-left"></span>Employees</a>
+            </li>
+        </ul>
+        <div id="Panels" class="tab-content">
+            <div class="tab-pane active" id="tab1">
+                <div ng-include src="'test_ui/entities-panel.html'"> </div>
+            </div>
+        </div>
+        <!-- Site footer -->
+        <div class="footer">
+            <p class="text-center">© QNIUM LLC 2017</p>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+            ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js"></script>
+    <script src="bower_components/angular-utf8-base64/angular-utf8-base64.min.js"></script>
+    <script src="bower_components/ngStorage/ngstorage.min.js"></script>
+    <script type="text/javascript" src="app-config.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="services/dialog.service.js"></script>
+    <script type="text/javascript" src="services/data-provider.service.test.js"></script>
+    <script type="text/javascript" src="services/file-store.service.js"></script>
+    <script type="text/javascript" src="services/auth_service.js"></script>
+    <script type="text/javascript" src="services/reports.service.js"></script>
+    <script type="text/javascript" src="controllers/login_controller.js"></script>
+    <script type="text/javascript" src="controllers/grid-panel.controller.js"></script>
+    <script type="text/javascript" src="controllers/grid-modal.controller.js"></script>
+    <script type="text/javascript" src="controllers/universal-form.controller.js"></script>
+    <script type="text/javascript" src="controllers/filters/related-filter.controller.js"></script>
+    <script type="text/javascript" src="controllers/filters/select-filter.controller.js"></script>
+    <script type="text/javascript" src="controllers/filters/simple-filter.controller.js"></script>
+    <script>
+        $(document).ready(function () {
+            var timeout = $("#LoginRoot").injector().get('$timeout');
+            timeout(function () {
+                var loginScope = $("#LoginRoot").scope();
+                var sessionInfo = {
+                    'email': "mail@mail.com"
+                };
+                loginScope.password = "";
+                loginScope.isLoggedIn = true;
+                loginScope.email = sessionInfo.email;
+                $("#LoginRoot").injector().get('$rootScope').$broadcast('LoggedInEvent', sessionInfo);
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>
