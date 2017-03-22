@@ -19,11 +19,11 @@ class DataProvider {
         })
         .then(response => response.json())
         .then(result => {
-            if (result.data.error) {
-                throw new Error(result.data.error);
+            if (result.error) {
+                throw new Error(result.error);
             }
             else {
-                return result.data;
+                return result;
             }
         });
     }
