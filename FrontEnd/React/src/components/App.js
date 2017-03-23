@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../media/logo.svg';
+import '../css/app.css';
+import '../css/bootstrap/css/bootstrap.css';
+import Button from 'react-bootstrap/lib/Button';
 
 class App extends Component {
   render() {
@@ -12,6 +14,9 @@ class App extends Component {
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>
+            <Button>Bootstrap button</Button>
         </p>
       </div>
     );
