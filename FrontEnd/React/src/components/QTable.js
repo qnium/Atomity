@@ -3,7 +3,6 @@ import Table from 'react-bootstrap/lib/Table';
 import ListController from '../js/ListController';
 import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
-import QCell from './QCell';
 
 class QTable extends Component {
     
@@ -54,7 +53,7 @@ class QTable extends Component {
         if(this.columns) {
             return this.columns.map(function(column, index) {
                 if(column.type === QColumn){
-                    return <QCell key={index} val={column.props.fieldName ? item[column.props.fieldName] : item} columnChildren={column.props.children} />
+                    return <QColumn key={index} val={column.props.fieldName ? item[column.props.fieldName] : item} columnChildren={column.props.children} />
                 } else {
                     return null;
                 }

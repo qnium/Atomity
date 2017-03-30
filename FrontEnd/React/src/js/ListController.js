@@ -1,5 +1,3 @@
-//import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
-
 class ListController
 {
     constructor(params)

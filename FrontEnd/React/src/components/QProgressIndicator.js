@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-//import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 
 class QProgressIndicator extends Component
 {
