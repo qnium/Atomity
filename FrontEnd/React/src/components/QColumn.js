@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import createFragment from 'react-addons-create-fragment';
+//import createFragment from 'react-addons-create-fragment';
 import QAction from './QAction';
 
 class QColumn extends Component {
@@ -20,7 +20,7 @@ class QColumn extends Component {
         }
 
         if(children.props && children.props.children){
-            return createFragment({el: React.createElement(children.type, children.props, this.renderRecursively(children.props.children))});
+            return React.createElement(children.type, {key: index, ...children.props}, this.renderRecursively(children.props.children));
         }
 
         if(typeof children === "function"){
