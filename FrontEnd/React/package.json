@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "EventEmitter": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "wolfy87-eventemitter": "^5.1.0"

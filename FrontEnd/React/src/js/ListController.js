@@ -28,7 +28,7 @@ class ListController
     deleteRecord(record)
     {
         var index = this.pageData.indexOf(this.pageData.find((value) => value.id === record.id));
-        if(index != -1){
+        if(index !== -1){
             this.pageData.splice(index, 1);
         }
         this.refresh(this.pageData);
@@ -69,15 +69,16 @@ class ListController
     getSampleEntities(entitiesName)
     {
         var data = [];
-        
+        var i;
+
         if(entitiesName === 'employees') {
-            for(var i = 0; i < 3; i++) {
+            for(i = 0; i < 3; i++) {
                 data.push({id: i, email: 'email_' + i, name: 'Name ' + i});
             }
         }
         
         if(entitiesName === 'departments') {
-            for(var i = 0; i < 5; i++) {
+            for(i = 0; i < 5; i++) {
                 data.push({id: i, type: i + 1, depName: 'Department name ' + i, description: 'Description ' + i});
             }
         }

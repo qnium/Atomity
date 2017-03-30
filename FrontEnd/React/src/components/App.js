@@ -5,9 +5,7 @@ import Tab from 'react-bootstrap/lib/Tab';
 import Panel from 'react-bootstrap/lib/Panel';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 //import dataProvider from '../js/DataProvider';
-import ListController from '../js/ListController';
 import QAction from './QAction';
 import QTable from './QTable';
 import QTableHeader from './QTableHeader';
@@ -23,20 +21,9 @@ class App extends Component
     super(props);
   	this.state = { };
     window.QEventEmitter = new EventEmitter();
-    window.helper = {
-        val: 'not set',
-        getVal: function(){
-            return this.val;
-        },
-        setVal: function(newVal){
-            this.val = newVal;
-        }
-    }
   }
   
   render() {
-
-    const fn = (item) => <span>{item}</span>;
 
     return (
         <div>
@@ -58,16 +45,15 @@ class App extends Component
                                         </QAction>
                                     </span>
                                 }>
-                                <QTable ctrlName='employeesCtrl' entitiesName='employees'>
-                                    
-                                    {/*<QTableHeader>Actions</QTableHeader>*/}
+                                <QTable ctrlName='employeesCtrl' entitiesName='employees'>                                    
+                                    <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
                                     <QTableHeader sortable="">Email</QTableHeader>
                                     <QTableHeader sortable="">Custom</QTableHeader>
-                                    {/*<QColumn>
+                                    <QColumn>
                                         <QAction targetListCtrlName="employeesCtrl" action="editRecord" title="Edit record" icon="pencil" dialog={EditEmployee} />
                                         <QAction targetListCtrlName="employeesCtrl" action="deleteRecord" title="Delete record" icon="trash" />
-                                    </QColumn>*/}
+                                    </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
                                     <QColumn>
@@ -90,7 +76,6 @@ class App extends Component
                             </Panel>
                         </Col>
                         <Col md={9}>
-                        {/*
                             <Panel header={
                                     <span>Departments
                                         <QProgressIndicator targetListCtrlName='departmentsCtrl' />
@@ -103,32 +88,20 @@ class App extends Component
                                     <QTableHeader sortable="">Name</QTableHeader>
                                     <QTableHeader sortable="">Description</QTableHeader>
                                     <QColumn>
-                                        <QAction targetListCtrlName="employeesCtrl" action="editRecord" title="Edit record" icon="pencil" dialog={EditEmployee} />
-                                        <QAction targetListCtrlName="employeesCtrl" action="deleteRecord" title="Delete record" icon="trash" />
+                                        <QAction targetListCtrlName="departmentsCtrl" action="editRecord" title="Edit record" icon="pencil" />
+                                        <QAction targetListCtrlName="departmentsCtrl" action="deleteRecord" title="Delete record" icon="trash" />
                                     </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="type" />
                                     <QColumn fieldName="depName" />
                                     <QColumn fieldName="description" />
                                 </QTable>
-                            </Panel>*/}
+                            </Panel>
                         </Col>
                     </Row>
                 </Tab>
             </Tabs>
         </div>            
-    //   <div className="App">
-    //     <div className="App-header">
-    //       <img src={logo} className="App-logo" alt="logo" />
-    //       <h2>Welcome to React</h2>
-    //     </div>
-    //     <p className="App-intro">
-    //       To get started, edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <p>
-    //         <Button>Bootstrap button</Button>
-    //     </p>
-    //   </div>
     );
   }
 }

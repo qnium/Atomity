@@ -5,10 +5,6 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 
 class EditEmployee extends Component
 {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <form>

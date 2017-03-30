@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import createFragment from 'react-addons-create-fragment';
 import QAction from './QAction';
 
 class QCell extends Component {
@@ -9,17 +8,21 @@ class QCell extends Component {
         this.columnChildren = this.props.columnChildren;
     }
 
-    renderRecursively(children, index) {
-        
-        if(typeof children === "object" && children.length != undefined){
+    renderRecursively(children, index)
+    {        
+        if(children.type === QAction) {            
+            return <span key={index}><QAction {...children.props} val={this.props.val} /></span>
+        }
+
+        if(typeof children === "object" && children.length !== undefined){
             return children.map((child, index) => this.renderRecursively(child, index));
         }
 
         if(children.props && children.props.children){
-            return React.createElement(children.type, children.props, this.renderRecursively(children.props.children));            
+            return React.createElement(children.type, children.props, this.renderRecursively(children.props.children));
         }
 
-        if(typeof children === "function") {
+        if(typeof children === "function"){
             return children(this.props.val);
         }
 

@@ -23,7 +23,7 @@ class QTable extends Component {
             
             var childrenArray;
             
-            if(this.props.children.length != undefined){
+            if(this.props.children.length !== undefined){
                 childrenArray = this.props.children;
             } else {
                 childrenArray = [this.props.children];

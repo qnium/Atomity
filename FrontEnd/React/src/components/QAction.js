@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import Badge from 'react-bootstrap/lib/Badge';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Modal from 'react-bootstrap/lib/Modal';
-import ModalHeader from 'react-bootstrap/lib/ModalHeader';
-import ModalTitle from 'react-bootstrap/lib/ModalTitle';
-import ModalBody from 'react-bootstrap/lib/ModalBody';
-import ModalFooter from 'react-bootstrap/lib/ModalFooter';
 import Button from 'react-bootstrap/lib/Button';
-import EditEmployee from '../dialogs/EditEmployee';
 
 class QAction extends Component {
 
