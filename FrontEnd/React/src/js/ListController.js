@@ -1,16 +1,35 @@
+import dataProvider from './DemoDataProvider';
+
 class ListController
 {
     constructor(params)
     {
         let self = this;
-        this.entitiesName = params.entitiesName;
-        this.ctrlName = params.ctrlName;
-        this.onAfterRefresh = params.onAfterRefresh;
+
+        dataProvider.init({apiEndpoint: 'demoApi'});
+        dataProvider.setSessionKey('demoSessionKey');
+        
+        // params
+        if(params) {
+            this.entitiesName = params.entitiesName;
+            this.ctrlName = params.ctrlName;
+            this.readAction = params.readAction || "read";
+            this.deleteAction = params.deleteAction || "delete";
+            this.onAfterRefresh = params.onAfterRefresh;
+            this.pageDataLength = params.pageDataLength || 2;
+        }
+
+        // vars
         this.actionInProgress = false;
         this.pageData = [];
+        this.totalRecords = 0;
+        this.currentPage = 1;
+        this.totalPages = 1;
+        this.nextPageAvailable = false;
+        this.prevPageAvailable = false;
         
         this.refreshActionListener = function() {
-            self.refresh(self.pageData);
+            self.refresh();
         }
         
         this.deleteActionListener = function(target) {            
@@ -25,11 +44,9 @@ class ListController
     
     deleteRecord(record)
     {
-        var index = this.pageData.indexOf(this.pageData.find((value) => value.id === record.id));
-        if(index !== -1){
-            this.pageData.splice(index, 1);
-        }
-        this.refresh(this.pageData);
+        dataProvider.executeAction(this.entitiesName, this.deleteAction, [record]).then(result => {
+            this.refresh();
+        });        
     }
 
     // window.QEventEmitter.removeListener(this.refreshActionListener);
@@ -41,51 +58,40 @@ class ListController
         }
     }
 
-    refresh(data) {
+    refresh() {
         this.pageData = [];
         this.setProgressState(true);
+        
+        let params = {
+            filter: [],
+            startIndex: (this.currentPage - 1) * this.pageDataLength,
+            count: this.pageDataLength
+        }
+        
         let self = this;
-        setTimeout(() => {
-            
-            if(data){
-                self.pageData = data;
-            } else {
-                self.pageData = self.getSampleEntities(self.entitiesName);
-            }
 
-            self.setProgressState(false);
+        dataProvider.executeAction(this.entitiesName, this.readAction, params)
+        .then(result =>
+        {
+            this.setProgressState(false);
+
+            this.pageData = result.data;
+            this.totalRecords = result.totalCounter;
+            this.totalPages = Math.ceil(this.totalRecords / this.pageDataLength);
+            this.totalPages = Math.max(1, this.totalPages);
+            //console.log("Pages for " + this.entitiesName + ": " + this.totalPages);
             
-            if(self.onAfterRefresh){
-                self.onAfterRefresh({
-                        pageData: self.pageData                        
+            if(this.onAfterRefresh){
+                this.onAfterRefresh({
+                        pageData: this.pageData
                     }
                 );
             }
-        }, 2000);            
+        });                
     }
-    
-    getSampleEntities(entitiesName)
-    {
-        var data = [];
-        var i;
 
-        if(entitiesName === 'employees') {
-            for(i = 0; i < 3; i++) {
-                data.push({id: i, email: 'email_' + i, name: 'Name ' + i});
-            }
-        }
-        
-        if(entitiesName === 'departments') {
-            for(i = 0; i < 5; i++) {
-                data.push({id: i, type: i + 1, depName: 'Department name ' + i, description: 'Description ' + i});
-            }
-        }
-
-        return data;
-    }
-    
     editRecord(entity){
-        console.log(entity);
+        console.log("ListCtrl - editRecord: ", entity);
     }
 }
 

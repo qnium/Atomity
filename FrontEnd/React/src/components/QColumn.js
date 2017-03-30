@@ -30,57 +30,13 @@ class QColumn extends Component {
         return children;
     }    
     
-    render() {
-
+    render()
+    {
         if(this.columnChildren) {
             return <td>{this.renderRecursively(this.columnChildren)}</td>
         } else {
             return <td>{this.props.val}</td>
         }
-
-        // if(this.columnChildren) {
-
-        //     //this.parseChildren(this.columnChildren);
-
-        //     if(this.columnChildren.length){
-        //         return <td>
-        //         {this.columnChildren.map((child, index) => {
-        //             if(child.type === QAction){
-        //                 return <span key={index}><QAction {...child.props} val={this.props.val} /></span>
-        //             } else {
-        //                 return (<span>{this.columnChildren}</span>);
-        //                 //return (<span>{this.child}</span>);
-        //             }
-        //         }, this)}
-        //         </td>
-
-        //     } else {
-        //         if(this.columnChildren.type === QAction){
-        //             return <td><QAction {...this.columnChildren.props} val={this.props.val} /></td>                   
-        //         } else {
-        //             return (<td>{this.columnChildren}</td>);
-        //         }
-        //     }
-
-        //     //return (<td>{this.columnChildren}</td>);
-            
-            
-            
-        //     // React.Children.map(this.child.props.children, function(self){
-        //     //     console.log(self);
-        //     //     self.replaceVal();
-        //     // });
-
-        //     // return (<td>{createFragment({childs: this.child.props.children})}</td>);            
-            
-            
-        //     //return React.createElement('td', {className: 'this.props'}, createFragment({childs: this.child.props.children}));
-        //     // return React.DOM.td(this.child.props.children);
-        // }
-        
-        // return (
-        //     <td>{this.props.val}</td>
-        // );
     }
 }
 

@@ -16,11 +16,11 @@ class EditEmployee extends Component
                 </FormGroup>
                 <FormGroup controlId="1">
                     <ControlLabel>Email</ControlLabel>
-                    <FormControl id="1" type="text" placeholder="Enter email" value={this.props.val.email} />
+                    <FormControl id="1" type="text" placeholder="Enter email" defaultValue={this.props.val.email} />
                 </FormGroup>
                 <FormGroup controlId="2">
                     <ControlLabel>Name</ControlLabel>
-                    <FormControl id="2" type="text" placeholder="Enter name" value={this.props.val.name} />
+                    <FormControl id="2" type="text" placeholder="Enter name" defaultValue={this.props.val.name} />
                 </FormGroup>
             </form>
         )        

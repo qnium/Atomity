@@ -5,14 +5,12 @@ import Tab from 'react-bootstrap/lib/Tab';
 import Panel from 'react-bootstrap/lib/Panel';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-//import dataProvider from '../js/DataProvider';
 import QAction from './QAction';
 import QTable from './QTable';
 import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
 import QProgressIndicator from './QProgressIndicator';
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
-//import EventEmitter from '../../node_modules/EventEmitter/src/index.js';
 import EditEmployee from '../dialogs/EditEmployee';
 
 class App extends Component
