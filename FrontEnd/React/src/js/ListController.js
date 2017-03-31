@@ -8,7 +8,8 @@ class ListController
         refresh: "refresh",
         editRecord: "editRecord",
         deleteRecord: "deleteRecord",
-        selectPage: "selectPage"
+        selectPage: "selectPage",
+        applyFilter: "applyFilter"
     }}
 
     static get event() { return {
@@ -17,6 +18,10 @@ class ListController
 
     static buildEvent = (ctrlName, actionOrEvent) => {
         return "ListCtrl" + ctrlName + actionOrEvent;
+    }
+
+    static getFilterName = (filter) => {
+        return filter.field + "-" + filter.operation;
     }
 
     constructor(params)
@@ -33,7 +38,7 @@ class ListController
             this.readAction = params.readAction || "read";
             this.deleteAction = params.deleteAction || "delete";
             this.onAfterRefresh = params.onAfterRefresh;
-            this.pageDataLength = params.pageDataLength || 10;
+            this.pageDataLength = params.pageDataLength || 10; // FIX for 0
         }
 
         // vars
@@ -44,8 +49,9 @@ class ListController
         this.totalPages = 1;
         this.nextPageAvailable = false;
         this.prevPageAvailable = false;
+        this.filters = {};
         
-        // event listeners
+        // event/action listeners
         this.refreshActionListener = function() {
             self.refresh();
         }
@@ -55,10 +61,14 @@ class ListController
         this.selectPageActionListener = function(target) {            
             self.selectPage(target);
         }
+        this.applyFilterActionListener = function(target) {            
+            self.applyFilter(target);
+        }
         
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.selectPage), this.selectPageActionListener);
+        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.applyFilter), this.applyFilterActionListener);
         
         this.refresh();
     }
@@ -70,6 +80,13 @@ class ListController
             this.setProgressState(false);
             this.refresh();
         });        
+    }
+    
+    applyFilter(filter)
+    {
+        let filterName = ListController.getFilterName(filter);
+        this.filters[filterName] = filter;
+        this.refresh();
     }
 
     // window.QEventEmitter.removeListener(this.refreshActionListener);
@@ -102,7 +119,7 @@ class ListController
         this.setProgressState(true);
         
         let params = {
-            filter: [],
+            filter: this.objectToArray(this.filters),
             startIndex: (this.currentPage - 1) * this.pageDataLength,
             count: this.pageDataLength
         }
@@ -133,6 +150,14 @@ class ListController
     editRecord(entity){
         console.log("ListCtrl - editRecord: ", entity);
     }
+
+    objectToArray(obj) {
+        var result = [];
+        for (var key in obj) {
+            result.push(obj[key]);
+        }
+        return result;
+    }    
 }
 
 export default ListController;

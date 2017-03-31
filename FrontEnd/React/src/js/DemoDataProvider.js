@@ -71,6 +71,26 @@ class DemoDataProvider
         let data = this.sampleData[req.entityName];
         
         let allFilteredData = data; // to do filtering
+
+        for(let currentFilter of req.data.filter)
+        {
+            if(!currentFilter.value){
+                continue;
+            }
+
+            if(currentFilter.operation === "like")
+            {
+                let currentFilterResult = [];
+                for(let item of allFilteredData)
+                {
+                    let val = item[currentFilter.field].toLowerCase();
+                    if(val.includes(currentFilter.value.toLowerCase())){
+                        currentFilterResult.push(item);
+                    }
+                }
+                allFilteredData = currentFilterResult;
+            }
+        }
         
         if(req.data.count > 0){
             data = allFilteredData.slice(req.data.startIndex, req.data.startIndex + req.data.count);

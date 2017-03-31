@@ -12,6 +12,7 @@ import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
 import QPagination from './QPagination';
 import QProgressIndicator from './QProgressIndicator';
+import QSimpleFilter from './QSimpleFilter';
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from '../dialogs/EditEmployee';
 import ListController from '../js/ListController';
@@ -34,8 +35,8 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                Filters...
-                                {/*<QSimpleFilter name='' target='employees'/>*/}
+                                <QSimpleFilter targetListCtrlName="employeesCtrl" filteringField="name" initialValue="" title="Name" placeholder="Enter name" />
+                                <QSimpleFilter targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
                             </Panel>
                         </Col>
                         <Col md={9}>
@@ -76,7 +77,8 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                Filters...
+                                <QSimpleFilter targetListCtrlName="departmentsCtrl" filteringField="depName" initialValue="" title="Name" placeholder="Enter name" />
+                                <QSimpleFilter targetListCtrlName="departmentsCtrl" filteringField="description" title="Description" placeholder="Enter description" />
                             </Panel>
                         </Col>
                         <Col md={9}>
@@ -88,7 +90,7 @@ class App extends Component
                                 footer={
                                     <QPagination targetListCtrlName="departmentsCtrl" />
                                 }>                                
-                                <QTable ctrlName='departmentsCtrl' entitiesName='departments'>
+                                <QTable ctrlName='departmentsCtrl' entitiesName='departments' pageDataLength={10}>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
                                     <QTableHeader sortable="">Type</QTableHeader>
