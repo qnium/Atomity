@@ -14,17 +14,18 @@ class QPagination extends Component
             activePage: 1,
             totalPages: 1,
             nextPageAvailable: false,
-            prevPageAvailable: false,
-            actionInPropgress: true
+            prevPageAvailable: false
         }
 
         this.ctrlStateListener = function(target) {
-            self.setState({
-                activePage: target.currentPage,
-                totalPages: target.totalPages,
-                nextPageAvailable: target.nextPageAvailable,
-                prevPageAvailable: target.prevPageAvailable
-            });
+            if(!target.actionInProgress){
+                self.setState({
+                    activePage: target.currentPage,
+                    totalPages: target.totalPages,
+                    nextPageAvailable: target.nextPageAvailable,
+                    prevPageAvailable: target.prevPageAvailable
+                });
+            }
         }
 
         this.handleSelect = (eventKey) => {   
@@ -52,7 +53,7 @@ class QPagination extends Component
                 activePage={this.state.activePage}
                 onSelect={this.handleSelect}
                 ellipsis={this.props.ellipsis === undefined ? true : this.props.ellipsis}
-                boundaryLinks={this.props.boundaryLinks === undefined ? true : this.props.boundaryLinks}
+                boundaryLinks={this.props.boundaryLinks === undefined ? true : this.props.boundaryLinks}                
             />
         );
     }    

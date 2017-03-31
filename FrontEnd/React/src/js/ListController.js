@@ -114,13 +114,18 @@ class ListController
             this.pageData = result.data;
             this.totalRecords = result.totalCounter;
             this.updatePaginationInfo();
-            this.sendStateChangedEvent();
             
-            if(this.onAfterRefresh){
-                this.onAfterRefresh({
-                        pageData: this.pageData
-                    }
-                );
+            if(this.currentPage > 1 && this.pageData.length === 0){
+                this.currentPage = this.totalPages;
+                this.refresh();
+            } else {            
+                this.sendStateChangedEvent();
+                if(this.onAfterRefresh){
+                    this.onAfterRefresh({
+                            pageData: this.pageData
+                        }
+                    );
+                }
             }
         });                
     }
