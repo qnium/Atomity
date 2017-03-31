@@ -5,13 +5,16 @@ import Tab from 'react-bootstrap/lib/Tab';
 import Panel from 'react-bootstrap/lib/Panel';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import Badge from 'react-bootstrap/lib/Badge';
 import QAction from './QAction';
 import QTable from './QTable';
 import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
+import QPagination from './QPagination';
 import QProgressIndicator from './QProgressIndicator';
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from '../dialogs/EditEmployee';
+import ListController from '../js/ListController';
 
 class App extends Component
 {
@@ -38,19 +41,22 @@ class App extends Component
                         <Col md={9}>
                             <Panel header={
                                     <span>Employees
-                                        <QAction targetListCtrlName="employeesCtrl" action="refresh" title="Refresh">
+                                        <QAction targetListCtrlName="employeesCtrl" action={ListController.action.refresh} title="Refresh">
                                             <QProgressIndicator targetListCtrlName='employeesCtrl' />
                                         </QAction>
                                     </span>
-                                }>
-                                <QTable ctrlName='employeesCtrl' entitiesName='employees'>                                    
+                                }
+                                footer={
+                                    <QPagination targetListCtrlName="employeesCtrl" />
+                                }>                                
+                                <QTable ctrlName='employeesCtrl' entitiesName='employees' pageDataLength={2}>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
                                     <QTableHeader sortable="">Email</QTableHeader>
                                     <QTableHeader sortable="">Custom</QTableHeader>
                                     <QColumn>
-                                        <QAction targetListCtrlName="employeesCtrl" action="editRecord" title="Edit record" icon="pencil" dialog={EditEmployee} />
-                                        <QAction targetListCtrlName="employeesCtrl" action="deleteRecord" title="Delete record" icon="trash" />
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
@@ -78,7 +84,10 @@ class App extends Component
                                     <span>Departments
                                         <QProgressIndicator targetListCtrlName='departmentsCtrl' />
                                     </span>
-                                }>
+                                }
+                                footer={
+                                    <QPagination targetListCtrlName="departmentsCtrl" />
+                                }>                                
                                 <QTable ctrlName='departmentsCtrl' entitiesName='departments'>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
@@ -86,8 +95,8 @@ class App extends Component
                                     <QTableHeader sortable="">Name</QTableHeader>
                                     <QTableHeader sortable="">Description</QTableHeader>
                                     <QColumn>
-                                        <QAction targetListCtrlName="departmentsCtrl" action="editRecord" title="Edit record" icon="pencil" />
-                                        <QAction targetListCtrlName="departmentsCtrl" action="deleteRecord" title="Delete record" icon="trash" />
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" /></Badge>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="type" />

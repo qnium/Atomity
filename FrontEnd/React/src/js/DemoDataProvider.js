@@ -28,10 +28,9 @@ class DemoDataProvider
                         break;
                     default:
                         throw new Error({result: {error: "Unknown action: " + req.action}});
-                        break;
                 }
                 
-            }, 2000);
+            }, 1000);
         });        
     }
 
@@ -51,7 +50,7 @@ class DemoDataProvider
         }
         
         this.sampleData.departments = [];
-        for(let i = 0; i < 21; i++) {
+        for(let i = 0; i < 81; i++) {
             this.sampleData.departments.push({id: i, type: i + 1, depName: 'Department name ' + i, description: 'Description ' + i});
         }
     }

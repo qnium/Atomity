@@ -41,11 +41,7 @@ class QTable extends Component {
     
     componentDidMount()
     {
-        this.listCtrl = new ListController({
-            ctrlName: this.props.ctrlName,
-            entitiesName: this.props.entitiesName
-        }); 
-        
+        this.listCtrl = new ListController(this.props);         
         this.listCtrl.onAfterRefresh = this.refreshEntities;
     }
     

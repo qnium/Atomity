@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Badge from 'react-bootstrap/lib/Badge';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
+import ListController from '../js/ListController';
 
 class QAction extends Component {
 
@@ -15,7 +15,7 @@ class QAction extends Component {
         this.onClick = function() {
             console.log(self.props.val);
             self.setState({showDialog: true});
-            window.QEventEmitter.emitEvent('ListCtrl-' + self.props.targetListCtrlName + '-' + self.props.action, [self.props.val]);
+            window.QEventEmitter.emitEvent(ListController.buildEvent(self.props.targetListCtrlName, self.props.action), [self.props.val]);
         }
 
         this.closeDialog = function(){
@@ -23,13 +23,12 @@ class QAction extends Component {
         }
     }
 
-    render() {
-
+    render()
+    {
         let actionTemplate;
         let dialogTemplate;
 
         if(this.state.showDialog && this.props.dialog){
-            //return (
             dialogTemplate = (
                 <Modal show={this.state.showDialog} onHide={this.closeDialog}>
                     <Modal.Header closeButton={true}>
@@ -47,25 +46,14 @@ class QAction extends Component {
         }
         
         if(this.props.children){
-            // ??? return (<span onClick={this.onClick}>{this.props.children}</span>)
-            // return (<span onClick={this.onClick}>{this.props.children}</span>)
             actionTemplate = (<span onClick={this.onClick}>{this.props.children}</span>)
         } else {
-            // return (
             actionTemplate = (
-                <Badge title={this.props.title} onClick={this.onClick}>
-                    <Glyphicon glyph={this.props.icon}>
+                    <Glyphicon title={this.props.title} glyph={this.props.icon} onClick={this.onClick}>
                         {this.props.children}
                     </Glyphicon>
-                </Badge>
             )
         }
-
-        // if(dialogTemplate){
-        //     return (<span><span>{actionTemplate}</span><span>{dialogTemplate}</span></span>)
-        // } else {
-        //     return actionTemplate
-        // }
         return (<span><span>{actionTemplate}</span><span>{dialogTemplate}</span></span>)
     }
 }
