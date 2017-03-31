@@ -37,9 +37,9 @@ class QSimpleFilter extends Component
     {
         return (
             <form>
-                <FormGroup controlId="1">
+                <FormGroup controlId={this.props.targetListCtrlName + this.props.filteringField}>
                     <ControlLabel>{this.props.title}</ControlLabel>
-                    <FormControl id="1" type="text" placeholder={this.props.placeholder} defaultValue={this.props.initialValue} onChange={this.onChangeFilterValue} />
+                    <FormControl id={this.props.targetListCtrlName + this.props.filteringField} type="text" placeholder={this.props.placeholder} defaultValue={this.props.initialValue} onChange={this.onChangeFilterValue} />
                 </FormGroup>
             </form>
         )
