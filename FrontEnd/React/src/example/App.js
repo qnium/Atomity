@@ -6,13 +6,14 @@ import Panel from 'react-bootstrap/lib/Panel';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
-import QAction from './QAction';
-import QTable from './QTable';
-import QTableHeader from './QTableHeader';
-import QColumn from './QColumn';
-import QPagination from './QPagination';
-import QProgressIndicator from './QProgressIndicator';
-import QSimpleFilter from './QSimpleFilter';
+import QAction from '../components/QAction';
+import QTable from '../components/QTable';
+import QTableHeader from '../components/QTableHeader';
+import QColumn from '../components/QColumn';
+import QPagination from '../components/QPagination';
+import QProgressIndicator from '../components/QProgressIndicator';
+import QInputFilter from '../components/QInputFilter';
+import QSelectFilter from '../components/QSelectFilter';
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from '../dialogs/EditEmployee';
 import ListController from '../js/ListController';
@@ -35,8 +36,11 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                <QSimpleFilter targetListCtrlName="employeesCtrl" filteringField="name" initialValue="" title="Name" placeholder="Enter name" />
-                                <QSimpleFilter targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
+                                <QInputFilter targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
+                                <QSelectFilter targetListCtrlName="employeesCtrl" filteringField="departmentId" title="Department"
+                                    entitiesName="department" valueField="id" displayField="name">
+                                    <option value="">Any</option>
+                                </QSelectFilter>
                             </Panel>
                         </Col>
                         <Col md={9}>
@@ -50,7 +54,7 @@ class App extends Component
                                 footer={
                                     <QPagination targetListCtrlName="employeesCtrl" />
                                 }>                                
-                                <QTable ctrlName='employeesCtrl' entitiesName='employees' pageDataLength={2}>
+                                <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={2}>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
                                     <QTableHeader sortable="">Email</QTableHeader>
@@ -64,8 +68,8 @@ class App extends Component
                                     <QColumn>
                                         <div>ID: {item => item.id}</div>
                                         <div>Email: {item => item.email}</div>
-                                        <div>Name (Email): <span>{item => item.name + ' (' + item.email + ')'}</span></div>
-                                        <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.name}</b>)</span>}</p></div>
+                                        <div>Department ID (Department name): <span>{item => item.departmentId + ' (' + item.department.name + ')'}</span></div>
+                                        <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
                                     </QColumn>
                                 </QTable>
                             </Panel>
@@ -77,8 +81,7 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                <QSimpleFilter targetListCtrlName="departmentsCtrl" filteringField="depName" initialValue="" title="Name" placeholder="Enter name" />
-                                <QSimpleFilter targetListCtrlName="departmentsCtrl" filteringField="description" title="Description" placeholder="Enter description" />
+                                <QInputFilter targetListCtrlName="departmentsCtrl" filteringField="name" initialValue="" title="Name" placeholder="Enter name" />
                             </Panel>
                         </Col>
                         <Col md={9}>
@@ -90,20 +93,16 @@ class App extends Component
                                 footer={
                                     <QPagination targetListCtrlName="departmentsCtrl" />
                                 }>                                
-                                <QTable ctrlName='departmentsCtrl' entitiesName='departments' pageDataLength={10}>
+                                <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10}>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
-                                    <QTableHeader sortable="">Type</QTableHeader>
                                     <QTableHeader sortable="">Name</QTableHeader>
-                                    <QTableHeader sortable="">Description</QTableHeader>
                                     <QColumn>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" /></Badge>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     <QColumn fieldName="id" />
-                                    <QColumn fieldName="type" />
-                                    <QColumn fieldName="depName" />
-                                    <QColumn fieldName="description" />
+                                    <QColumn fieldName="name" />
                                 </QTable>
                             </Panel>
                         </Col>

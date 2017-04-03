@@ -4,7 +4,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import ListController from '../js/ListController';
 
-class QSimpleFilter extends Component 
+class QInputFilter extends Component 
 {    
     constructor(props)
     {
@@ -46,4 +46,4 @@ class QSimpleFilter extends Component
     }
 }
 
-export default QSimpleFilter;
+export default QInputFilter;

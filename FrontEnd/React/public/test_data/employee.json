@@ -1,0 +1,81 @@
+{
+    "records": [
+        {
+            "id": 1,
+            "email": "mail1@mail.com",
+            "departmentId": 1
+        },
+        {
+            "id": 2,
+            "email": "mail2@mail.com",
+            "departmentId": 1
+        },
+        {
+            "id": 3,
+            "email": "mail3@mail.com",
+            "departmentId": 3
+        },
+        {
+            "id": 4,
+            "email": "mail4@mail.com",
+            "departmentId": 1
+        },
+        {
+            "id": 5,
+            "email": "mail5@mail.com",
+            "departmentId": 1
+        },
+        {
+            "id": 6,
+            "email": "mail6@mail.com",
+            "departmentId": 3
+        },
+        {
+            "id": 7,
+            "email": "mail7@mail.com",
+            "departmentId": 2
+        },
+        {
+            "id": 8,
+            "email": "mail8@mail.com",
+            "departmentId": 2
+        },
+        {
+            "id": 9,
+            "email": "mail9@mail.com",
+            "departmentId": 3
+        },
+        {
+            "id": 10,
+            "email": "mail10@mail.com",
+            "departmentId": 2
+        },
+        {
+            "id": 11,
+            "email": "mail11@mail.com",
+            "departmentId": 2
+        },
+        {
+            "id": 12,
+            "email": "mail12@mail.com",
+            "departmentId": 3
+        },
+        {
+            "id": 13,
+            "email": "mail13@mail.com",
+            "departmentId": 2
+        },
+        {
+            "id": 14,
+            "email": "mail14@mail.com",
+            "departmentId": 1
+        }
+    ],
+    "relationships": [
+        {
+            "field": "departmentId",
+            "relatedEntity": "department",
+            "relatedEntityField": "id"
+        }
+    ]
+}

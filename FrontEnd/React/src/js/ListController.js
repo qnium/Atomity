@@ -1,5 +1,4 @@
-//import dataProvider from './DemoDataProvider';
-import dataProvider from './DemoDataProvider'
+import dataProvider from './DemoDataProvider';
 
 class ListController
 {
