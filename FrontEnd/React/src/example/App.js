@@ -41,6 +41,9 @@ class App extends Component
                                     entitiesName="department" valueField="id" displayField="name">
                                     <option value="">Any</option>
                                 </QSelectFilter>
+                                <QInputFilter targetListCtrlName="employeesCtrl" filteringField="departmentId" title="Department name" placeholder="Enter department name"
+                                    complexFilter={{entitiesName: "department", filteringField: "name", key: "id"}}
+                                />
                             </Panel>
                         </Col>
                         <Col md={9}>
