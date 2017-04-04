@@ -2,15 +2,18 @@
     "records": [
         {
             "id": 1,
-            "name": "sales"
+            "name": "sales",
+            "registrationDate": "2017-01-01T00:00:00.000Z"
         },
         {
             "id": 2,
-            "name": "production"
+            "name": "production",
+            "registrationDate": "2017-01-01T00:00:00.000Z"
         },
         {
             "id": 3,
-            "name": "management"
+            "name": "management",
+            "registrationDate": "2017-01-01T00:00:00.000Z"
         }
     ],
     "relationships": []

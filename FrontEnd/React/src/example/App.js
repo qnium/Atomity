@@ -14,9 +14,11 @@ import QPagination from '../components/QPagination';
 import QProgressIndicator from '../components/QProgressIndicator';
 import QInputFilter from '../components/QInputFilter';
 import QSelectFilter from '../components/QSelectFilter';
+import QDateFilter from '../components/QDateFilter';
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from '../dialogs/EditEmployee';
 import ListController from '../js/ListController';
+import moment from 'moment';
 
 class App extends Component
 {
@@ -84,7 +86,8 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                <QInputFilter targetListCtrlName="departmentsCtrl" filteringField="name" initialValue="" title="Name" placeholder="Enter name" />
+                                <QInputFilter targetListCtrlName="departmentsCtrl" filteringField="name" title="Name" placeholder="Enter name" />                                
+                                <QDateFilter targetListCtrlName="departmentsCtrl" filteringField="registrationDate" filteringOperation="eq" title="Registration date" placeholder="Select regisration date" />
                             </Panel>
                         </Col>
                         <Col md={9}>
@@ -100,12 +103,16 @@ class App extends Component
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
                                     <QTableHeader sortable="">Name</QTableHeader>
+                                    <QTableHeader sortable="">Registration date</QTableHeader>
                                     <QColumn>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" /></Badge>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="name" />
+                                    <QColumn>
+                                        {item => moment(item.registrationDate).toString()}<br/>
+                                    </QColumn>
                                 </QTable>
                             </Panel>
                         </Col>
