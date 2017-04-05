@@ -19,6 +19,9 @@ import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.m
 import EditEmployee from '../dialogs/EditEmployee';
 import ListController from '../js/ListController';
 import moment from 'moment';
+import 'moment-timezone';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 
 class App extends Component
 {
@@ -26,6 +29,7 @@ class App extends Component
     super(props);
   	this.state = { };
     window.QEventEmitter = new EventEmitter();
+    moment.tz.setDefault("America/New_York");
   }
   
   render() {
@@ -113,6 +117,13 @@ class App extends Component
                                     <QColumn>
                                         {item => moment(item.registrationDate).toString()}<br/>
                                     </QColumn>
+                                    {/*<QColumn>
+                                        {item =>
+                                            <Datetime onChange={e => console.log(e.toString())} timeFormat="HH:mm" utc={false}
+                                                value={moment(item.registrationDate)} />
+                                        }
+                                        
+                                    </QColumn>*/}
                                 </QTable>
                             </Panel>
                         </Col>
