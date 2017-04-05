@@ -13,6 +13,8 @@ class QTable extends Component {
         this.state = {
             entities: []
         };
+        
+        this.listCtrl = new ListController(this.props);         
 
         this.refreshEntities = function(data) {
             self.setState({ entities: data.pageData });
@@ -20,7 +22,7 @@ class QTable extends Component {
         
         if(this.props.children){
             
-            var childrenArray;
+            let childrenArray;
             
             if(this.props.children.length !== undefined){
                 childrenArray = this.props.children;
@@ -28,10 +30,30 @@ class QTable extends Component {
                 childrenArray = [this.props.children];
             }
 
-            var header = childrenArray.filter((element) => {
+            this.headerClick = header =>
+            {
+                if(header)
+                {
+                    let listCtrlName = header.props.targetListCtrlName || this.listCtrl.ctrlName;
+                    let sortParams = {
+                        sortingField: header.props.sortingField
+                    }
+                    window.QEventEmitter.emitEvent(ListController.buildEvent(listCtrlName, ListController.action.sort), [sortParams]);
+                }
+            }
+            
+            let tableHeader = childrenArray.filter((element) => {
                 return element.type === QTableHeader;
             });
-            this.headerTemplate = <thead><tr>{header}</tr></thead>;
+            
+            this.headerTemplate = 
+                <thead><tr>{
+                    tableHeader.map((headerItem, index) => <QTableHeader key={index}
+                        onClick={this.headerClick.bind(this, headerItem)}
+                        targetListCtrlName={headerItem.props.targetListCtrlName ? headerItem.props.targetListCtrlName : this.listCtrl.ctrlName}
+                        {...headerItem.props}
+                        />)
+                }</tr></thead>;
 
             this.columns = childrenArray.filter((element) => {
                 return element.type === QColumn;
@@ -41,7 +63,6 @@ class QTable extends Component {
     
     componentDidMount()
     {
-        this.listCtrl = new ListController(this.props);         
         this.listCtrl.onAfterRefresh = this.refreshEntities;
     }
     

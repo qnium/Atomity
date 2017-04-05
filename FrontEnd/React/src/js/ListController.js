@@ -9,7 +9,8 @@ class ListController
         editRecord: "editRecord",
         deleteRecord: "deleteRecord",
         selectPage: "selectPage",
-        applyFilter: "applyFilter"
+        applyFilter: "applyFilter",
+        sort: "sort"
     }}
 
     static get event() { return {
@@ -50,25 +51,30 @@ class ListController
         this.nextPageAvailable = false;
         this.prevPageAvailable = false;
         this.filters = {};
+        this.currentSort = {};
         
         // event/action listeners
         this.refreshActionListener = function() {
             self.refresh();
         }
-        this.deleteActionListener = function(target) {            
+        this.deleteActionListener = function(target) {
             self.deleteRecord(target);
         }
-        this.selectPageActionListener = function(target) {            
+        this.selectPageActionListener = function(target) {
             self.selectPage(target);
         }
-        this.applyFilterActionListener = function(target) {            
+        this.applyFilterActionListener = function(target) {
             self.applyFilter(target);
+        }
+        this.sortActionListener = function(target) {
+            self.sortAction(target);
         }
         
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.selectPage), this.selectPageActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.applyFilter), this.applyFilterActionListener);
+        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.sort), this.sortActionListener);
         
         this.refresh();
     }
@@ -90,6 +96,42 @@ class ListController
     }
 
     // window.QEventEmitter.removeListener(this.refreshActionListener);
+
+    sortAction(sortParams)
+    {
+        let newSortingFilter = {
+            field: sortParams.sortingField,
+            operation: "sort"
+        }
+
+        let newFilterName = ListController.getFilterName(newSortingFilter);
+        let currentSortingFilter = this.filters[newFilterName];
+        
+        if(currentSortingFilter) {
+            if(sortParams.value !== undefined){
+                newSortingFilter.value = sortParams.value;
+            } else {
+                newSortingFilter.value = !currentSortingFilter.value;
+            }
+        } else {
+            let newFilters = {};
+            for(let key in this.filters) {
+                if(!key.endsWith("-sort")){
+                    newFilters[key] = this.filters[key];
+                }
+            }
+            newSortingFilter.value = true;
+            this.filters = newFilters;
+        }
+
+        this.filters[newFilterName] = newSortingFilter;
+        this.currentSort = {
+            field: newSortingFilter.field,
+            value: newSortingFilter.value
+        };
+
+        this.refresh();
+    }
 
     setProgressState = function(newState){
         if(this.actionInProgress !== newState){

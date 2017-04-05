@@ -65,9 +65,9 @@ class App extends Component
                                 }>                                
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={2}>
                                     <QTableHeader>Actions</QTableHeader>
-                                    <QTableHeader sortable="">ID</QTableHeader>
-                                    <QTableHeader sortable="">Email</QTableHeader>
-                                    <QTableHeader sortable="">Custom</QTableHeader>
+                                    <QTableHeader sortingField="id">ID</QTableHeader>
+                                    <QTableHeader sortingField="email">Email</QTableHeader>
+                                    <QTableHeader>Custom</QTableHeader>
                                     <QColumn>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
