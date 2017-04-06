@@ -27,7 +27,7 @@ class QInputFilter extends Component
         this.onChangeFilterValue = (e) =>
         {
             console.log(e.toString());
-            console.log(e.utc().toString());
+            //console.log(e.utc().toString());
             
             //console.log(e);
             //console.log(new Date(parseInt(e.toString())));
@@ -45,11 +45,9 @@ class QInputFilter extends Component
                     {/*<Calendar id={this.props.targetListCtrlName + this.props.filteringField + this.props.filteringOperation} onChange={this.onChangeFilterValue} />*/}
                     {/*<RcDatePicker id={this.props.targetListCtrlName + this.props.filteringField + this.props.filteringOperation} onChange={this.onChangeFilterValue} />*/}
                     {/*<DatePicker id={this.props.targetListCtrlName + this.props.filteringField + this.props.filteringOperation} onChange={this.onChangeFilterValue} />*/}
-                    
                     {/*<DateTimeField id={this.props.targetListCtrlName + this.props.filteringField + this.props.filteringOperation} onChange={this.onChangeFilterValue} />*/}
-                    
-                    <Datetime id={this.props.targetListCtrlName + this.props.filteringField + this.props.filteringOperation} onChange={this.onChangeFilterValue}
-                        utc={false} timeFormat="HH:mm"
+                    <Datetime id={this.props.targetListCtrlName + this.props.filteringField + this.props.filteringOperation}
+                        onChange={this.onChangeFilterValue} utc={false} timeFormat="HH:mm"
                     />
                 </FormGroup>
             </form>
