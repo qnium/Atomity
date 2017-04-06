@@ -10,7 +10,8 @@ class ListController
         deleteRecord: "deleteRecord",
         selectPage: "selectPage",
         applyFilter: "applyFilter",
-        sort: "sort"
+        sort: "sort",
+        setRowChecked: "setRowChecked"
     }}
 
     static get event() { return {
@@ -38,7 +39,6 @@ class ListController
             this.ctrlName = params.ctrlName;
             this.readAction = params.readAction || "read";
             this.deleteAction = params.deleteAction || "delete";
-            this.onAfterRefresh = params.onAfterRefresh;
             this.pageDataLength = params.pageDataLength || 10; // FIX for 0
         }
 
@@ -69,12 +69,16 @@ class ListController
         this.sortActionListener = function(target) {
             self.sortAction(target);
         }
+        this.setRowCheckedActionListener = function(target) {
+            self.setRowCheckedAction(target);
+        }
         
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.selectPage), this.selectPageActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.applyFilter), this.applyFilterActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.sort), this.sortActionListener);
+        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setRowChecked), this.setRowCheckedActionListener);
         
         this.refresh();
     }
@@ -133,7 +137,14 @@ class ListController
         this.refresh();
     }
 
-    setProgressState = function(newState){
+    setRowCheckedAction(params)
+    {
+        let item = this.pageData[params.rowIndex];
+        item.checked = params.newState === undefined ? !item.checked : params.newState;
+        this.sendStateChangedEvent();
+    }
+
+    setProgressState(newState) {
         if(this.actionInProgress !== newState){
             this.actionInProgress = newState;
             this.sendStateChangedEvent();
@@ -156,8 +167,17 @@ class ListController
         this.refresh();
     }
     
+    arrayDataToPageData(arrayData) {
+        return arrayData.map((item, index) => {
+            return {
+                index: index,
+                checked: false,
+                data: item
+            }
+        });
+    }
+    
     refresh() {
-        this.pageData = [];
         this.setProgressState(true);
         
         let params = {
@@ -170,7 +190,7 @@ class ListController
         .then(result =>
         {
             this.setProgressState(false);
-            this.pageData = result.data;
+            this.pageData = this.arrayDataToPageData(result.data);
             this.totalRecords = result.totalCounter;
             this.updatePaginationInfo();
             
@@ -179,12 +199,6 @@ class ListController
                 this.refresh();
             } else {            
                 this.sendStateChangedEvent();
-                if(this.onAfterRefresh){
-                    this.onAfterRefresh({
-                            pageData: this.pageData
-                        }
-                    );
-                }
             }
         });                
     }

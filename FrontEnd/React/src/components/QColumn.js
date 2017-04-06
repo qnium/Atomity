@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import createFragment from 'react-addons-create-fragment';
 import QAction from './QAction';
+import QRowChecker from './QRowChecker';
 
 class QColumn extends Component {
 
@@ -11,8 +12,15 @@ class QColumn extends Component {
 
     renderRecursively(children, index)
     {        
-        if(children.type === QAction) {            
-            return <span key={index}><QAction {...children.props} val={this.props.val} /></span>
+        if(children.type === QAction) {
+            return <QAction {...children.props} val={this.props.val} />
+        }
+
+        if(children.type === QRowChecker) {
+            return (<QRowChecker {...children.props}
+                targetListCtrlName={children.props.targetListCtrlName || this.props.targetListCtrlName}
+                val={this.props.pageItem}
+            />)
         }
 
         if(typeof children === "object" && children.length !== undefined){

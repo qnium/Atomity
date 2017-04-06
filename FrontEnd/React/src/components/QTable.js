@@ -11,13 +11,17 @@ class QTable extends Component {
         let self = this;
         
         this.state = {
-            entities: []
+            pageData: []
         };
         
         this.listCtrl = new ListController(this.props);
-        this.listCtrl.onAfterRefresh = data => {
-            self.setState({entities: data.pageData});
-        };
+
+        this.ctrlStateListener = function(target) {
+            if(!target.actionInProgress){
+                self.setState({pageData: target.pageData});
+            }
+        }
+        window.QEventEmitter.addListener(ListController.buildEvent(this.listCtrl.ctrlName, ListController.event.stateChanged), this.ctrlStateListener);
         
         if(this.props.children){
             
@@ -37,7 +41,7 @@ class QTable extends Component {
                 <thead><tr>{
                     tableHeader.map((headerItem, index) => <QTableHeader key={index}                        
                         {...headerItem.props}
-                        targetListCtrlName={headerItem.props.targetListCtrlName ? headerItem.props.targetListCtrlName : this.listCtrl.ctrlName}
+                        targetListCtrlName={headerItem.props.targetListCtrlName || this.listCtrl.ctrlName}
                         />)
                 }</tr></thead>;
 
@@ -47,15 +51,19 @@ class QTable extends Component {
         }        
     }
     
-    renderRow(item) {
+    renderRow(pageItem)
+    {        
         if(this.columns) {
             return this.columns.map(function(column, index) {
                 if(column.type === QColumn){
-                    return <QColumn key={index} val={column.props.fieldName ? item[column.props.fieldName] : item} columnChildren={column.props.children} />
+                    return <QColumn key={index} val={column.props.fieldName ? pageItem.data[column.props.fieldName] : pageItem.data}
+                        pageItem={pageItem} columnChildren={column.props.children}
+                        targetListCtrlName={column.props.targetListCtrlName || this.listCtrl.ctrlName}
+                        />
                 } else {
                     return null;
                 }
-            })
+            }, this)
         }
     }
     
@@ -66,10 +74,10 @@ class QTable extends Component {
                 {this.headerTemplate}
                 
                 <tbody>{
-                    this.state.entities.map(function(item, index) {
+                    this.state.pageData.map(function(pageItem, index) {
                         return (                        
                             <tr key={index}>
-                                {this.renderRow(item)}
+                                {this.renderRow(pageItem)}
                             </tr>
                         )
                     }, this)

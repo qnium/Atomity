@@ -27,11 +27,11 @@ class QTableHeader extends Component
         {
             if(header.props.sortingField)
             {
-                let listCtrlName = header.props.targetListCtrlName || this.listCtrl.ctrlName;
+                console.log("H click: " + this.targetCtrl);
                 let sortParams = {
                     sortingField: header.props.sortingField
                 }
-                window.QEventEmitter.emitEvent(ListController.buildEvent(listCtrlName, ListController.action.sort), [sortParams]);
+                window.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.sort), [sortParams]);
             }
         }        
     }
