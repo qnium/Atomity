@@ -29,28 +29,15 @@ class QTable extends Component {
                 childrenArray = [this.props.children];
             }
 
-            this.headerClick = header =>
-            {
-                if(header.props.sortingField)
-                {
-                    let listCtrlName = header.props.targetListCtrlName || this.listCtrl.ctrlName;
-                    let sortParams = {
-                        sortingField: header.props.sortingField
-                    }
-                    window.QEventEmitter.emitEvent(ListController.buildEvent(listCtrlName, ListController.action.sort), [sortParams]);
-                }
-            }
-            
             let tableHeader = childrenArray.filter((element) => {
                 return element.type === QTableHeader;
             });
             
             this.headerTemplate = 
                 <thead><tr>{
-                    tableHeader.map((headerItem, index) => <QTableHeader key={index}
-                        onClick={this.headerClick.bind(this, headerItem)}
-                        targetListCtrlName={headerItem.props.targetListCtrlName ? headerItem.props.targetListCtrlName : this.listCtrl.ctrlName}
+                    tableHeader.map((headerItem, index) => <QTableHeader key={index}                        
                         {...headerItem.props}
+                        targetListCtrlName={headerItem.props.targetListCtrlName ? headerItem.props.targetListCtrlName : this.listCtrl.ctrlName}
                         />)
                 }</tr></thead>;
 

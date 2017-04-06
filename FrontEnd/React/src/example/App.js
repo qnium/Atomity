@@ -20,8 +20,6 @@ import EditEmployee from '../dialogs/EditEmployee';
 import ListController from '../js/ListController';
 import moment from 'moment';
 import 'moment-timezone';
-import Datetime from 'react-datetime';
-import 'react-datetime/css/react-datetime.css';
 
 class App extends Component
 {
@@ -91,7 +89,7 @@ class App extends Component
                         <Col md={3}>
                             <Panel header="Filters">
                                 <QInputFilter targetListCtrlName="departmentsCtrl" filteringField="name" title="Name" placeholder="Enter name" />                                
-                                <QDateFilter targetListCtrlName="departmentsCtrl" filteringField="registrationDate" filteringOperation="eq" title="Registration date" placeholder="Select regisration date" />
+                                <QDateFilter targetListCtrlName="departmentsCtrl" filteringField="registrationDate" filteringOperation="eq" title="Registration date" placeholder="Select registration date" />
                             </Panel>
                         </Col>
                         <Col md={9}>

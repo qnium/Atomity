@@ -58,9 +58,9 @@ class QSelectFilter extends Component
     {
         return (
             <form>
-                <FormGroup controlId={this.props.targetListCtrlName + this.props.filteringField}>
+                <FormGroup controlId={"SelectFilter" + this.props.targetListCtrlName + this.props.filteringField}>
                     <ControlLabel>{this.props.title}</ControlLabel>
-                    <FormControl id={this.props.targetListCtrlName + this.props.filteringField} componentClass="select" defaultValue="" onChange={this.onChangeFilterValue}>
+                    <FormControl id={"SelectFilter" + this.props.targetListCtrlName + this.props.filteringField} componentClass="select" defaultValue="" onChange={this.onChangeFilterValue}>
                         {this.props.children}
                         {this.renderCustomOptions()}
                     </FormControl>

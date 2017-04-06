@@ -22,6 +22,18 @@ class QTableHeader extends Component
                 });
             }
         }
+
+        this.headerClick = header =>
+        {
+            if(header.props.sortingField)
+            {
+                let listCtrlName = header.props.targetListCtrlName || this.listCtrl.ctrlName;
+                let sortParams = {
+                    sortingField: header.props.sortingField
+                }
+                window.QEventEmitter.emitEvent(ListController.buildEvent(listCtrlName, ListController.action.sort), [sortParams]);
+            }
+        }        
     }
 
     componentDidMount() {
@@ -42,7 +54,7 @@ class QTableHeader extends Component
     }
     
     render() {
-        return <th onClick={this.props.onClick}>
+        return <th onClick={this.headerClick.bind(this, this)}>
             {this.props.children}
             {this.renderSortIcon()}
         </th>
