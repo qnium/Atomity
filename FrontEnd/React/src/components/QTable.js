@@ -14,10 +14,9 @@ class QTable extends Component {
             entities: []
         };
         
-        this.listCtrl = new ListController(this.props);         
-
-        this.refreshEntities = function(data) {
-            self.setState({ entities: data.pageData });
+        this.listCtrl = new ListController(this.props);
+        this.listCtrl.onAfterRefresh = data => {
+            self.setState({entities: data.pageData});
         };
         
         if(this.props.children){
@@ -32,7 +31,7 @@ class QTable extends Component {
 
             this.headerClick = header =>
             {
-                if(header)
+                if(header.props.sortingField)
                 {
                     let listCtrlName = header.props.targetListCtrlName || this.listCtrl.ctrlName;
                     let sortParams = {
@@ -59,11 +58,6 @@ class QTable extends Component {
                 return element.type === QColumn;
             });            
         }        
-    }
-    
-    componentDidMount()
-    {
-        this.listCtrl.onAfterRefresh = this.refreshEntities;
     }
     
     renderRow(item) {

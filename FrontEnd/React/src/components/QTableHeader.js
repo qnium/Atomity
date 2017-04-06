@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListController from '../js/ListController';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 class QTableHeader extends Component
 {
@@ -14,11 +15,12 @@ class QTableHeader extends Component
         }
 
         this.ctrlStateListener = function(target) {
-            //console.log("Render header", this.props.sortingField);
-            self.setState({
-                sortingField: target.currentSort.field,
-                sortingValue: target.currentSort.value
-            });
+            if(!target.actionInProgress){
+                self.setState({
+                    sortingField: target.currentSort.field,
+                    sortingValue: target.currentSort.value
+                });
+            }
         }
     }
 
@@ -30,15 +32,20 @@ class QTableHeader extends Component
         window.QEventEmitter.removeListener(this.ctrlStateListener);
     };
 
+    renderSortIcon(){
+        if(this.state.sortingField !== undefined && this.state.sortingField === this.props.sortingField){
+            let icon = this.state.sortingValue ? "triangle-bottom" : "triangle-top";
+            return <Glyphicon glyph={icon} />
+        } else {
+            return null;
+        }
+    }
+    
     render() {
-        console.log("Render header", this.props.sortingField);
-        return <th onClick={this.props.onClick}>{this.props.children}</th>
-        // return <th>{React.Children.map(this.props.children,
-        //     (child) =>
-        //     React.cloneElement(child, {
-        //         onClick: this.props.onClick
-        //     })
-        // , this)}</th>
+        return <th onClick={this.props.onClick}>
+            {this.props.children}
+            {this.renderSortIcon()}
+        </th>
     }
 }
 

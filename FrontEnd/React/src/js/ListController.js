@@ -14,7 +14,7 @@ class ListController
     }}
 
     static get event() { return {
-        stateChaged: "stateChanged"
+        stateChanged: "stateChanged"
     }}
 
     static buildEvent = (ctrlName, actionOrEvent) => {

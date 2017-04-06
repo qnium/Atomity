@@ -63,11 +63,11 @@ class App extends Component
                                 footer={
                                     <QPagination targetListCtrlName="employeesCtrl" />
                                 }>                                
-                                <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={2}>
+                                <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={3}>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
                                     <QTableHeader sortingField="email">Email</QTableHeader>
-                                    <QTableHeader>Custom</QTableHeader>
+                                    <QTableHeader sortingField="departmentId">Custom</QTableHeader>
                                     <QColumn>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
