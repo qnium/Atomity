@@ -42,6 +42,7 @@ class ListController
             this.deleteAction = params.deleteAction || "delete";
             this.pageDataLength = params.pageDataLength || 10; // FIX for 0
             this.useDummyRows = params.useDummyRows;
+            this.entityKeyField = params.entityKeyField || "id";
         }
 
         // vars
@@ -193,14 +194,28 @@ class ListController
         this.refresh();
     }
     
-    arrayDataToPageData(arrayData) {
-        return arrayData.map((item, index) => {
+    arrayDataToPageData(arrayData)
+    {
+        let newPageData = arrayData.map((item, index) => {
             return {
                 index: index,
                 checked: false,
                 data: item
             }
         });
+        
+        let self = this;
+        newPageData.forEach(newItem =>
+        {
+            let sameItems = self.pageData.filter(currentItem => {
+                return currentItem.data[self.entityKeyField] === newItem.data[self.entityKeyField];
+            });
+            if(sameItems[0] !== undefined) {
+                newItem.checked = sameItems[0].checked;
+            }
+        });
+
+        return newPageData;
     }
     
     addDummyRows() {
