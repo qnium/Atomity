@@ -78,6 +78,8 @@ class App extends Component
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
                                     <QTableHeader>
                                         <QGroupActions>
+                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" icon="trash" />
+                                            <QAction action="delete" isCustomAction={true} title="Delete records 2" icon="trash" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader>Actions</QTableHeader>

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/lib/Button';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import ListController from '../js/ListController';
+import QAction from '../components/QAction';
 
 class QGroupActions extends Component
 {
@@ -14,14 +15,22 @@ class QGroupActions extends Component
         this.targetCtrl = this.props.targetListCtrlName;
         
         this.state = {
-            allChecked: false
+            allChecked: false,
+            actionsAllowed: false,
+            checkedItems: []
         };
 
         this.ctrlStateListener = function(target)
         {
             if(!target.actionInProgress) {
-                let allChecked = target.pageData.filter(item => item.checked).length === target.pageData.filter(item => !item.dummy).length;
-                self.setState({allChecked: allChecked});
+                let checkedItems = target.pageData.filter(item => item.checked).map(item => item.data);
+                let checkedCounter = checkedItems.length;
+                let allChecked = checkedCounter === target.pageData.filter(item => !item.dummy).length;
+                self.setState({
+                    allChecked: allChecked,
+                    actionsAllowed: checkedCounter > 0,
+                    checkedItems: checkedItems
+                });
             }
         }
         window.QEventEmitter.addListener(ListController.buildEvent(this.targetCtrl, ListController.event.stateChanged), this.ctrlStateListener);
@@ -31,17 +40,31 @@ class QGroupActions extends Component
         }        
     }
 
+    renderMenuItems()
+    {
+        return this.props.children.props.children.map((menuItem, index) =>
+        {
+            let actionTemplate;
+
+            if(menuItem.type === QAction) {
+                actionTemplate = <QAction {...menuItem.props} val={this.state.checkedItems} targetListCtrlName={this.targetCtrl}>{menuItem.props.title}</QAction>
+            } else {
+                return null;
+                actionTemplate = menuItem;
+            }
+
+            return <MenuItem key={index} disabled={!this.state.actionsAllowed}>{actionTemplate}</MenuItem>
+        });
+    }
+
     render() {
         return (
             <ButtonGroup>
                 <Button bsSize="small" onClick={this.checkBoxClick}>
                     <input type="checkbox" checked={this.state.allChecked} />
                 </Button>
-                <DropdownButton
-                    id="input-dropdown-addon"
-                    title=""
-                    >
-                    <MenuItem key="1">Item</MenuItem>
+                <DropdownButton id="input-dropdown-addon" title="">
+                    {this.renderMenuItems()}
                 </DropdownButton>
             </ButtonGroup>
         );

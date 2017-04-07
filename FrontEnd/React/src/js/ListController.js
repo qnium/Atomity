@@ -11,7 +11,8 @@ class ListController
         selectPage: "selectPage",
         applyFilter: "applyFilter",
         sort: "sort",
-        setRowChecked: "setRowChecked"
+        setRowChecked: "setRowChecked",
+        customAction: "customAction"
     }}
 
     static get event() { return {
@@ -76,6 +77,9 @@ class ListController
         this.setAllCheckedActionListener = function(target) {
             self.setAllCheckedAction(target);
         }
+        this.customActionListener = function(target) {
+            self.customAction(target);
+        }
         
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
@@ -84,6 +88,7 @@ class ListController
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.sort), this.sortActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setRowChecked), this.setRowCheckedActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setAllChecked), this.setAllCheckedActionListener);
+        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.customAction), this.customActionListener);
         
         this.refresh();
     }
@@ -92,6 +97,15 @@ class ListController
     {
         this.setProgressState(true);
         dataProvider.executeAction(this.entitiesName, this.deleteAction, [record]).then(result => {
+            this.setProgressState(false);
+            this.refresh();
+        });        
+    }
+    
+    customAction(params)
+    {
+        this.setProgressState(true);
+        dataProvider.executeAction(this.entitiesName, params.action, params.payload).then(result => {
             this.setProgressState(false);
             this.refresh();
         });        

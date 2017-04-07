@@ -15,7 +15,11 @@ class QAction extends Component {
         this.onClick = function() {
             console.log(self.props.val);
             self.setState({showDialog: true});
-            window.QEventEmitter.emitEvent(ListController.buildEvent(self.props.targetListCtrlName, self.props.action), [self.props.val]);
+            if(self.props.isCustomAction === true) {
+                window.QEventEmitter.emitEvent(ListController.buildEvent(self.props.targetListCtrlName, ListController.action.customAction), [{action: self.props.action, payload: self.props.val}]);
+            } else {
+                window.QEventEmitter.emitEvent(ListController.buildEvent(self.props.targetListCtrlName, self.props.action), [self.props.val]);
+            }
         }
 
         this.closeDialog = function(){
@@ -49,12 +53,12 @@ class QAction extends Component {
             actionTemplate = (<span onClick={this.onClick}>{this.props.children}</span>)
         } else {
             actionTemplate = (
-                    <Glyphicon title={this.props.title} glyph={this.props.icon} onClick={this.onClick}>
-                        {this.props.children}
-                    </Glyphicon>
+                <Glyphicon title={this.props.title} glyph={this.props.icon} onClick={this.onClick}>
+                    {this.props.children}
+                </Glyphicon>
             )
         }
-        return (<span><span>{actionTemplate}</span><span>{dialogTemplate}</span></span>)
+        return (<span>{actionTemplate}{dialogTemplate}</span>)
     }
 }
 
