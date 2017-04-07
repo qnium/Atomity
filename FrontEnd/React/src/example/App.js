@@ -11,6 +11,7 @@ import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
+import Checkbox from 'react-bootstrap/lib/Checkbox';
 
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
@@ -78,25 +79,28 @@ class App extends Component
                                     
                                     
                                     <QTableHeader>
-                                        <FormGroup>
-                                            <InputGroup>
-                                                <InputGroup.Addon>
+                                        {/*<FormGroup>*/}
+                                            <ButtonGroup>
+                                                {/*<InputGroup.Addon>
                                                 <input type="checkbox" />
-                                                </InputGroup.Addon>
+                                                </InputGroup.Addon>*/}
+                                                <Button bsSize="small">
+                                                <input type="checkbox" />
+                                                </Button>
                                                 <DropdownButton
-                                                        componentClass={InputGroup.Button}
-                                                        id="input-dropdown-addon"
-                                                        title=""
-                                                        >
-                                                        <MenuItem key="1">Item</MenuItem>
-                                                    </DropdownButton>
+                                                    
+                                                    id="input-dropdown-addon"
+                                                    title=""
+                                                    >
+                                                    <MenuItem key="1">Item</MenuItem>
+                                                </DropdownButton>
                                                 {/*<FormControl type="text" />*/}
                                                 {/*<DropdownButton title="Dropdown" id="bg-nested-dropdown">
                                                     <MenuItem eventKey="1">Dropdown link</MenuItem>
                                                     <MenuItem eventKey="2">Dropdown link</MenuItem>
                                                 </DropdownButton>*/}
-                                            </InputGroup>
-                                        </FormGroup>
+                                            </ButtonGroup>
+                                        {/*</FormGroup>*/}
                                     </QTableHeader>
                                     {/*<QTableHeader>
                                         <ButtonGroup>
@@ -112,29 +116,21 @@ class App extends Component
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
                                     <QTableHeader sortingField="email">Email</QTableHeader>
-                                    <QTableHeader sortingField="departmentId">Custom</QTableHeader>
-
-
-                                    {/*<QColumn><input type="checkbox" /></QColumn>*/}
-                                    <QColumn>
-                                        <QRowChecker />
-                                    {/*<QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Check record" icon="">
-                                        <input type="checkbox" />
-                                    </QAction>*/}
-                                    </QColumn>
-
+                                    {/*<QTableHeader sortingField="departmentId">Custom</QTableHeader>*/}
+                                    
+                                    <QColumn><QRowChecker /></QColumn>
                                     <QColumn>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
-                                    <QColumn>
+                                    {/*<QColumn>
                                         <div>ID: {item => item.id}</div>
                                         <div>Email: {item => item.email}</div>
                                         <div>Department ID (Department name): <span>{item => item.departmentId + ' (' + item.department.name + ')'}</span></div>
-                                        <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>                                        
-                                    </QColumn>
+                                        <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
+                                    </QColumn>*/}
                                 </QTable>
                             </Panel>
                         </Col>
