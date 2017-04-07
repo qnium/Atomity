@@ -27,6 +27,7 @@ import QInputFilter from '../components/QInputFilter';
 import QSelectFilter from '../components/QSelectFilter';
 import QDateFilter from '../components/QDateFilter';
 import QRowChecker from '../components/QRowChecker';
+import QGroupActions from '../components/QGroupActions';
 
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from '../dialogs/EditEmployee';
@@ -75,49 +76,14 @@ class App extends Component
                                     <QPagination targetListCtrlName="employeesCtrl" />
                                 }>                                
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
-                                    
-                                    
-                                    
                                     <QTableHeader>
-                                        {/*<FormGroup>*/}
-                                            <ButtonGroup>
-                                                {/*<InputGroup.Addon>
-                                                <input type="checkbox" />
-                                                </InputGroup.Addon>*/}
-                                                <Button bsSize="small">
-                                                <input type="checkbox" />
-                                                </Button>
-                                                <DropdownButton
-                                                    
-                                                    id="input-dropdown-addon"
-                                                    title=""
-                                                    >
-                                                    <MenuItem key="1">Item</MenuItem>
-                                                </DropdownButton>
-                                                {/*<FormControl type="text" />*/}
-                                                {/*<DropdownButton title="Dropdown" id="bg-nested-dropdown">
-                                                    <MenuItem eventKey="1">Dropdown link</MenuItem>
-                                                    <MenuItem eventKey="2">Dropdown link</MenuItem>
-                                                </DropdownButton>*/}
-                                            </ButtonGroup>
-                                        {/*</FormGroup>*/}
+                                        <QGroupActions>
+                                        </QGroupActions>
                                     </QTableHeader>
-                                    {/*<QTableHeader>
-                                        <ButtonGroup>
-                                            <Button><input type="checkbox" aria-label="..." /></Button>
-                                            <DropdownButton title="Dropdown" id="bg-nested-dropdown">
-                                                <MenuItem eventKey="1">Dropdown link</MenuItem>
-                                                <MenuItem eventKey="2">Dropdown link</MenuItem>
-                                            </DropdownButton>
-                                        </ButtonGroup>
-                                    </QTableHeader>*/}
-
-
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
                                     <QTableHeader sortingField="email">Email</QTableHeader>
-                                    {/*<QTableHeader sortingField="departmentId">Custom</QTableHeader>*/}
-                                    
+                                    <QTableHeader sortingField="departmentId">Custom</QTableHeader>
                                     <QColumn><QRowChecker /></QColumn>
                                     <QColumn>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
@@ -125,12 +91,12 @@ class App extends Component
                                     </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
-                                    {/*<QColumn>
+                                    <QColumn>
                                         <div>ID: {item => item.id}</div>
                                         <div>Email: {item => item.email}</div>
                                         <div>Department ID (Department name): <span>{item => item.departmentId + ' (' + item.department.name + ')'}</span></div>
                                         <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
-                                    </QColumn>*/}
+                                    </QColumn>
                                 </QTable>
                             </Panel>
                         </Col>

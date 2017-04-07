@@ -73,6 +73,9 @@ class ListController
         this.setRowCheckedActionListener = function(target) {
             self.setRowCheckedAction(target);
         }
+        this.setAllCheckedActionListener = function(target) {
+            self.setAllCheckedAction(target);
+        }
         
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
@@ -80,6 +83,7 @@ class ListController
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.applyFilter), this.applyFilterActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.sort), this.sortActionListener);
         window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setRowChecked), this.setRowCheckedActionListener);
+        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setAllChecked), this.setAllCheckedActionListener);
         
         this.refresh();
     }
@@ -142,6 +146,13 @@ class ListController
     {
         let item = this.pageData[params.rowIndex];
         item.checked = params.newState === undefined ? !item.checked : params.newState;
+        this.sendStateChangedEvent();
+    }
+
+    setAllCheckedAction(params)
+    {
+        let newState = params && params.newState !== undefined ? params.newState : true;
+        this.pageData.map(item => item.checked = newState);
         this.sendStateChangedEvent();
     }
 

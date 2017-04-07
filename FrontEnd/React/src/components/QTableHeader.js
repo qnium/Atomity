@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ListController from '../js/ListController';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import QGroupActions from '../components/QGroupActions';
 
 class QTableHeader extends Component
 {
@@ -27,7 +28,6 @@ class QTableHeader extends Component
         {
             if(header.props.sortingField)
             {
-                console.log("H click: " + this.targetCtrl);
                 let sortParams = {
                     sortingField: header.props.sortingField
                 }
@@ -53,9 +53,19 @@ class QTableHeader extends Component
         }
     }
     
+    renderChildren() {
+        if(this.props.children && this.props.children.type === QGroupActions) {
+            return <QGroupActions {...this.props} targetListCtrlName={this.props.children.props.targetListCtrlName || this.targetCtrl}/>
+        } else {
+            return this.props.children
+        }
+
+        return null;
+    }
+
     render() {
         return <th onClick={this.headerClick.bind(this, this)}>
-            {this.props.children}
+            {this.renderChildren()}
             {this.renderSortIcon()}
         </th>
     }
