@@ -40,6 +40,7 @@ class ListController
             this.readAction = params.readAction || "read";
             this.deleteAction = params.deleteAction || "delete";
             this.pageDataLength = params.pageDataLength || 10; // FIX for 0
+            this.useDummyRows = params.useDummyRows;
         }
 
         // vars
@@ -177,6 +178,12 @@ class ListController
         });
     }
     
+    addDummyRows() {
+        for(let i = this.pageData.length; i < this.pageDataLength; i++){
+            this.pageData.push({dummy: true});
+        }
+    }
+
     refresh() {
         this.setProgressState(true);
         
@@ -197,7 +204,10 @@ class ListController
             if(this.currentPage > 1 && this.pageData.length === 0){
                 this.currentPage = this.totalPages;
                 this.refresh();
-            } else {            
+            } else {
+                if(this.useDummyRows === true){
+                    this.addDummyRows();
+                }
                 this.sendStateChangedEvent();
             }
         });                

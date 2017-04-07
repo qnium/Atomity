@@ -55,11 +55,15 @@ class QTable extends Component {
     {        
         if(this.columns) {
             return this.columns.map(function(column, index) {
-                if(column.type === QColumn){
-                    return <QColumn key={index} val={column.props.fieldName ? pageItem.data[column.props.fieldName] : pageItem.data}
-                        pageItem={pageItem} columnChildren={column.props.children}
-                        targetListCtrlName={column.props.targetListCtrlName || this.listCtrl.ctrlName}
-                        />
+                if(column.type === QColumn) {
+                    if(pageItem.dummy === true){
+                        return <td key={index} style={this.props.dummyStyle || {visibility: "hidden"}}>&nbsp;</td>
+                    } else {
+                        return <QColumn key={index} val={column.props.fieldName ? pageItem.data[column.props.fieldName] : pageItem.data}
+                            pageItem={pageItem} columnChildren={column.props.children}
+                            targetListCtrlName={column.props.targetListCtrlName || this.listCtrl.ctrlName}
+                            />
+                    }
                 } else {
                     return null;
                 }

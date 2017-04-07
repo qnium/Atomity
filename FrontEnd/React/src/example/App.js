@@ -74,7 +74,7 @@ class App extends Component
                                 footer={
                                     <QPagination targetListCtrlName="employeesCtrl" />
                                 }>                                
-                                <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={3}>
+                                <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
                                     
                                     
                                     
@@ -154,7 +154,7 @@ class App extends Component
                                 footer={
                                     <QPagination targetListCtrlName="departmentsCtrl" />
                                 }>                                
-                                <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10}>
+                                <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10} useDummyRows={true}>
                                     <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortable="">ID</QTableHeader>
                                     <QTableHeader sortable="">Name</QTableHeader>
