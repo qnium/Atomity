@@ -3,17 +3,20 @@
         {
             "id": 1,
             "name": "sales",
-            "registrationDate": "2017-01-01T05:00:00.000Z"
+            "registrationDate": "1483246800000",
+            "strRegistrationDate": "2017-01-01T05:00:00.000Z"
         },
         {
             "id": 2,
             "name": "production",
-            "registrationDate": "2017-01-01T05:00:00.000Z"
+            "registrationDate": "1483333200000",
+            "strRegistrationDate": "2017-01-02T05:00:00.000Z"
         },
         {
             "id": 3,
             "name": "management",
-            "registrationDate": "2017-01-01T05:00:00.000Z"
+            "registrationDate": "1483419600000",
+            "strRegistrationDate": "2017-01-03T05:00:00.000Z"
         }
     ],
     "relationships": []

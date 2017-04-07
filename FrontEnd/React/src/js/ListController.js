@@ -208,7 +208,7 @@ class ListController
         newPageData.forEach(newItem =>
         {
             let sameItems = self.pageData.filter(currentItem => {
-                return currentItem.data[self.entityKeyField] === newItem.data[self.entityKeyField];
+                return !currentItem.dummy && currentItem.data[self.entityKeyField] === newItem.data[self.entityKeyField];
             });
             if(sameItems[0] !== undefined) {
                 newItem.checked = sameItems[0].checked;

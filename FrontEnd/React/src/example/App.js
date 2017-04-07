@@ -110,7 +110,8 @@ class App extends Component
                         <Col md={3}>
                             <Panel header="Filters">
                                 <QInputFilter targetListCtrlName="departmentsCtrl" filteringField="name" title="Name" placeholder="Enter name" />                                
-                                <QDateFilter targetListCtrlName="departmentsCtrl" filteringField="registrationDate" filteringOperation="eq" title="Registration date" placeholder="Select registration date" />
+                                <QDateFilter targetListCtrlName="departmentsCtrl" filteringField="registrationDate" filteringOperation="date_ge" title="Registration date from" placeholder="Select start registration date" />
+                                <QDateFilter targetListCtrlName="departmentsCtrl" filteringField="registrationDate" filteringOperation="date_le" title="Registration date to" placeholder="Select end registration date" />
                             </Panel>
                         </Col>
                         <Col md={9}>
@@ -134,7 +135,8 @@ class App extends Component
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="name" />
                                     <QColumn>
-                                        {item => moment(item.registrationDate).toString()}<br/>
+                                        {item => moment(parseInt(item.registrationDate)).toString()}<br/>
+                                        {item => new Date(parseInt(item.registrationDate)).toString()}<br/>
                                     </QColumn>
                                     {/*<QColumn>
                                         {item =>

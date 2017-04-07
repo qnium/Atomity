@@ -10,7 +10,7 @@ class FilterController
 
         this.filter = {
             field: this.params.filteringField,
-            operation: this.params.complexFilter ? "in" : "like",
+            operation: this.params.complexFilter ? "in" : this.params.filteringOperation,
             value: undefined
         }
     }

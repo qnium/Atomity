@@ -215,6 +215,12 @@ class DemoDataProvider
 
             } else if (operation === 'eq' && value) {
                 newEntities = newEntities.filter(entity => entity[field] == value);
+            } else if (operation === 'date_ge' && value) {
+                //newEntities = newEntities.filter(entity => entity[field] == value);
+                console.log("date ge: ", value);
+            } else if (operation === 'date_le' && value) {
+                //newEntities = newEntities.filter(entity => entity[field] == value);
+                console.log("date le: ", value);
             }
         });
         return newEntities;

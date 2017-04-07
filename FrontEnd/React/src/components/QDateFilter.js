@@ -24,17 +24,13 @@ class QInputFilter extends Component
         super(props);
         
         this.filterCtrl = new FilterController(this.props);
-        //let self = this;
+        let self = this;
 
         this.onChangeFilterValue = (e) =>
         {
             console.log(e.toString());
-            //console.log(e.utc().toString());
-            
-            //console.log(e);
-            //console.log(new Date(parseInt(e.toString())));
-
-            //self.filterCtrl.applyFilter(e.target.value);
+            console.log(e);
+            self.filterCtrl.applyFilter(e);
         }
     }
     
