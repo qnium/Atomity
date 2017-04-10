@@ -18,12 +18,12 @@ body {
   visibility: visible;
 }
 
-tbody tr:hover {
+.q-table tbody tr:hover {
   background-color: #ff0000;
   color: #ffffff;
 }
 
-tbody tr:hover .badge {
+.q-table tbody tr:hover .badge {
   visibility: visible;
 }
 

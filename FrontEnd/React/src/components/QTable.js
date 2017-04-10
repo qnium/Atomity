@@ -91,7 +91,7 @@ class QTable extends Component {
     render() {
         return (
             //<div style={{position: "relative"}}>
-            <div>
+            <div  className="q-table">
             <Table>
                 
                 {this.headerTemplate}
