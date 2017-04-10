@@ -1,7 +1,7 @@
 import dataProvider from '../js/DemoDataProvider'
 import ListController from '../js/ListController';
 
-class FilterController
+class InputFilterController
 {
     constructor(params)
     {
@@ -37,4 +37,4 @@ class FilterController
     }
 }
 
-export default FilterController;
+export default InputFilterController;

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import FilterController from '../js/FilterController';
+import InputFilterController from '../js/InputFilterController';
 
 class QInputFilter extends Component 
 {    
@@ -10,7 +10,7 @@ class QInputFilter extends Component
     {
         super(props);
         
-        let filterCtrl = new FilterController(this.props);
+        let filterCtrl = new InputFilterController(this.props);
         
         this.onChangeFilterValue = (e) => {
             filterCtrl.applyFilter(e.target.value);

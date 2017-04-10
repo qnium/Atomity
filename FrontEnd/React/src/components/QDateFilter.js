@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import FilterController from '../js/FilterController';
+import InputFilterController from '../js/InputFilterController';
 
 //import Calendar from 'rc-calendar';
 //import 'rc-calendar/dist/rc-calendar.css';
@@ -17,13 +17,13 @@ import 'react-datetime/css/react-datetime.css';
 
 //import moment from 'moment';
 
-class QInputFilter extends Component 
+class QDateFilter extends Component 
 {    
     constructor(props)
     {
         super(props);
         
-        this.filterCtrl = new FilterController(this.props);
+        this.filterCtrl = new InputFilterController(this.props);
         let self = this;
 
         this.onChangeFilterValue = (e) =>
@@ -58,4 +58,4 @@ class QInputFilter extends Component
     }
 }
 
-export default QInputFilter;
+export default QDateFilter;

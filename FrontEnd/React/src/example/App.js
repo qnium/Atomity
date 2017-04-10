@@ -78,8 +78,8 @@ class App extends Component
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" icon="trash" />
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 2" icon="trash" />
+                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" />
+                                            <QAction action="delete" isCustomAction={true} title="Delete records 2" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
@@ -128,7 +128,7 @@ class App extends Component
                                 <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" icon="trash" />
+                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>

@@ -3,6 +3,7 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import ListController from '../js/ListController';
+import SelectFilterController from '../js/SelectFilterController';
 import dataProvider from '../js/DemoDataProvider'
 
 class QSelectFilter extends Component 
@@ -11,43 +12,25 @@ class QSelectFilter extends Component
     {
         super(props);
         
-        this.targetCtrl = this.props.targetListCtrlName;
-        this.readAction = this.props.readAction || "read";
-
-        this.filter = {
-            field: this.props.filteringField,
-            operation: 'eq',
-            value: undefined
-        }
-
+        this.filterCtrl = new SelectFilterController(this.props);
+        
         this.state = {
             options: []
         };
 
         this.onChangeFilterValue = (e) => {
-            this.applyFilter(e.target.value);
+            this.filterCtrl.applyFilter(e.target.value);
         }
     }
     
-    applyFilter(filterValue)
-    {
-        this.filter.value = filterValue;
-        window.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.applyFilter), [this.filter]);
-    }
-
     componentDidMount()
     {
-        if(this.props.entitiesName)
-        {
-            let self = this;
-            dataProvider.executeAction(this.props.entitiesName, this.readAction, {})
-            .then(result => {
-                self.setState({options: result.data});
-            });
-        }      
+        this.filterCtrl.loadOptions().then(result => {
+            this.setState({options: result});
+        });
     }
 
-    renderCustomOptions()
+    renderOptions()
     {
         return this.state.options.map((item, index) => {
             return (<option key={index} value={item[this.props.valueField]}>{item[this.props.displayField]}</option>)
@@ -62,7 +45,7 @@ class QSelectFilter extends Component
                     <ControlLabel>{this.props.title}</ControlLabel>
                     <FormControl id={"SelectFilter" + this.props.targetListCtrlName + this.props.filteringField} componentClass="select" defaultValue="" onChange={this.onChangeFilterValue}>
                         {this.props.children}
-                        {this.renderCustomOptions()}
+                        {this.renderOptions()}
                     </FormControl>
                 </FormGroup>
             </form>
