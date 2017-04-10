@@ -58,7 +58,7 @@ class QAction extends Component {
                 </Glyphicon>
             )
         }
-        return (<span>{actionTemplate}{dialogTemplate}</span>)
+        return (<span className="q-action">{actionTemplate}{dialogTemplate}</span>)
     }
 }
 

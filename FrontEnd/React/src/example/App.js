@@ -54,7 +54,7 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                <QInputFilter targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
+                                <QInputFilter className="asdad" targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
                                 <QSelectFilter targetListCtrlName="employeesCtrl" filteringField="departmentId" title="Department"
                                     entitiesName="department" valueField="id" displayField="name">
                                     <option value="">Any</option>
@@ -76,21 +76,17 @@ class App extends Component
                                     <QPagination targetListCtrlName="employeesCtrl" />
                                 }>                                
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
-                                    <QTableHeader>
+                                    <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
                                             <QAction action="delete" isCustomAction={true} title="Delete records 1" icon="trash" />
                                             <QAction action="delete" isCustomAction={true} title="Delete records 2" icon="trash" />
                                         </QGroupActions>
                                     </QTableHeader>
-                                    <QTableHeader>Actions</QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
                                     <QTableHeader sortingField="email">Email</QTableHeader>
                                     <QTableHeader sortingField="departmentId">Custom</QTableHeader>
+                                    <QTableHeader></QTableHeader>
                                     <QColumn><QRowChecker /></QColumn>
-                                    <QColumn>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
-                                    </QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
                                     <QColumn>
@@ -98,6 +94,10 @@ class App extends Component
                                         <div>Email: {item => item.email}</div>
                                         <div>Department ID (Department name): <span>{item => item.departmentId + ' (' + item.department.name + ')'}</span></div>
                                         <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
+                                    </QColumn>
+                                    <QColumn isHoverButtons={true}>
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                 </QTable>
                             </Panel>
@@ -117,26 +117,34 @@ class App extends Component
                         <Col md={9}>
                             <Panel header={
                                     <span>Departments
-                                        <QProgressIndicator targetListCtrlName='departmentsCtrl' />
+                                        <QAction targetListCtrlName="departmentsCtrl" action={ListController.action.refresh} title="Refresh">
+                                            <QProgressIndicator targetListCtrlName='departmentsCtrl' />
+                                        </QAction>
                                     </span>
                                 }
                                 footer={
                                     <QPagination targetListCtrlName="departmentsCtrl" />
                                 }>                                
                                 <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10} useDummyRows={true}>
-                                    <QTableHeader>Actions</QTableHeader>
-                                    <QTableHeader sortable="">ID</QTableHeader>
-                                    <QTableHeader sortable="">Name</QTableHeader>
-                                    <QTableHeader sortable="">Registration date</QTableHeader>
-                                    <QColumn>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" /></Badge>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
-                                    </QColumn>
+                                    <QTableHeader className="q-no-left-padding">
+                                        <QGroupActions>
+                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" icon="trash" />
+                                        </QGroupActions>
+                                    </QTableHeader>
+                                    <QTableHeader sortingField="id">ID</QTableHeader>
+                                    <QTableHeader sortingField="name">Name</QTableHeader>
+                                    <QTableHeader sortingField="registrationDate">Registration date</QTableHeader>
+                                    <QTableHeader></QTableHeader>
+                                    <QColumn><QRowChecker /></QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="name" />
                                     <QColumn>
                                         {item => moment(parseInt(item.registrationDate)).toString()}<br/>
                                         {item => new Date(parseInt(item.registrationDate)).toString()}<br/>
+                                    </QColumn>
+                                    <QColumn isHoverButtons={true}>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" /></Badge>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     {/*<QColumn>
                                         {item =>

@@ -19,7 +19,7 @@ class QColumn extends Component {
         if(children.type === QRowChecker) {
             return (<QRowChecker {...children.props}
                 targetListCtrlName={children.props.targetListCtrlName || this.props.targetListCtrlName}
-                val={this.props.pageItem}
+                val={this.props.pageItem}                
             />)
         }
 
@@ -28,7 +28,8 @@ class QColumn extends Component {
         }
 
         if(children.props && children.props.children){
-            return React.createElement(children.type, {key: index, ...children.props}, this.renderRecursively(children.props.children));
+            return React.createElement(children.type, {key: index, ...children.props,
+                className: this.props.isHoverButtons ? "q-row-button" : ""}, this.renderRecursively(children.props.children));
         }
 
         if(typeof children === "function"){

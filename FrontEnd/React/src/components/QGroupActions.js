@@ -36,13 +36,22 @@ class QGroupActions extends Component
         window.QEventEmitter.addListener(ListController.buildEvent(this.targetCtrl, ListController.event.stateChanged), this.ctrlStateListener);
         
         this.checkBoxClick = () => {
-            window.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.setAllChecked), [{newState: !this.state.allChecked}]);
+            window.QEventEmitter.emitEvent(ListController.buildEvent(self.targetCtrl, ListController.action.setAllChecked), [{newState: !self.state.allChecked}]);
         }        
     }
 
     renderMenuItems()
     {
-        return this.props.children.props.children.map((menuItem, index) =>
+        let subItems = this.props.children.props.children;
+        if(!subItems){
+            return null;
+        }
+        
+        if(typeof subItems === "object" && !subItems.length){
+            subItems = [subItems];
+        }
+        
+        return subItems.map((menuItem, index) =>
         {
             let actionTemplate;
 

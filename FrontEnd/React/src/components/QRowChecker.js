@@ -13,7 +13,9 @@ class QRowChecker extends Component
     }
 
     render() {
-        return <input type="checkbox" checked={this.props.val.checked} onClick={this.checkBoxClick.bind(this, this.props.val.index)} />
+        return (<span className="q-row-checker">
+            <input type="checkbox" checked={this.props.val.checked} onClick={this.checkBoxClick.bind(this, this.props.val.index)} />
+        </span>)
     }
 }
 

@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/lib/Table';
 import ListController from '../js/ListController';
 import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
+import Row from 'react-bootstrap/lib/Row';
+import FontAwesome from 'react-fontawesome';
 
 class QTable extends Component {
     
@@ -11,15 +13,19 @@ class QTable extends Component {
         let self = this;
         
         this.state = {
-            pageData: []
+            pageData: [],
+            actionInProgress: false
         };
         
         this.listCtrl = new ListController(this.props);
 
         this.ctrlStateListener = function(target) {
-            if(!target.actionInProgress){
-                self.setState({pageData: target.pageData});
-            }
+            //if(!target.actionInProgress){
+                self.setState({
+                    pageData: target.pageData,
+                    actionInProgress: target.actionInProgress
+                });
+            //}
         }
         window.QEventEmitter.addListener(ListController.buildEvent(this.listCtrl.ctrlName, ListController.event.stateChanged), this.ctrlStateListener);
         
@@ -59,9 +65,9 @@ class QTable extends Component {
                     if(pageItem.dummy === true){
                         return <td key={index} style={this.props.dummyStyle || {visibility: "hidden"}}>&nbsp;</td>
                     } else {
-                        return <QColumn key={index} val={column.props.fieldName ? pageItem.data[column.props.fieldName] : pageItem.data}
+                        return <QColumn {...column.props} key={index} val={column.props.fieldName ? pageItem.data[column.props.fieldName] : pageItem.data}
                             pageItem={pageItem} columnChildren={column.props.children}
-                            targetListCtrlName={column.props.targetListCtrlName || this.listCtrl.ctrlName}
+                            targetListCtrlName={column.props.targetListCtrlName || this.listCtrl.ctrlName}                            
                             />
                     }
                 } else {
@@ -71,8 +77,21 @@ class QTable extends Component {
         }
     }
     
+    renderOverlay() {
+        if(this.state.actionInProgress){
+            return (
+                <div className="q-overlay text-center">
+                    <div className="q-center"><FontAwesome name="refresh" size="3x" spin /></div>
+                </div>)
+        } else {
+            return null
+        }        
+    }
+
     render() {
         return (
+            //<div style={{position: "relative"}}>
+            <div>
             <Table>
                 
                 {this.headerTemplate}
@@ -88,6 +107,8 @@ class QTable extends Component {
                 }
                 </tbody>
             </Table>
+                {this.renderOverlay()}
+            </div>
         );
     }
 }

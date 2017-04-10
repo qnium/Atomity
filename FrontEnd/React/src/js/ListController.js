@@ -167,7 +167,7 @@ class ListController
     setAllCheckedAction(params)
     {
         let newState = params && params.newState !== undefined ? params.newState : true;
-        this.pageData.map(item => item.checked = newState);
+        this.pageData.filter(item => !item.dummy).map(item => item.checked = newState);
         this.sendStateChangedEvent();
     }
 

@@ -43,7 +43,7 @@ class QPagination extends Component
 
     render() {
         return (
-            <Pagination
+            <Pagination                
                 prev
                 next
                 first
