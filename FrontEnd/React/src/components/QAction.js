@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
-import ListController from '../js/ListController';
+import ListController from '../controllers/ListController';
 
 class QAction extends Component {
 

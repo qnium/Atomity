@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import InputFilterController from '../js/InputFilterController';
+import InputFilterController from '../controllers/InputFilterController';
 
 class QInputFilter extends Component 
 {    

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/lib/Table';
-import ListController from '../js/ListController';
+import ListController from '../controllers/ListController';
 import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
 import Row from 'react-bootstrap/lib/Row';
 import FontAwesome from 'react-fontawesome';
+import '../css/font-awesome-4.7.0/css/font-awesome.min.css';
 
 class QTable extends Component {
     

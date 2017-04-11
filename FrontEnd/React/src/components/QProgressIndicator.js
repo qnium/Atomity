@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListController from '../js/ListController';
+import ListController from '../controllers/ListController';
 
 class QProgressIndicator extends Component
 {

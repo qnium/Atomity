@@ -30,8 +30,8 @@ import QRowChecker from '../components/QRowChecker';
 import QGroupActions from '../components/QGroupActions';
 
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
-import EditEmployee from '../dialogs/EditEmployee';
-import ListController from '../js/ListController';
+import EditEmployee from './dialogs/EditEmployee';
+import ListController from '../controllers/ListController';
 import moment from 'moment';
 import 'moment-timezone';
 

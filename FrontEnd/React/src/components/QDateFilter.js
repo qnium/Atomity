@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import InputFilterController from '../js/InputFilterController';
+import InputFilterController from '../controllers/InputFilterController';
 
 //import Calendar from 'rc-calendar';
 //import 'rc-calendar/dist/rc-calendar.css';

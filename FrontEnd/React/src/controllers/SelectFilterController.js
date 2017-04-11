@@ -1,5 +1,5 @@
-import dataProvider from '../js/DemoDataProvider'
-import ListController from '../js/ListController';
+import dataProvider from '../services/DemoDataProvider'
+import ListController from './ListController';
 
 class SelectFilterController
 {

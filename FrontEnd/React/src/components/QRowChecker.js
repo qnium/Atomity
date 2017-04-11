@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ListController from '../js/ListController';
+import ListController from '../controllers/ListController';
 
 class QRowChecker extends Component
 {

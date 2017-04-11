@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ListController from '../js/ListController';
+import ListController from '../controllers/ListController';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import QGroupActions from '../components/QGroupActions';
+import QGroupActions from './QGroupActions';
 
 class QTableHeader extends Component
 {

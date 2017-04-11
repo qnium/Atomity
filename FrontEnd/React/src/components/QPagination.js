@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ListController from '../js/ListController';
+import ListController from '../controllers/ListController';
 import Pagination from 'react-bootstrap/lib/Pagination';
 
 class QPagination extends Component
