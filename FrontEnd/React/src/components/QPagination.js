@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ListController from '../controllers/ListController';
+import {ListControllerEvents} from '../controllers/ListController';
 import Pagination from 'react-bootstrap/lib/Pagination';
+
+var events = require('events');
 
 class QPagination extends Component
 {
@@ -29,7 +32,8 @@ class QPagination extends Component
         }
 
         this.handleSelect = (eventKey) => {   
-            window.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.selectPage), [eventKey]);
+            //window-.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.selectPage), [eventKey]);
+            events(ListControllerEvents.selectPage).send({targetName: this.targetCtrl, data: eventKey});            
         }
     }
 

@@ -32,8 +32,23 @@ import QGroupActions from '../components/QGroupActions';
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from './dialogs/EditEmployee';
 import ListController from '../controllers/ListController';
+import {ListControllerEvents} from '../controllers/ListController';
 import moment from 'moment';
 import 'moment-timezone';
+
+
+
+//var event = require('events')
+
+
+
+
+// function showDialog(dialog, data)
+// {
+
+
+// }
+
 
 class App extends Component
 {
@@ -54,7 +69,7 @@ class App extends Component
                     <Row>
                         <Col md={3}>
                             <Panel header="Filters">
-                                <QInputFilter className="asdad" targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
+                                <QInputFilter targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
                                 <QSelectFilter targetListCtrlName="employeesCtrl" filteringField="departmentId" title="Department"
                                     entitiesName="department" valueField="id" displayField="name">
                                     <option value="">Any</option>
@@ -67,7 +82,7 @@ class App extends Component
                         <Col md={9}>
                             <Panel header={
                                     <span>Employees
-                                        <QAction targetListCtrlName="employeesCtrl" action={ListController.action.refresh} title="Refresh">
+                                        <QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.refresh} title="Refresh">
                                             <QProgressIndicator targetListCtrlName='employeesCtrl' />
                                         </QAction>
                                     </span>
@@ -96,8 +111,8 @@ class App extends Component
                                         <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                 </QTable>
                             </Panel>
@@ -117,7 +132,7 @@ class App extends Component
                         <Col md={9}>
                             <Panel header={
                                     <span>Departments
-                                        <QAction targetListCtrlName="departmentsCtrl" action={ListController.action.refresh} title="Refresh">
+                                        <QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.refresh} title="Refresh">
                                             <QProgressIndicator targetListCtrlName='departmentsCtrl' />
                                         </QAction>
                                     </span>
@@ -143,8 +158,8 @@ class App extends Component
                                         {item => new Date(parseInt(item.registrationDate)).toString()}<br/>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.editRecord} title="Edit record" icon="pencil" /></Badge>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListController.action.deleteRecord} title="Delete record" icon="trash" /></Badge>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" /></Badge>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     {/*<QColumn>
                                         {item =>

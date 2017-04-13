@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import ListController from '../controllers/ListController';
+import {ListControllerEvents} from '../controllers/ListController';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import QGroupActions from './QGroupActions';
+
+var events = require('events');
 
 class QTableHeader extends Component
 {
@@ -31,7 +34,8 @@ class QTableHeader extends Component
                 let sortParams = {
                     sortingField: header.props.sortingField
                 }
-                window.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.sort), [sortParams]);
+                //window-.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.sort), [sortParams]);
+                events(ListControllerEvents.sort).send({targetName: this.targetCtrl, data: sortParams});
             }
         }        
     }

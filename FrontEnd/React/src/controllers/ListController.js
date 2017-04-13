@@ -1,19 +1,45 @@
 import dataProvider from '../services/DemoDataProvider';
 
+var events = require('events');
+
+let ListControllerEvents =
+{
+    // actions
+    refresh: events().create({targetName: String}),
+    deleteRecord: events().create({targetName: String, data: Object}),
+    editRecord: events().create({targetName: String, data: Object}),
+    selectPage: events().create({targetName: String, data: Object}),
+    applyFilter: events().create({targetName: String, data: Object}),
+    sort: events().create({targetName: String, data: Object}),
+    setRowChecked: events().create({targetName: String, data: Object}),
+    setAllChecked: events().create({targetName: String, data: Object}),
+    customAction: events().create({targetName: String, data: Object}),
+
+    // events
+    stateChanged: events().create({targetName: String, data: Object})
+}
+
+//let RefreshAction = event().create({refreshParams: String});
+//let TestEvent = event().create({tstRf: Number});
+// event(TestEvent).handle(event =>
+// {
+//     console.log(event.ctrlName + " test handler: ", event.tstRf);
+// });
+
 class ListController
 {
     static get ctrlPrefix() { return "ListCtrl" }
     
-    static get action() { return {
-        refresh: "refresh",
-        editRecord: "editRecord",
-        deleteRecord: "deleteRecord",
-        selectPage: "selectPage",
-        applyFilter: "applyFilter",
-        sort: "sort",
-        setRowChecked: "setRowChecked",
-        customAction: "customAction"
-    }}
+    // static get action() { return {
+    //     refresh: "refresh",
+    //     editRecord: "editRecord",
+    //     deleteRecord: "deleteRecord",
+    //     selectPage: "selectPage",
+    //     applyFilter: "applyFilter",
+    //     sort: "sort",
+    //     setRowChecked: "setRowChecked",
+    //     customAction: "customAction"
+    // }}
 
     static get event() { return {
         stateChanged: "stateChanged"
@@ -57,45 +83,89 @@ class ListController
         this.currentSort = {};
         
         // event/action listeners
-        this.refreshActionListener = function() {
-            self.refresh();
-        }
-        this.deleteActionListener = function(target) {
-            self.deleteRecord(target);
-        }
-        this.selectPageActionListener = function(target) {
-            self.selectPage(target);
-        }
-        this.applyFilterActionListener = function(target) {
-            self.applyFilter(target);
-        }
-        this.sortActionListener = function(target) {
-            self.sortAction(target);
-        }
-        this.setRowCheckedActionListener = function(target) {
-            self.setRowCheckedAction(target);
-        }
-        this.setAllCheckedActionListener = function(target) {
-            self.setAllCheckedAction(target);
-        }
-        this.customActionListener = function(target) {
-            self.customAction(target);
-        }
+        // this.refreshActionListener = function() {
+        //     self.refresh();
+        // }
+        // this.deleteActionListener = function(target) {
+        //     self.deleteRecord(target);
+        // }
+        // this.selectPageActionListener = function(target) {
+        //     self.selectPage(target);
+        // }
+        // this.applyFilterActionListener = function(target) {
+        //     self.applyFilter(target);
+        // }
+        // this.sortActionListener = function(target) {
+        //     self.sortAction(target);
+        // }
+        // this.setRowCheckedActionListener = function(target) {
+        //     self.setRowCheckedAction(target);
+        // }
+        // this.setAllCheckedActionListener = function(target) {
+        //     self.setAllCheckedAction(target);
+        // }
+        // this.customActionListener = function(target) {
+        //     self.customAction(target);
+        // }
         
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.selectPage), this.selectPageActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.applyFilter), this.applyFilterActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.sort), this.sortActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setRowChecked), this.setRowCheckedActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setAllChecked), this.setAllCheckedActionListener);
-        window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.customAction), this.customActionListener);
+        events(ListControllerEvents.refresh).handle(event => {
+            console.log("refresh ac");
+            this.doAction(this.refresh, event);
+        });
+        events(ListControllerEvents.deleteRecord).handle(event => {
+            console.log("delete ac");
+            this.doAction(this.deleteRecord, event);
+        });
+        events(ListControllerEvents.editRecord).handle(event => {
+            console.log("edit ac");
+            this.doAction(this.editRecord, event);
+        });
+        events(ListControllerEvents.selectPage).handle(event => {
+            console.log("selectPage ac");
+            this.doAction(this.selectPage, event);
+        });
+        events(ListControllerEvents.applyFilter).handle(event => {
+            console.log("applyFilter ac");
+            this.doAction(this.applyFilter, event);
+        });
+        events(ListControllerEvents.sort).handle(event => {
+            console.log("sort ac");
+            this.doAction(this.sortAction, event);
+        });
+        events(ListControllerEvents.setRowChecked).handle(event => {
+            console.log("setRowChecked ac");
+            this.doAction(this.setRowCheckedAction, event);
+        });
+        events(ListControllerEvents.setAllChecked).handle(event => {
+            console.log("setAllChecked ac");
+            this.doAction(this.setAllCheckedAction, event);
+        });
+        events(ListControllerEvents.customAction).handle(event => {
+            console.log("customAction ac");
+            this.doAction(this.customAction, event);
+        });
+
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.refresh), this.refreshActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.deleteRecord), this.deleteActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.selectPage), this.selectPageActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.applyFilter), this.applyFilterActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.sort), this.sortActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setRowChecked), this.setRowCheckedActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.setAllChecked), this.setAllCheckedActionListener);
+        // window.QEventEmitter.addListener(ListController.buildEvent(this.ctrlName, ListController.action.customAction), this.customActionListener);
         
         this.refresh();
+    }
+
+    doAction(actionPerformer, params) {
+        if(this.ctrlName === params.targetName) {
+            actionPerformer.bind(this)(params.data);
+        }
     }
     
     deleteRecord(record)
     {
+        console.log("delete rec");
         this.setProgressState(true);
         dataProvider.executeAction(this.entitiesName, this.deleteAction, [record]).then(result => {
             this.setProgressState(false);
@@ -225,6 +295,7 @@ class ListController
     }
 
     refresh() {
+        console.log("refresh");
         this.setProgressState(true);
         
         let params = {
@@ -266,4 +337,5 @@ class ListController
     }    
 }
 
+export {ListControllerEvents};
 export default ListController;

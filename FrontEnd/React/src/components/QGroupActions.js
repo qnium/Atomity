@@ -4,7 +4,11 @@ import Button from 'react-bootstrap/lib/Button';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import ListController from '../controllers/ListController';
+import {ListControllerEvents} from '../controllers/ListController';
+
 import QAction from './QAction';
+
+var events = require('events')
 
 class QGroupActions extends Component
 {
@@ -25,7 +29,7 @@ class QGroupActions extends Component
             if(!target.actionInProgress) {
                 let checkedItems = target.pageData.filter(item => item.checked).map(item => item.data);
                 let checkedCounter = checkedItems.length;
-                let allChecked = checkedCounter === target.pageData.filter(item => !item.dummy).length;
+                let allChecked = checkedCounter === target.pageData.filter(item => !item.dummy).length && checkedCounter > 0;
                 self.setState({
                     allChecked: allChecked,
                     actionsAllowed: checkedCounter > 0,
@@ -36,7 +40,8 @@ class QGroupActions extends Component
         window.QEventEmitter.addListener(ListController.buildEvent(this.targetCtrl, ListController.event.stateChanged), this.ctrlStateListener);
         
         this.checkBoxClick = () => {
-            window.QEventEmitter.emitEvent(ListController.buildEvent(self.targetCtrl, ListController.action.setAllChecked), [{newState: !self.state.allChecked}]);
+            //window-.QEventEmitter.emitEvent(ListController.buildEvent(self.targetCtrl, ListController.action.setAllChecked), [{newState: !self.state.allChecked}]);
+            events(ListControllerEvents.setAllChecked).send({targetName: self.targetCtrl, data: {newState: !self.state.allChecked}});
         }        
     }
 
