@@ -3,9 +3,11 @@ import Table from 'react-bootstrap/lib/Table';
 import ListController from '../controllers/ListController';
 import QTableHeader from './QTableHeader';
 import QColumn from './QColumn';
-import Row from 'react-bootstrap/lib/Row';
 import FontAwesome from 'react-fontawesome';
 import '../css/font-awesome-4.7.0/css/font-awesome.min.css';
+import {ListControllerEvents} from '../controllers/ListController';
+
+var events = require('events');
 
 class QTable extends Component {
     
@@ -21,14 +23,16 @@ class QTable extends Component {
         this.listCtrl = new ListController(this.props);
 
         this.ctrlStateListener = function(target) {
-            //if(!target.actionInProgress){
-                self.setState({
-                    pageData: target.pageData,
-                    actionInProgress: target.actionInProgress
-                });
-            //}
+            self.setState({
+                pageData: target.pageData,
+                actionInProgress: target.actionInProgress
+            });
         }
-        window.QEventEmitter.addListener(ListController.buildEvent(this.listCtrl.ctrlName, ListController.event.stateChanged), this.ctrlStateListener);
+        events(ListControllerEvents.stateChanged).handle(event => {
+            if(event.sourceName === this.listCtrl.ctrlName) {
+                this.ctrlStateListener(event.data);
+            }
+        });
         
         if(this.props.children){
             

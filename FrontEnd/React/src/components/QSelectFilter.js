@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import ListController from '../controllers/ListController';
 import SelectFilterController from '../controllers/SelectFilterController';
-import dataProvider from '../services/DemoDataProvider'
 
 class QSelectFilter extends Component 
 {    

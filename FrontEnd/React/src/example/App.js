@@ -7,16 +7,6 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
-import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
-import Button from 'react-bootstrap/lib/Button';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import Checkbox from 'react-bootstrap/lib/Checkbox';
-
-import FormGroup from 'react-bootstrap/lib/FormGroup';
-import InputGroup from 'react-bootstrap/lib/InputGroup';
-import FormControl from 'react-bootstrap/lib/FormControl';
-
 import QAction from '../components/QAction';
 import QTable from '../components/QTable';
 import QTableHeader from '../components/QTableHeader';
@@ -31,24 +21,9 @@ import QGroupActions from '../components/QGroupActions';
 
 import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from './dialogs/EditEmployee';
-import ListController from '../controllers/ListController';
 import {ListControllerEvents} from '../controllers/ListController';
 import moment from 'moment';
 import 'moment-timezone';
-
-
-
-//var event = require('events')
-
-
-
-
-// function showDialog(dialog, data)
-// {
-
-
-// }
-
 
 class App extends Component
 {
@@ -154,8 +129,8 @@ class App extends Component
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="name" />
                                     <QColumn>
-                                        {item => moment(parseInt(item.registrationDate)).toString()}<br/>
-                                        {item => new Date(parseInt(item.registrationDate)).toString()}<br/>
+                                        {item => moment(parseInt(item.registrationDate, 10)).toString()}<br/>
+                                        {item => new Date(parseInt(item.registrationDate, 10)).toString()}<br/>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" /></Badge>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
-import ListController from '../controllers/ListController';
+import {ListControllerEvents} from '../controllers/ListController';
 
 var events = require('events')
 
@@ -18,9 +18,8 @@ class QAction extends Component {
             console.log(self.props.val);
             self.setState({showDialog: true});
             if(self.props.isCustomAction === true) {
-                window.QEventEmitter.emitEvent(ListController.buildEvent(self.props.targetListCtrlName, ListController.action.customAction), [{action: self.props.action, payload: self.props.val}]);
+                events(ListControllerEvents.customAction).send({targetName: self.props.targetListCtrlName, data: {action: self.props.action, payload: self.props.val}});
             } else {
-                //window-.QEventEmitter.emitEvent(ListController.buildEvent(self.props.targetListCtrlName, self.props.action), [self.props.val]);
                 events(self.props.action).send({targetName: self.props.targetListCtrlName, data: self.props.val});
             }
         }

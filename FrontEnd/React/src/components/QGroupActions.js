@@ -3,12 +3,10 @@ import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Button from 'react-bootstrap/lib/Button';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import ListController from '../controllers/ListController';
 import {ListControllerEvents} from '../controllers/ListController';
-
 import QAction from './QAction';
 
-var events = require('events')
+var events = require('events');
 
 class QGroupActions extends Component
 {
@@ -37,10 +35,13 @@ class QGroupActions extends Component
                 });
             }
         }
-        window.QEventEmitter.addListener(ListController.buildEvent(this.targetCtrl, ListController.event.stateChanged), this.ctrlStateListener);
-        
+        events(ListControllerEvents.stateChanged).handle(event => {
+            if(event.sourceName === this.targetCtrl) {
+                this.ctrlStateListener(event.data);
+            }
+        });
+
         this.checkBoxClick = () => {
-            //window-.QEventEmitter.emitEvent(ListController.buildEvent(self.targetCtrl, ListController.action.setAllChecked), [{newState: !self.state.allChecked}]);
             events(ListControllerEvents.setAllChecked).send({targetName: self.targetCtrl, data: {newState: !self.state.allChecked}});
         }        
     }

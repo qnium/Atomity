@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListController from '../controllers/ListController';
+import {ListControllerEvents} from '../controllers/ListController';
+
+var events = require('events');
 
 class QProgressIndicator extends Component
 {
@@ -19,11 +21,15 @@ class QProgressIndicator extends Component
     }
 
     componentDidMount() {
-        window.QEventEmitter.addListener(ListController.buildEvent(this.targetCtrl, ListController.event.stateChanged), this.ctrlStateListener);
+        events(ListControllerEvents.stateChanged).handle(event => {
+            if(event.sourceName === this.targetCtrl) {
+                this.ctrlStateListener(event.data);
+            }
+        });
     };    
     
     componentWillUnmount() {
-        window.QEventEmitter.removeListener(this.ctrlStateListener);
+        //window.QEventEmitter.removeListener(this.ctrlStateListener);
     };
 
     render() {

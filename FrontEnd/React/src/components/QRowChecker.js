@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ListController from '../controllers/ListController';
 import {ListControllerEvents} from '../controllers/ListController';
 
 var events = require('events');
@@ -11,7 +10,6 @@ class QRowChecker extends Component
         super(props);
         this.targetCtrl = this.props.targetListCtrlName;
         this.checkBoxClick = rowIndex => {
-            //window-.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.setRowChecked), [{rowIndex: rowIndex}]);
             events(ListControllerEvents.setRowChecked).send({targetName: this.targetCtrl, data: {rowIndex: rowIndex}});
         }        
     }

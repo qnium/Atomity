@@ -1,5 +1,4 @@
 import dataProvider from '../services/DemoDataProvider'
-import ListController from './ListController';
 import {ListControllerEvents} from './ListController';
 
 var events = require('events');
@@ -23,7 +22,6 @@ class SelectFilterController
     applyFilter(filterValue)
     {
         this.filter.value = filterValue;
-        //window-.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.applyFilter), [this.filter]);
         events(ListControllerEvents.applyFilter).send({targetName: this.targetCtrl, data: this.filter});
     }
 
@@ -31,7 +29,6 @@ class SelectFilterController
     {
         if(this.params.entitiesName)
         {
-            let self = this;
             return dataProvider.executeAction(this.params.entitiesName, this.readAction, {})
             .then(result => {
                 return result.data;

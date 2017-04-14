@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ListController from '../controllers/ListController';
 import {ListControllerEvents} from '../controllers/ListController';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import QGroupActions from './QGroupActions';
@@ -34,18 +33,21 @@ class QTableHeader extends Component
                 let sortParams = {
                     sortingField: header.props.sortingField
                 }
-                //window-.QEventEmitter.emitEvent(ListController.buildEvent(this.targetCtrl, ListController.action.sort), [sortParams]);
                 events(ListControllerEvents.sort).send({targetName: this.targetCtrl, data: sortParams});
             }
         }        
     }
 
     componentDidMount() {
-        window.QEventEmitter.addListener(ListController.buildEvent(this.targetCtrl, ListController.event.stateChanged), this.ctrlStateListener);
+        events(ListControllerEvents.stateChanged).handle(event => {
+            if(event.sourceName === this.targetCtrl) {
+                this.ctrlStateListener(event.data);
+            }
+        });
     };    
     
     componentWillUnmount() {
-        window.QEventEmitter.removeListener(this.ctrlStateListener);
+        //window.QEventEmitter.removeListener(this.ctrlStateListener);
     };
 
     renderSortIcon(){
@@ -63,8 +65,6 @@ class QTableHeader extends Component
         } else {
             return this.props.children
         }
-
-        return null;
     }
 
     render() {
