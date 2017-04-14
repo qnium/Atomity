@@ -14,6 +14,7 @@ let ListControllerEvents =
     setRowChecked: events().create({targetName: String, data: Object}),
     setAllChecked: events().create({targetName: String, data: Object}),
     customAction: events().create({targetName: String, data: Object}),
+    updateEntities: events().create({entitiesName: Array}),
 
     // events
     stateChanged: events().create({sourceName: String, data: Object})
@@ -61,8 +62,15 @@ class ListController
         events(ListControllerEvents.setRowChecked).handle(event => { this.doAction(this.setRowCheckedAction, event); });
         events(ListControllerEvents.setAllChecked).handle(event => { this.doAction(this.setAllCheckedAction, event); });
         events(ListControllerEvents.customAction).handle(event => { this.doAction(this.customAction, event); });
+        events(ListControllerEvents.updateEntities).handle(event => this.updateEntities(event));
 
         this.refresh();
+    }
+
+    updateEntities(entities) {
+        if(entities && entities.filter(item => item === this.entitiesName).length > 0) {
+            this.refresh();
+        }
     }
 
     doAction(actionPerformer, params) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import '../css/bootstrap/css/bootstrap.css';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
@@ -19,27 +20,120 @@ import QDateFilter from '../components/QDateFilter';
 import QRowChecker from '../components/QRowChecker';
 import QGroupActions from '../components/QGroupActions';
 
-import EventEmitter from '../../node_modules/wolfy87-eventemitter/EventEmitter.min.js';
 import EditEmployee from './dialogs/EditEmployee';
 import {ListControllerEvents} from '../controllers/ListController';
 import moment from 'moment';
 import 'moment-timezone';
+
+import EditEmployeeForm from './dialogs/EditEmployeeForm';
+import EditDepartmentForm from './dialogs/EditDepartmentForm';
+import EmployeeNotificationForm from './dialogs/EmployeeNotificationForm';
+
+var DialogService = 
+{
+    showDialog: (dialogTemplate, dialogData) =>
+    {
+        dialogData = Object.assign({}, dialogData);
+        
+        return new Promise((resolve, reject) => {
+        
+            let popup = document.createElement("div");
+            document.body.appendChild(popup);            
+            
+            ReactDOM.render(
+                React.createElement(dialogTemplate, {val: dialogData, onSuccess: resolve, onCancel: reject}),
+                popup
+            );
+        });
+    }
+}
+
+var EditEmployeeWF =
+{
+    start: (dialogData, event) =>
+    {        
+        // event.stopPropagation();
+        // console.log(dialogData);
+        // console.log(event);
+
+        console.log("show edit employee form");
+        DialogService.showDialog(EditEmployeeForm, dialogData).then(result =>
+        {
+            console.log("edit employee step 1 success", result);
+            console.log("show notification form");
+            DialogService.showDialog(EmployeeNotificationForm, {recipient: "recipient val"}).then(result => {
+                console.log("edit employee step 2 success", result);
+            }).catch(reason => {
+                console.log("edit employee step 2 reject", reason);
+            });
+        }).catch(reason => {
+            console.log("edit employee step 1 reject", reason);
+        });
+    }
+}
+
+var EditEmployeeWF1 = function()
+{    
+    return {start: start}
+
+    function step1(dialogData) {
+        console.log("show edit employee form");
+        return DialogService.showDialog(EditEmployeeForm, dialogData).then(result =>
+        {
+            console.log("edit employee step 1 success", result);
+            step2(dialogData);
+        }).catch(reason => {
+            console.log("edit employee step 1 reject", reason);
+        });
+    };
+
+    function step2(step1Data) {
+        console.log("show notification form");
+        return DialogService.showDialog(EmployeeNotificationForm, {recipient: "recipient val"}).then(result => {
+            if(result === "'back'") {
+                step1(step1Data);
+            } else {
+                console.log("edit employee step 2 success", result);
+            }
+        }).catch(reason => {
+            console.log("edit employee step 2 reject", reason);
+        });
+    };
+    
+    function start(dialogData)
+    {        
+        step1(dialogData);
+    }
+}
+
+var EditDepartmentWF =
+{
+    start: dialogData =>
+    {
+        console.log("show edit department form");
+        DialogService.showDialog(EditDepartmentForm, dialogData).then(result =>
+        {
+            console.log("edit department step 1 success", result);
+        }).catch(reason => {
+            console.log("edit department step 1 reject", reason);
+        });
+    }
+}
 
 class App extends Component
 {
   constructor(props){
     super(props);
   	this.state = { };
-    window.QEventEmitter = new EventEmitter();
     moment.tz.setDefault("America/New_York");
   }
   
   render() {
-
+    //onClick={EditEmployeeWF.start.bind(this, {id: 11, email: "employee email"})}
     return (
         <div>
             <Tabs id="mainTabs" defaultActiveKey={1} animation={true}>
-                <Tab eventKey={1} title="Employees">
+                <Tab eventKey={1} title="Employees" >
                     <br/>
                     <Row>
                         <Col md={3}>
@@ -86,7 +180,7 @@ class App extends Component
                                         <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" dialog={EditEmployee} /></Badge>
+                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" workflow={EditEmployeeWF}/></Badge>
                                         <Badge><QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                 </QTable>
@@ -154,4 +248,6 @@ class App extends Component
   }
 }
 
+export {EditDepartmentWF};
+export {EditEmployeeWF};
 export default App;

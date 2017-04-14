@@ -10,47 +10,28 @@ class QAction extends Component {
 
     constructor(props){
         super(props);
+        
         let self = this;
 
-        this.state = {showDialog : false}
-        
-        this.onClick = function() {
-            console.log(self.props.val);
-            self.setState({showDialog: true});
+        this.onClick = function()
+        {
+            if(self.props.workflow) {
+                self.props.workflow.start(self.props.val);
+                return;
+            }
+            
             if(self.props.isCustomAction === true) {
                 events(ListControllerEvents.customAction).send({targetName: self.props.targetListCtrlName, data: {action: self.props.action, payload: self.props.val}});
             } else {
                 events(self.props.action).send({targetName: self.props.targetListCtrlName, data: self.props.val});
             }
         }
-
-        this.closeDialog = function(){
-            self.setState({showDialog: false});
-        }
     }
 
     render()
     {
         let actionTemplate;
-        let dialogTemplate;
 
-        if(this.state.showDialog && this.props.dialog){
-            dialogTemplate = (
-                <Modal show={this.state.showDialog} onHide={this.closeDialog}>
-                    <Modal.Header closeButton={true}>
-                        <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {React.createElement(this.props.dialog, {val: this.props.val})}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.closeDialog}>Close</Button>
-                        <Button bsStyle="primary" onClick={this.closeDialog}>Save</Button>
-                    </Modal.Footer>
-                </Modal>
-            )
-        }
-        
         if(this.props.children){
             actionTemplate = (<span onClick={this.onClick}>{this.props.children}</span>)
         } else {
@@ -60,7 +41,7 @@ class QAction extends Component {
                 </Glyphicon>
             )
         }
-        return (<span className="q-action">{actionTemplate}{dialogTemplate}</span>)
+        return (<span className="q-action">{actionTemplate}</span>)
     }
 }
 
