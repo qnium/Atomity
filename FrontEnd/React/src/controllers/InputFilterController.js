@@ -1,7 +1,7 @@
 import dataProvider from '../services/DemoDataProvider'
 import {ListControllerEvents} from './ListController';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class InputFilterController
 {

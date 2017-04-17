@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {ListControllerEvents} from '../controllers/ListController';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class QRowChecker extends Component
 {

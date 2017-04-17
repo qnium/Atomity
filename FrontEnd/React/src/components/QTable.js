@@ -7,7 +7,7 @@ import FontAwesome from 'react-fontawesome';
 import '../css/font-awesome-4.7.0/css/font-awesome.min.css';
 import {ListControllerEvents} from '../controllers/ListController';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class QTable extends Component {
     

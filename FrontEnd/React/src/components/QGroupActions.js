@@ -6,7 +6,7 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import {ListControllerEvents} from '../controllers/ListController';
 import QAction from './QAction';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class QGroupActions extends Component
 {

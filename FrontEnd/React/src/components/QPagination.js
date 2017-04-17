@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {ListControllerEvents} from '../controllers/ListController';
 import Pagination from 'react-bootstrap/lib/Pagination';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class QPagination extends Component
 {

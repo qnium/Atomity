@@ -1,6 +1,6 @@
 import dataProvider from '../services/DemoDataProvider';
 
-var events = require('events');
+var events = require('qnium-events');
 
 let ListControllerEvents =
 {

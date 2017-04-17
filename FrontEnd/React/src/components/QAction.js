@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 import {ListControllerEvents} from '../controllers/ListController';
 
-var events = require('events')
+var events = require('qnium-events');
 
 class QAction extends Component {
 

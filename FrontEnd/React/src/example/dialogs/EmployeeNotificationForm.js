@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import {ListControllerEvents} from '../../controllers/ListController';
 import {EditEmployeeWF} from '../App'
 
-var events = require('events')
+var events = require('qnium-events')
 
 class EmployeeNotificationForm extends React.Component {
     
@@ -23,12 +23,12 @@ class EmployeeNotificationForm extends React.Component {
 
         this.cancel = function() {
             self.closeDialog();
-            self.props.onCancel("'reject params'");
+            self.props.onDialogClose("'dialogCancel'");
         }
 
         this.save = function() {
             self.closeDialog();
-            self.props.onSuccess("'success params'");
+            self.props.onDialogClose("'dialogOk'");
         }
         
         this.back = function() {

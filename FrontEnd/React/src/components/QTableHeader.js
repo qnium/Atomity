@@ -3,7 +3,7 @@ import {ListControllerEvents} from '../controllers/ListController';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import QGroupActions from './QGroupActions';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class QTableHeader extends Component
 {

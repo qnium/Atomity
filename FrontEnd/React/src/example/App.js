@@ -35,13 +35,13 @@ var DialogService =
     {
         dialogData = Object.assign({}, dialogData);
         
-        return new Promise((resolve, reject) => {
-        
+        return new Promise(onDialogClose =>
+        {        
             let popup = document.createElement("div");
             document.body.appendChild(popup);            
             
             ReactDOM.render(
-                React.createElement(dialogTemplate, {val: dialogData, onSuccess: resolve, onCancel: reject}),
+                React.createElement(dialogTemplate, {val: dialogData, onDialogClose: onDialogClose}),
                 popup
             );
         });
@@ -57,17 +57,23 @@ var EditEmployeeWF =
         // console.log(event);
 
         console.log("show edit employee form");
-        DialogService.showDialog(EditEmployeeForm, dialogData).then(result =>
+        
+        DialogService.showDialog(EditEmployeeForm, dialogData)
+        .then(result =>
         {
-            console.log("edit employee step 1 success", result);
-            console.log("show notification form");
-            DialogService.showDialog(EmployeeNotificationForm, {recipient: "recipient val"}).then(result => {
-                console.log("edit employee step 2 success", result);
-            }).catch(reason => {
-                console.log("edit employee step 2 reject", reason);
-            });
-        }).catch(reason => {
-            console.log("edit employee step 1 reject", reason);
+            if(result === "'dialogOk'") {
+                console.log("edit employee step 1 success", result);
+                console.log("show notification form");
+                DialogService.showDialog(EmployeeNotificationForm, {recipient: "recipient val"}).then(result => {
+                    if(result === "'dialogOk'") {
+                        console.log("edit employee step 2 success", result);
+                    } else {
+                        console.log("edit employee step 2 reject", result);
+                    }
+                });
+            } else {
+                console.log("edit employee step 1 reject", result);
+            }
         });
     }
 }
@@ -113,9 +119,11 @@ var EditDepartmentWF =
         console.log("show edit department form");
         DialogService.showDialog(EditDepartmentForm, dialogData).then(result =>
         {
-            console.log("edit department step 1 success", result);
-        }).catch(reason => {
-            console.log("edit department step 1 reject", reason);
+            if(result === "'dialogOk'") {
+                console.log("edit department step 1 success", result);
+            } else {
+                console.log("edit department step 1 reject", result);
+            }            
         });
     }
 }

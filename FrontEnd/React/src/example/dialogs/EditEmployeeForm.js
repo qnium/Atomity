@@ -8,7 +8,7 @@ import {ListControllerEvents} from '../../controllers/ListController';
 import {EditDepartmentWF} from '../App'
 import dataProvider from '../../services/DemoDataProvider'
 
-var events = require('events')
+var events = require('qnium-events')
 
 class EditEmployeeForm extends React.Component {
     
@@ -28,7 +28,7 @@ class EditEmployeeForm extends React.Component {
 
         this.cancel = function() {
             self.closeDialog();
-            self.props.onCancel("'reject params'");
+            self.props.onDialogClose("'dialogCancel'");
         }
 
         this.save = function()
@@ -36,7 +36,7 @@ class EditEmployeeForm extends React.Component {
             self.entity.email = self.email.value;
             dataProvider.executeAction("employee", "update", [self.entity]).then(result => {
                 self.closeDialog();
-                self.props.onSuccess("'success params'");
+                self.props.onDialogClose("'dialogOk'");
                 events(ListControllerEvents.updateEntities).send(["employee"]);
             });
         }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {ListControllerEvents} from '../controllers/ListController';
 
-var events = require('events');
+var events = require('qnium-events');
 
 class QProgressIndicator extends Component
 {

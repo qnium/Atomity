@@ -5,6 +5,7 @@
   "dependencies": {
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
+    "qnium-events": "git+https://github.com/qnium/events.git",
     "rc-calendar": "^7.8.0",
     "react": "^15.4.2",
     "react-bootstrap": "0.30.8",
