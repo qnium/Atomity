@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/lib/Button';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import {ListControllerEvents} from '../../controllers/ListController';
-import {EditEmployeeWF} from '../App'
+import {ListControllerEvents} from 'atomity-core';
+//import {EditEmployeeWF} from '../App'
 
 var events = require('qnium-events')
 

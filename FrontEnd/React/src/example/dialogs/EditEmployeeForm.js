@@ -4,9 +4,12 @@ import Button from 'react-bootstrap/lib/Button';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import {ListControllerEvents} from '../../controllers/ListController';
-import {EditDepartmentWF} from '../App'
-import dataProvider from '../../services/DemoDataProvider'
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
+
+import {ListControllerEvents} from 'atomity-core';
+import EditDepartmentWF from '../workflows/EditDepartmentWF'
+import {FileDataProvider as dataProvider} from 'atomity-core'
 
 var events = require('qnium-events')
 
@@ -40,7 +43,6 @@ class EditEmployeeForm extends React.Component {
                 events(ListControllerEvents.updateEntities).send(["employee"]);
             });
         }
-
     }
 
     render() {
@@ -66,8 +68,14 @@ class EditEmployeeForm extends React.Component {
                       </FormGroup>
                       <FormGroup controlId="2">
                           <ControlLabel>Department</ControlLabel>
-                          <FormControl id="2" type="text" placeholder="" defaultValue={this.props.val.departmentId} />
-                          <Button onClick={EditDepartmentWF.start.bind(this, {id: -1, name: "dep name"})}>Edit</Button>
+                          <Row>
+                            <Col md={10} xs={10}>
+                                <FormControl id="2" type="text" placeholder="" defaultValue={this.props.val.departmentId} />
+                            </Col>
+                            <Col md={2} xs={2}>
+                                <Button onClick={EditDepartmentWF.start.bind(this, {id: -1, name: "dep name"})}>Edit</Button>
+                            </Col>
+                          </Row>  
                       </FormGroup>
                   </form>
                 </Modal.Body>

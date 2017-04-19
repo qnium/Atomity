@@ -3,17 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "atomity-react": "file:..\\AtomityReact",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
-    "qnium-events": "git+https://github.com/qnium/events.git",
-    "rc-calendar": "^7.8.0",
     "react": "^15.4.2",
     "react-bootstrap": "0.30.8",
-    "react-bootstrap-datetimepicker": "0.0.22",
-    "react-datepicker": "^0.44.0",
-    "react-datetime": "^2.8.8",
-    "react-dom": "^15.4.2",
-    "react-fontawesome": "^1.5.0"
+    "react-dom": "^15.4.2"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
@@ -57,6 +52,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "compile": "babel --presets es2015 -d lib/ src/",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
