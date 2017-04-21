@@ -31,6 +31,7 @@ import moment from 'moment';
 import 'moment-timezone';
 
 import EditEmployeeWF from './workflows/EditEmployeeWF'
+import EditDepartmentWF from './workflows/EditDepartmentWF'
 
 class App extends Component
 {
@@ -138,7 +139,7 @@ class App extends Component
                                         {item => new Date(parseInt(item.registrationDate, 10)).toString()}<br/>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" /></Badge>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" workflow={EditDepartmentWF} /></Badge>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     {/*<QColumn>
