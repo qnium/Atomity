@@ -18,9 +18,7 @@ class EditEmployeeForm extends React.Component
 {
     depChanged(event)
     {
-        console.log(event);
-        this.selectedDep = event.newValue;
-        
+        this.selectedDep = event.newValue;        
     }
 
     editDepartment()

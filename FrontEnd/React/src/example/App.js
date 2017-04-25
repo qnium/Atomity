@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-//import '../css/bootstrap/css/bootstrap.css';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 import Panel from 'react-bootstrap/lib/Panel';
@@ -10,20 +9,6 @@ import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter, QRowChecker, QGroupActions } from 'atomity-react';
 import { ListControllerEvents } from 'atomity-core';
-
-// import QAction from '../components/QAction';
-// import QTable from '../components/QTable';
-// import QTableHeader from '../components/QTableHeader';
-// import QColumn from '../components/QColumn';
-// import QPagination from '../components/QPagination';
-// import QProgressIndicator from '../components/QProgressIndicator';
-// import QInputFilter from '../components/QInputFilter';
-// import QSelectFilter from '../components/QSelectFilter';
-// import QDateFilter from '../components/QDateFilter';
-// import QRowChecker from '../components/QRowChecker';
-// import QGroupActions from '../components/QGroupActions';
-
-// import {ListControllerEvents} from '../controllers/ListController';
 
 import events from 'qnium-events';
 
@@ -35,7 +20,8 @@ import EditDepartmentWF from './workflows/EditDepartmentWF'
 
 class App extends Component
 {
-  constructor(props){
+  constructor(props)
+  {
     super(props);
   	this.state = { };
     moment.tz.setDefault("America/New_York");
@@ -135,8 +121,7 @@ class App extends Component
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="name" />
                                     <QColumn>
-                                        {item => moment(parseInt(item.registrationDate, 10)).toString()}<br/>
-                                        {item => new Date(parseInt(item.registrationDate, 10)).toString()}<br/>
+                                        {item => moment(parseInt(item.registrationDate, 10)).toString()}
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" workflow={EditDepartmentWF} /></Badge>
