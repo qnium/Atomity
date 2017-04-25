@@ -7,12 +7,9 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import {ListControllerEvents} from 'atomity-core';
-import EditDepartmentWF from '../workflows/EditDepartmentWF'
-import {FileDataProvider as dataProvider} from 'atomity-core'
-import { QForm } from 'atomity-react'
-import { QFormControl } from 'atomity-react'
-
-var events = require('qnium-events')
+import EditDepartmentWF from '../workflows/EditDepartmentWF';
+import { QForm, QFormControl } from 'atomity-react';
+import events from 'qnium-events';
 
 class EditEmployeeForm extends React.Component
 {

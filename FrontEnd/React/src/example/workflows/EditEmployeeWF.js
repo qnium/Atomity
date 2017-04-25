@@ -4,7 +4,7 @@ import {DialogService} from 'atomity-core'
 
 let EditEmployeeWF =
 {
-    start: (dialogData, event) =>
+    start: dialogData =>
     {        
         console.log("show edit employee form");
         

@@ -8,8 +8,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter, QRowChecker, QGroupActions } from 'atomity-react';
-import { ListControllerEvents } from 'atomity-core';
-
+import { ListControllerEvents, DataProviderRegistry, DataProviderJSONFile } from 'atomity-core';
 import events from 'qnium-events';
 
 import moment from 'moment';
@@ -25,6 +24,8 @@ class App extends Component
     super(props);
   	this.state = { };
     moment.tz.setDefault("America/New_York");
+
+    DataProviderRegistry.add(new DataProviderJSONFile("test_data"));
   }
 
   render() {

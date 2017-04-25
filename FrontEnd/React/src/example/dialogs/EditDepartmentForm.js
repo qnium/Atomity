@@ -5,10 +5,8 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import {ListControllerEvents} from 'atomity-core';
-import { QForm } from 'atomity-react'
-import { QFormControl } from 'atomity-react'
-
-var events = require('qnium-events')
+import { QForm, QFormControl } from 'atomity-react';
+import events from 'qnium-events';
 
 class EditDepartmentForm extends React.Component
 {    
