@@ -1,21 +1,18 @@
 import React from 'react';
-import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import {ListControllerEvents} from 'atomity-core';
 import EditDepartmentWF from '../workflows/EditDepartmentWF';
-import { QForm, QFormControl } from 'atomity-react';
-import events from 'qnium-events';
+import { QForm, QFormControl, QInputControl, QSelectControl } from 'atomity-react';
 
 class EditEmployeeForm extends React.Component
 {
     depChanged(event)
     {
-        this.selectedDep = event.newValue;        
+        this.selectedDep = event.selectedItem;        
     }
 
     editDepartment()
@@ -39,14 +36,14 @@ class EditEmployeeForm extends React.Component
                     
                     <FormGroup controlId="1">
                         <ControlLabel>Email</ControlLabel>
-                        <QFormControl id="1" type="text" placeholder="Enter email" bindingField="email" />
+                        <QFormControl id="1" type={QInputControl} placeholder="Enter email" bindingField="email" />
                     </FormGroup>
                     
                     <FormGroup controlId="2">
                         <ControlLabel>Department</ControlLabel>
                         <Row>
                             <Col md={10} xs={10}>
-                                <QFormControl id="2" type="select" bindingField="departmentId" relatedEntitiesName="department" readAction="read"
+                                <QFormControl id="2" type={QSelectControl} bindingField="departmentId" relatedEntitiesName="department" readAction="read"
                                     valueField="id" displayField="name" onChange={this.depChanged.bind(this)} >
                                         <option value="" disabled>--Select department--</option>
                                 </QFormControl>
