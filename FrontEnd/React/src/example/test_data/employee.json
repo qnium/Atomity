@@ -1,4 +1,13 @@
 {
+    "validators": {
+        "email": [
+            "if (object === undefined || object === null || object === '') err = 'Email is required';",
+            "if (object !== undefined && object !== null && object !== '' && object.length < 5) err = 'Min email length 5';"
+        ],
+        "departmentId": [
+            "if (object === undefined || object === null || object === '') err = 'Department is required';"
+        ]
+    },
     "records": [
         {
             "id": 1,

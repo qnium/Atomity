@@ -1,7 +1,6 @@
 import React from 'react';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
-import FormControl from 'react-bootstrap/lib/FormControl';
 import { QForm, QFormControl, QInputControl } from 'atomity-react';
 
 class AddDepartmentForm extends React.Component

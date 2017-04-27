@@ -44,7 +44,7 @@ class EditEmployeeForm extends React.Component
                         <Row>
                             <Col md={10} xs={10}>
                                 <QFormControl id="2" type={QSelectControl} bindingField="departmentId" relatedEntitiesName="department" readAction="read"
-                                    valueField="id" displayField="name" onChange={this.depChanged.bind(this)} >
+                                    valueField="id" displayField="name" onChange={this.depChanged.bind(this)} onInit={selectedItem => this.selectedDep = selectedItem} >
                                         <option value="" disabled>--Select department--</option>
                                 </QFormControl>
                             </Col>
