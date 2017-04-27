@@ -23,8 +23,8 @@ class EditEmployeeForm extends React.Component
     render()
     {
         return (
-            <QForm okButtonText="Save" cancelButtonText="Cancel" title="Edit employee" entityObject={this.props.val}
-                entitiesName="employee" okAction="update" onDialogClose={this.props.onDialogClose}>
+            <QForm okButtonText="Save" cancelButtonText="Cancel" title="Edit employee" entityObject={this.props.val} entitiesName="employee"
+                okAction="update" onDialogClose={this.props.onDialogClose} transformExp="[entityObject]">
                 <form>
                     
                     <FormGroup>

@@ -4,19 +4,12 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { QForm, QFormControl, QInputControl } from 'atomity-react';
 
-class EditDepartmentForm extends React.Component
+class AddDepartmentForm extends React.Component
 {    
     render = () => (
-        <QForm okButtonText="Save" cancelButtonText="Cancel" title="Edit department" entityObject={this.props.val} entitiesName="department"
-            entitiesToRefresh={["employee"]} okAction="update" onDialogClose={this.props.onDialogClose} transformExp="[entityObject]">
+        <QForm okButtonText="Add" cancelButtonText="Cancel" title="Add department" entityObject={this.props.val}
+            entitiesName="department" okAction="create" onDialogClose={this.props.onDialogClose}>
             <form>
-                
-                <FormGroup>
-                    <ControlLabel>ID</ControlLabel>
-                    <FormControl.Static>
-                        {this.props.val.id}
-                    </FormControl.Static>
-                </FormGroup>
                 
                 <FormGroup controlId="1">
                     <ControlLabel>Name</ControlLabel>
@@ -27,4 +20,4 @@ class EditDepartmentForm extends React.Component
         </QForm>
     )
 }
-export default EditDepartmentForm;
+export default AddDepartmentForm;

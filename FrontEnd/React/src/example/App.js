@@ -1,8 +1,11 @@
+import './css/index.css';
 import React, { Component } from 'react';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 import Panel from 'react-bootstrap/lib/Panel';
 import Row from 'react-bootstrap/lib/Row';
+import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
@@ -12,7 +15,9 @@ import { ListControllerEvents, DataProviderRegistry, DataProviderJSONFile } from
 import moment from 'moment';
 import 'moment-timezone';
 
+import AddEmployeeWF from './workflows/AddEmployeeWF'
 import EditEmployeeWF from './workflows/EditEmployeeWF'
+import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
 
 class App extends Component
@@ -54,7 +59,16 @@ class App extends Component
                                     </span>
                                 }
                                 footer={
-                                    <QPagination targetListCtrlName="employeesCtrl" />
+                                    <span className="q-bs-pagination">
+                                        <span className="pull-left">
+                                            <QAction workflow={AddEmployeeWF}>
+                                                <Button>
+                                                    <Glyphicon title="Add record" glyph="plus"></Glyphicon>
+                                                </Button>
+                                            </QAction>
+                                        </span>
+                                        <QPagination targetListCtrlName="employeesCtrl" />
+                                    </span>
                                 }>                                
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
@@ -104,7 +118,16 @@ class App extends Component
                                     </span>
                                 }
                                 footer={
-                                    <QPagination targetListCtrlName="departmentsCtrl" />
+                                    <span className="q-bs-pagination">
+                                        <span className="pull-left">
+                                            <QAction workflow={AddDepartmentWF}>
+                                                <Button>
+                                                    <Glyphicon title="Add record" glyph="plus"></Glyphicon>
+                                                </Button>
+                                            </QAction>
+                                        </span>
+                                        <QPagination targetListCtrlName="departmentsCtrl" />
+                                    </span>
                                 }>                                
                                 <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
@@ -123,7 +146,7 @@ class App extends Component
                                         {item => moment(parseInt(item.registrationDate, 10)).toString()}
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.editRecord} title="Edit record" icon="pencil" workflow={EditDepartmentWF} /></Badge>
+                                        <Badge><QAction targetListCtrlName="departmentsCtrl" title="Edit record" icon="pencil" workflow={EditDepartmentWF} /></Badge>
                                         <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
                                     </QColumn>
                                     {/*<QColumn>
