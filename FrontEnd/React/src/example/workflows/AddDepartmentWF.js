@@ -1,5 +1,6 @@
 import AddDepartmentForm from '../dialogs/AddDepartmentForm';
 import {DialogService} from 'atomity-core';
+import {DialogResult} from 'atomity-react';
 import moment from 'moment';
 
 let AddDepartmentWF =
@@ -10,7 +11,7 @@ let AddDepartmentWF =
         let newDep = {registrationDate: moment().format("x")};
         DialogService.showDialog(AddDepartmentForm, newDep).then(result =>
         {
-            if(result === "'dialogOk'") {
+            if(result.dialogResult === DialogResult.ok) {
                 console.log("add department step 1 success", result);
             } else {
                 console.log("add department step 1 reject", result);

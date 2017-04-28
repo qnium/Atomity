@@ -1,6 +1,7 @@
 import EditEmployeeForm from '../dialogs/EditEmployeeForm';
 import EmployeeNotificationForm from '../dialogs/EmployeeNotificationForm';
-import {DialogService} from 'atomity-core'
+import {DialogService} from 'atomity-core';
+import {DialogResult} from 'atomity-react';
 
 let EditEmployeeWF =
 {
@@ -11,17 +12,18 @@ let EditEmployeeWF =
         DialogService.showDialog(EditEmployeeForm, dialogData)
         .then(result =>
         {
-            if(result === "'dialogOk'") {
+            if(result.dialogResult === DialogResult.ok) {
                 console.log("edit employee step 1 success", result);
                 console.log("show notification form");
-                return DialogService.showDialog(EmployeeNotificationForm, {recipient: "recipient val"});
+                return DialogService.showDialog(EmployeeNotificationForm, {recipient: result.entityObject.email});
             } else {
                 console.log("edit employee step 1 reject", result);
+                return {};
             }
         })
         .then(result =>
         {
-            if(result === "'dialogOk'") {
+            if(result.dialogResult === DialogResult.ok) {
                 console.log("edit employee step 2 success", result);
             } else {
                 console.log("edit employee step 2 reject", result);

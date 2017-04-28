@@ -1,5 +1,6 @@
 import EditDepartmentForm from '../dialogs/EditDepartmentForm';
-import {DialogService} from 'atomity-core'
+import {DialogService} from 'atomity-core';
+import {DialogResult} from 'atomity-react';
 
 let EditDepartmentWF =
 {
@@ -8,7 +9,7 @@ let EditDepartmentWF =
         console.log("show edit department form");
         DialogService.showDialog(EditDepartmentForm, dialogData).then(result =>
         {
-            if(result === "'dialogOk'") {
+            if(result.dialogResult === DialogResult.ok) {
                 console.log("edit department step 1 success", result);
             } else {
                 console.log("edit department step 1 reject", result);
