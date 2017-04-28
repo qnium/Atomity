@@ -3,21 +3,29 @@ import Button from 'react-bootstrap/lib/Button';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
+import InputGroup from 'react-bootstrap/lib/InputGroup';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import EditDepartmentWF from '../workflows/EditDepartmentWF';
 import { QForm, QFormControl, QInputControl, QSelectControl } from 'atomity-react';
 
 class EditEmployeeForm extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            selectedDep: null
+        }
+    }
+    
     depChanged(event)
     {
-        this.selectedDep = event.selectedItem;        
+        this.setState({selectedDep: event.selectedItem});
     }
 
     editDepartment()
     {
-        EditDepartmentWF.start(this.selectedDep);
+        EditDepartmentWF.start(this.state.selectedDep);
     }
     
     render()
@@ -41,17 +49,15 @@ class EditEmployeeForm extends React.Component
                     
                     <FormGroup controlId="2">
                         <ControlLabel>Department</ControlLabel>
-                        <Row>
-                            <Col md={10} xs={10}>
-                                <QFormControl id="2" type={QSelectControl} bindingField="departmentId" relatedEntitiesName="department" readAction="read"
-                                    valueField="id" displayField="name" onChange={this.depChanged.bind(this)} onInit={selectedItem => this.selectedDep = selectedItem} >
-                                        <option value="" disabled>--Select department--</option>
-                                </QFormControl>
-                            </Col>
-                            <Col md={2} xs={2}>
-                                <Button onClick={this.editDepartment.bind(this)}>Edit</Button>
-                            </Col>
-                        </Row>  
+                        <InputGroup>
+                            <QFormControl id="2" type={QSelectControl} bindingField="departmentId" relatedEntitiesName="department" readAction="read"
+                                valueField="id" displayField="name" onChange={this.depChanged.bind(this)} onInit={selectedItem => this.setState({selectedDep: selectedItem})} >
+                                    <option value="" disabled>--Select department--</option>
+                            </QFormControl>
+                            <InputGroup.Button>
+                                <Button onClick={this.editDepartment.bind(this)} disabled={this.state.selectedDep ? false : true} title="Edit department" ><Glyphicon glyph="pencil" /></Button>                                
+                            </InputGroup.Button>
+                        </InputGroup>
                     </FormGroup>
 
                   </form>
