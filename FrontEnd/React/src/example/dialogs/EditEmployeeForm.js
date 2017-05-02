@@ -32,7 +32,7 @@ class EditEmployeeForm extends React.Component
     {
         return (
             <QForm okButtonText="Save" cancelButtonText="Cancel" title="Edit employee" entityObject={this.props.val} entitiesName="employee"
-                okAction="update" onDialogClose={this.props.onDialogClose} transformExp="[entityObject]">
+                okAction="update" onDialogClose={this.props.onDialogClose} useArray={true}>
                 <form>
                     
                     <FormGroup>

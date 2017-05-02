@@ -8,7 +8,7 @@ class EditDepartmentForm extends React.Component
 {    
     render = () => (
         <QForm okButtonText="Save" cancelButtonText="Cancel" title="Edit department" entityObject={this.props.val} entitiesName="department"
-            entitiesToRefresh={["employee"]} okAction="update" onDialogClose={this.props.onDialogClose} transformExp="[entityObject]">
+            entitiesToRefresh={["employee"]} okAction="update" onDialogClose={this.props.onDialogClose} useArray={true}>
             <form>
                 
                 <FormGroup>
