@@ -20,7 +20,7 @@ class EditEmployeeForm extends React.Component
     
     depChanged(event)
     {
-        this.setState({selectedDep: event.selectedItem});
+        this.setState({selectedDep: event.newValue});
     }
 
     editDepartment()
@@ -50,7 +50,7 @@ class EditEmployeeForm extends React.Component
                     <FormGroup controlId="2">
                         <ControlLabel>Department</ControlLabel>
                         <InputGroup>
-                            <QFormControl id="2" type={QSelectControl} bindingField="departmentId" relatedEntitiesName="department" readAction="read"
+                            <QFormControl id="2" type={QSelectControl} bindingField="department" relatedEntitiesName="department" readAction="read"
                                 valueField="id" displayField="name" onChange={this.depChanged.bind(this)} onInit={selectedItem => this.setState({selectedDep: selectedItem})} >
                                     <option value="" disabled>--Select department--</option>
                             </QFormControl>

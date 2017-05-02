@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter, QRowChecker, QGroupActions } from 'atomity-react';
-import { ListControllerEvents, DataProviderRegistry, DataProviderJSONFile } from 'atomity-core';
+import { ListControllerEvents, DataProviderRegistry, DataProviderJSONFile, DataProviderJSONService } from 'atomity-core';
 
 import moment from 'moment';
 import 'moment-timezone';
@@ -28,7 +28,9 @@ class App extends Component
   	this.state = { };
     moment.tz.setDefault("America/New_York");
 
-    DataProviderRegistry.add(new DataProviderJSONFile("test_data"));
+    //let dataProv = new DataProviderJSONFile("test_data");
+    let dataProv = new DataProviderJSONService("http://127.0.0.1:8080/api");
+    DataProviderRegistry.add(dataProv);
   }
 
   render() {
@@ -41,11 +43,11 @@ class App extends Component
                         <Col md={3}>
                             <Panel header="Filters">
                                 <QInputFilter targetListCtrlName="employeesCtrl" filteringField="email" title="Email" placeholder="Enter email" />
-                                <QSelectFilter targetListCtrlName="employeesCtrl" filteringField="departmentId" title="Department"
+                                <QSelectFilter targetListCtrlName="employeesCtrl" filteringField="department_id" title="Department"
                                     entitiesName="department" valueField="id" displayField="name">
                                     <option value="">Any</option>
                                 </QSelectFilter>
-                                <QInputFilter targetListCtrlName="employeesCtrl" filteringField="departmentId" title="Department name" placeholder="Enter department name"
+                                <QInputFilter targetListCtrlName="employeesCtrl" filteringField="department_id" title="Department name" placeholder="Enter department name"
                                     complexFilter={{entitiesName: "department", filteringField: "name", key: "id"}}
                                 />
                             </Panel>
@@ -87,7 +89,7 @@ class App extends Component
                                     <QColumn>
                                         <div>ID: {item => item.id}</div>
                                         <div>Email: {item => item.email}</div>
-                                        <div>Department ID (Department name): <span>{item => item.departmentId + ' (' + item.department.name + ')'}</span></div>
+                                        <div>Department ID (Department name): <span>{item => item.department ? (item.department.id + ' (' + item.department.name + ')') : null}</span></div>
                                         <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
