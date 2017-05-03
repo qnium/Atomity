@@ -55,8 +55,8 @@ class App extends Component
                         <Col md={9}>
                             <Panel header={
                                     <span>Employees
-                                        <QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.refresh} title="Refresh">
-                                            <QProgressIndicator targetListCtrlName='employeesCtrl' />
+                                        <QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.refresh}>
+                                            <QProgressIndicator title="Refresh" targetListCtrlName='employeesCtrl' />
                                         </QAction>
                                     </span>
                                 }
@@ -93,8 +93,10 @@ class App extends Component
                                         <div><p>Formatted item - {item => <span key={item.id}>ID: {item.id} (<b>{item.email}</b>)</span>}</p></div>
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" workflow={EditEmployeeWF} title="Edit record" icon="pencil" /></Badge>
-                                        <Badge><QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
+                                        <QAction workflow={EditEmployeeWF} ><Badge title="Edit record"><Glyphicon glyph="pencil" /></Badge></QAction>
+                                        <QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.deleteRecord}>
+                                            <Badge title="Delete record"><Glyphicon glyph="trash" /></Badge>
+                                        </QAction>
                                     </QColumn>
                                 </QTable>
                             </Panel>
@@ -114,8 +116,8 @@ class App extends Component
                         <Col md={9}>
                             <Panel header={
                                     <span>Departments
-                                        <QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.refresh} title="Refresh">
-                                            <QProgressIndicator targetListCtrlName='departmentsCtrl' />
+                                        <QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.refresh}>
+                                            <QProgressIndicator title="Refresh" targetListCtrlName='departmentsCtrl' />
                                         </QAction>
                                     </span>
                                 }
@@ -148,8 +150,10 @@ class App extends Component
                                         {item => moment(parseInt(item.registrationDate, 10)).toString()}
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" title="Edit record" icon="pencil" workflow={EditDepartmentWF} /></Badge>
-                                        <Badge><QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord} title="Delete record" icon="trash" /></Badge>
+                                        <QAction workflow={EditDepartmentWF}><Badge title="Edit record"><Glyphicon glyph="pencil" /></Badge></QAction>
+                                        <QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord}>
+                                            <Badge title="Delete record"><Glyphicon glyph="trash" /></Badge>
+                                        </QAction>
                                     </QColumn>
                                     {/*<QColumn>
                                         {item =>
