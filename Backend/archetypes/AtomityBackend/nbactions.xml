@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+    <action>
+        <actionName>CUSTOM-JettyDebug</actionName>
+        <displayName>Jetty (debug mode)</displayName>
+        <goals>
+            <goal>jetty:run</goal>
+        </goals>
+        <properties>
+            <maven.test.skip>true</maven.test.skip>
+            <jpda.listen>maven</jpda.listen>
+            <netbeans.deploy.debugmode>true</netbeans.deploy.debugmode>
+        </properties>
+    </action>
+</actions>
