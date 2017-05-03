@@ -19,6 +19,7 @@ import AddEmployeeWF from './workflows/AddEmployeeWF'
 import EditEmployeeWF from './workflows/EditEmployeeWF'
 import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
+import DeleteConfirmationWF from './workflows/DeleteConfirmationWF';
 
 class App extends Component
 {
@@ -94,8 +95,8 @@ class App extends Component
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
                                         <QAction workflow={EditEmployeeWF} ><Badge title="Edit record"><Glyphicon glyph="pencil" /></Badge></QAction>
-                                        <QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.deleteRecord}>
-                                            <Badge title="Delete record"><Glyphicon glyph="trash" /></Badge>
+                                        <QAction workflow={DeleteConfirmationWF} workflowParams={{entitiesName: "employee"}}>
+                                            <Badge title="Delete record"><Glyphicon glyph="trash"/></Badge>
                                         </QAction>
                                     </QColumn>
                                 </QTable>
@@ -151,8 +152,8 @@ class App extends Component
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
                                         <QAction workflow={EditDepartmentWF}><Badge title="Edit record"><Glyphicon glyph="pencil" /></Badge></QAction>
-                                        <QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord}>
-                                            <Badge title="Delete record"><Glyphicon glyph="trash" /></Badge>
+                                        <QAction workflow={DeleteConfirmationWF} workflowParams={{entitiesName: "department", entitiesToRefresh: ["employee"]}}>
+                                            <Badge title="Delete record"><Glyphicon glyph="trash"/></Badge>
                                         </QAction>
                                     </QColumn>
                                     {/*<QColumn>
