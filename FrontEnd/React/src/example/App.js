@@ -10,7 +10,11 @@ import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter, QRowChecker, QGroupActions } from 'atomity-react';
-import { ListControllerEvents, DataProviderRegistry, DataProviderJSONFile, DataProviderJSONService } from 'atomity-core';
+import { ListControllerEvents, DataProviderRegistry } from 'atomity-core';
+// eslint-disable-next-line
+import { DataProviderJSONFile } from 'atomity-core';
+// eslint-disable-next-line
+import { DataProviderJSONService } from 'atomity-core';
 
 import moment from 'moment';
 import 'moment-timezone';
@@ -29,8 +33,8 @@ class App extends Component
   	this.state = { };
     moment.tz.setDefault("America/New_York");
 
-    //let dataProv = new DataProviderJSONFile("test_data");
-    let dataProv = new DataProviderJSONService("http://127.0.0.1:8080/api");
+    let dataProv = new DataProviderJSONFile("test_data");
+    //let dataProv = new DataProviderJSONService("http://127.0.0.1:8080/api");
     DataProviderRegistry.add(dataProv);
   }
 
