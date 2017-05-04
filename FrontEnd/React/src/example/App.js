@@ -9,7 +9,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
-import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter, QRowChecker, QGroupActions } from 'atomity-react';
+import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter,
+    QRowChecker, QGroupActions, DeleteConfirmationWF } from 'atomity-react';
 import { ListControllerEvents, DataProviderRegistry } from 'atomity-core';
 // eslint-disable-next-line
 import { DataProviderJSONFile } from 'atomity-core';
@@ -23,7 +24,6 @@ import AddEmployeeWF from './workflows/AddEmployeeWF'
 import EditEmployeeWF from './workflows/EditEmployeeWF'
 import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
-import DeleteConfirmationWF from './workflows/DeleteConfirmationWF';
 
 class App extends Component
 {
