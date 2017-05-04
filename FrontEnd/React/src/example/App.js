@@ -80,8 +80,8 @@ class App extends Component
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" />
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 2" />
+                                            <QAction action={ListControllerEvents.deleteRecords} title="Delete records" />
+                                            <QAction action={ListControllerEvents.deleteRecords} useConfirmation={true} title="Delete records with confirmation" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
@@ -141,7 +141,7 @@ class App extends Component
                                 <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
-                                            <QAction action="delete" isCustomAction={true} title="Delete records" />
+                                            <QAction action={ListControllerEvents.deleteRecords} title="Delete records" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
