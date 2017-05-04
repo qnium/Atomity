@@ -1,4 +1,3 @@
-import './css/index.css';
 import React, { Component } from 'react';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
@@ -24,6 +23,8 @@ import AddEmployeeWF from './workflows/AddEmployeeWF'
 import EditEmployeeWF from './workflows/EditEmployeeWF'
 import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
+
+import './css/index.css';
 
 class App extends Component
 {
