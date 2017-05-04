@@ -87,11 +87,17 @@ class App extends Component
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
                                     <QTableHeader sortingField="email">Email</QTableHeader>
-                                    <QTableHeader sortingField="departmentId">Custom</QTableHeader>
+                                    <QTableHeader sortingField="gender">Gender</QTableHeader>
+                                    <QTableHeader sortingField="department_id">Custom</QTableHeader>
                                     <QTableHeader></QTableHeader>
                                     <QColumn><QRowChecker /></QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
+                                    
+                                    <QColumn fieldName="gender">{
+                                        // eslint-disable-next-line
+                                        gender => gender == 1 ? "Male" : gender == 2 ? "Female" : ""
+                                    }</QColumn>
                                     <QColumn>
                                         <div>ID: {item => item.id}</div>
                                         <div>Email: {item => item.email}</div>

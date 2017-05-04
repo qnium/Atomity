@@ -49,15 +49,24 @@ class EditEmployeeForm extends React.Component
                     
                     <FormGroup controlId="2">
                         <ControlLabel>Department</ControlLabel>
-                        <InputGroup>
+                        <InputGroup>                                                
                             <QFormControl id="2" type={QSelectControl} bindingField="department" relatedEntitiesName="department" readAction="read"
                                 valueField="id" displayField="name" onChange={this.depChanged.bind(this)} onInit={selectedItem => this.setState({selectedDep: selectedItem})} >
-                                    <option value="" disabled>--Select department--</option>
+                                    <option value="">--Select department--</option>
                             </QFormControl>
                             <InputGroup.Button>
                                 <Button onClick={this.editDepartment.bind(this)} disabled={this.state.selectedDep ? false : true} title="Edit department" ><Glyphicon glyph="pencil" /></Button>                                
                             </InputGroup.Button>
                         </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup controlId="3">
+                        <ControlLabel>Gender</ControlLabel>
+                        <QFormControl id="3" type={QSelectControl} bindingField="gender">
+                                <option value="">--Select gender--</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                        </QFormControl>
                     </FormGroup>
 
                   </form>

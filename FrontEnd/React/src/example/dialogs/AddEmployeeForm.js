@@ -52,6 +52,15 @@ class AddEmployeeForm extends React.Component
                         </InputGroup>
                     </FormGroup>
 
+                    <FormGroup controlId="3">
+                        <ControlLabel>Gender</ControlLabel>
+                        <QFormControl id="3" type={QSelectControl} bindingField="gender">
+                                <option value="">--Select gender--</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                        </QFormControl>
+                    </FormGroup>
+
                   </form>
             </QForm>
         )
