@@ -12,7 +12,7 @@ package com.qnium.atomitybackend.auth.definitions;
 public enum AccountType
 {
     NO_SESSION (-1, "NO_SESSION"),
-    ADMIN (1, "ADMIN");
+    USER (1, "USER");
     
     private final int accountTypeId;
     private final String accountTypeString;

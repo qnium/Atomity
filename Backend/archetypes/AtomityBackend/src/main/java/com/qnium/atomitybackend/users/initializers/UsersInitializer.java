@@ -6,12 +6,10 @@
 package com.qnium.atomitybackend.users.initializers;
 
 import com.j256.ormlite.dao.Dao;
+import com.qnium.atomitybackend.auth.PasswordProtector;
 import com.qnium.atomitybackend.users.data.User;
 import com.qnium.common.backend.assets.interfaces.IEntityInitializer;
 import com.qnium.common.backend.core.EntityManager;
-import com.qnium.common.backend.core.Logger;
-import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -23,11 +21,10 @@ public class UsersInitializer implements IEntityInitializer{
     public void initialize(EntityManager em) throws Exception
     {
         EntityManager<User> usersEM = EntityManager.getInstance(User.class);
-        Dao<User, Long> usersDao = usersEM.getDao();
         
         User user = new User();
         user.email = "test@example.com";
-        user.password = "testpass";
+        user.password = PasswordProtector.protectPassword("testpass");
         usersEM.create(user);
     }    
 }

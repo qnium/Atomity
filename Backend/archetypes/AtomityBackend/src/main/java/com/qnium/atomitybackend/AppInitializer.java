@@ -4,7 +4,9 @@ package com.qnium.atomitybackend;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.j256.ormlite.field.DataPersisterManager;
+import com.qnium.atomitybackend.auth.AuthenticationManager;
 import com.qnium.atomitybackend.auth.AuthorizationManager;
+import com.qnium.atomitybackend.auth.DefaultAuthenticationHandler;
 import com.qnium.atomitybackend.auth.definitions.AccountType;
 import com.qnium.atomitybackend.auth.handlers.AuthenticationHandler;
 import com.qnium.atomitybackend.auth.handlers.AuthenticationRequest;
@@ -98,7 +100,7 @@ public class AppInitializer implements ServletContextListener {
         // Add other validation handlers here...
 
         action = "users.read";
-        AuthorizationManager.getInstance().addPermission(AccountType.ADMIN, action);
+        AuthorizationManager.getInstance().addPermission(AccountType.USER, action);
         ReadHandler usersReadHandler = new ReadHandler();
         
         hm.addHandler(action, new HandlerWrapper(
@@ -111,6 +113,9 @@ public class AppInitializer implements ServletContextListener {
                 new TypeReference<RequestMessage<AuthenticationRequest>>() {},
                 new TypeReference<ObjectResponseMessage<String>>() {},
                 new AuthenticationHandler()));
+        
+        AuthenticationManager.getInstance().addAuthenticationHandler(AccountType.USER,
+            new DefaultAuthenticationHandler());
         
         // Add other handlers here...
     }
