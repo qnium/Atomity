@@ -10,7 +10,11 @@ import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter, QRowChecker, QGroupActions } from 'atomity-react';
-import { ListControllerEvents, DataProviderRegistry, DataProviderJSONFile, DataProviderJSONService } from 'atomity-core';
+import { ListControllerEvents, DataProviderRegistry } from 'atomity-core';
+// eslint-disable-next-line
+import { DataProviderJSONFile } from 'atomity-core';
+// eslint-disable-next-line
+import { DataProviderJSONService } from 'atomity-core';
 
 import moment from 'moment';
 import 'moment-timezone';
@@ -19,6 +23,7 @@ import AddEmployeeWF from './workflows/AddEmployeeWF'
 import EditEmployeeWF from './workflows/EditEmployeeWF'
 import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
+import DeleteConfirmationWF from './workflows/DeleteConfirmationWF';
 
 class App extends Component
 {
@@ -28,8 +33,8 @@ class App extends Component
   	this.state = { };
     moment.tz.setDefault("America/New_York");
 
-    //let dataProv = new DataProviderJSONFile("test_data");
-    let dataProv = new DataProviderJSONService("http://127.0.0.1:8080/api");
+    let dataProv = new DataProviderJSONFile("test_data");
+    //let dataProv = new DataProviderJSONService("http://127.0.0.1:8080/api");
     DataProviderRegistry.add(dataProv);
   }
 
@@ -75,8 +80,8 @@ class App extends Component
                                 <QTable ctrlName='employeesCtrl' entitiesName='employee' pageDataLength={5} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 1" />
-                                            <QAction action="delete" isCustomAction={true} title="Delete records 2" />
+                                            <QAction action={ListControllerEvents.deleteRecords} title="Delete records" />
+                                            <QAction action={ListControllerEvents.deleteRecords} useConfirmation={true} title="Delete records with confirmation" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
@@ -94,8 +99,8 @@ class App extends Component
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
                                         <QAction workflow={EditEmployeeWF} ><Badge title="Edit record"><Glyphicon glyph="pencil" /></Badge></QAction>
-                                        <QAction targetListCtrlName="employeesCtrl" action={ListControllerEvents.deleteRecord}>
-                                            <Badge title="Delete record"><Glyphicon glyph="trash" /></Badge>
+                                        <QAction workflow={DeleteConfirmationWF} workflowParams={{entitiesName: "employee"}}>
+                                            <Badge title="Delete record"><Glyphicon glyph="trash"/></Badge>
                                         </QAction>
                                     </QColumn>
                                 </QTable>
@@ -136,7 +141,7 @@ class App extends Component
                                 <QTable ctrlName='departmentsCtrl' entitiesName='department' pageDataLength={10} useDummyRows={true}>
                                     <QTableHeader className="q-no-left-padding">
                                         <QGroupActions>
-                                            <QAction action="delete" isCustomAction={true} title="Delete records" />
+                                            <QAction action={ListControllerEvents.deleteRecords} title="Delete records" />
                                         </QGroupActions>
                                     </QTableHeader>
                                     <QTableHeader sortingField="id">ID</QTableHeader>
@@ -151,8 +156,8 @@ class App extends Component
                                     </QColumn>
                                     <QColumn isHoverButtons={true}>
                                         <QAction workflow={EditDepartmentWF}><Badge title="Edit record"><Glyphicon glyph="pencil" /></Badge></QAction>
-                                        <QAction targetListCtrlName="departmentsCtrl" action={ListControllerEvents.deleteRecord}>
-                                            <Badge title="Delete record"><Glyphicon glyph="trash" /></Badge>
+                                        <QAction workflow={DeleteConfirmationWF} workflowParams={{entitiesName: "department", entitiesToRefresh: ["employee"]}}>
+                                            <Badge title="Delete record"><Glyphicon glyph="trash"/></Badge>
                                         </QAction>
                                     </QColumn>
                                     {/*<QColumn>
