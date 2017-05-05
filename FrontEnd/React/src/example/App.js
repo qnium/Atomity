@@ -35,7 +35,7 @@ class App extends Component
     moment.tz.setDefault("America/New_York");
 
     let dataProv = new DataProviderJSONFile("test_data");
-    //let dataProv = new DataProviderJSONService("http://127.0.0.1:8080/api");
+    //let dataProv = new DataProviderJSONService({apiEndpoint: "http://127.0.0.1:8080/api"});
     DataProviderRegistry.add(dataProv);
   }
 
@@ -54,7 +54,7 @@ class App extends Component
                                     <option value="">Any</option>
                                 </QSelectFilter>
                                 <QInputFilter targetListCtrlName="employeesCtrl" filteringField="department_id" title="Department name" placeholder="Enter department name"
-                                    complexFilter={{entitiesName: "department", filteringField: "name", key: "id"}}
+                                    complexFilter={{entitiesName: "department", filteringField: "name", key: "id", relatedEntities: "employee"}}
                                 />
                                 <QSelectFilter targetListCtrlName="employeesCtrl" filteringField="gender" title="Gender">
                                     <option value="">Any</option>
