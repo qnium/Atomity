@@ -25,8 +25,8 @@ import java.util.List;
  *
  * @author Kirill Zhukov
  */
-public abstract class BaseCreateHandler extends AbstractBaseHandler<RequestMessage<CreateRequestParameters>, CountResponseMessage> {
+public abstract class BaseCreateHandler extends AbstractBaseHandler<RequestMessage, CountResponseMessage> {
     
-   abstract public CountResponseMessage processRequest(RequestMessage<CreateRequestParameters> request) throws IOException, CommonException;
+   abstract public CountResponseMessage processRequest(RequestMessage request) throws IOException, CommonException;
 
 }

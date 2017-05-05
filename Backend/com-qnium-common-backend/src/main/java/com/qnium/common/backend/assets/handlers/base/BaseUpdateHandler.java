@@ -10,14 +10,15 @@ import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.dataobjects.UpdateRequestParameters;
 import com.qnium.common.backend.exceptions.CommonException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
  * @author Kirill Zhukov
  */
-abstract public class BaseUpdateHandler extends AbstractBaseHandler<RequestMessage<UpdateRequestParameters>, CountResponseMessage> {
+abstract public class BaseUpdateHandler extends AbstractBaseHandler<RequestMessage<List>, CountResponseMessage> {
     
     @Override
-    abstract public CountResponseMessage processRequest(RequestMessage<UpdateRequestParameters> request) throws IOException, CommonException;
+    abstract public CountResponseMessage processRequest(RequestMessage<List> request) throws IOException, CommonException;
     
 }

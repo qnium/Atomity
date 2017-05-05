@@ -10,14 +10,14 @@ import com.qnium.common.backend.assets.dataobjects.DeleteRequestParameters;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.exceptions.CommonException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
  * @author nbv
  */
-public abstract class BaseDeleteHandler extends AbstractBaseHandler<RequestMessage<DeleteRequestParameters>, CountResponseMessage> {
+public abstract class BaseDeleteHandler extends AbstractBaseHandler<RequestMessage<List>, CountResponseMessage> {
 
     @Override
-    abstract public CountResponseMessage processRequest(RequestMessage<DeleteRequestParameters> request) throws IOException, CommonException;
-    
+    abstract public CountResponseMessage processRequest(RequestMessage<List> request) throws IOException, CommonException;    
 }

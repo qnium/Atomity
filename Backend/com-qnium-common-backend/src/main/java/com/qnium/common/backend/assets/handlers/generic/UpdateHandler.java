@@ -16,6 +16,7 @@ import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.dataobjects.UpdateRequestParameters;
 import com.qnium.common.backend.assets.handlers.base.BaseUpdateHandler;
 import com.qnium.common.backend.exceptions.CommonException;
+import java.util.List;
 
 /**
  *
@@ -25,14 +26,14 @@ public class UpdateHandler extends BaseUpdateHandler {
 
     
     @Override
-    public CountResponseMessage processRequest(RequestMessage<UpdateRequestParameters> request) throws IOException, CommonException {
+    public CountResponseMessage processRequest(RequestMessage<List> request) throws IOException, CommonException {
         try
         {
-            RequestMessage<UpdateRequestParameters> req = (RequestMessage<UpdateRequestParameters>)request;
+            //RequestMessage<UpdateRequestParameters> req = (RequestMessage<UpdateRequestParameters>)request;
            
-            IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(req.entityName);
+            IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(request.entityName);
             
-            em.update(req.data.entities);
+            em.update(request.data);
 
             return new CountResponseMessage(em.getCount());
         }

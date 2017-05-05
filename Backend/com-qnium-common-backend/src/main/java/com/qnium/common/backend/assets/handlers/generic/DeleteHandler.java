@@ -14,6 +14,7 @@ import com.qnium.common.backend.assets.dataobjects.DeleteRequestParameters;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.handlers.base.BaseDeleteHandler;
 import com.qnium.common.backend.exceptions.CommonException;
+import java.util.List;
 
 /**
  *
@@ -22,14 +23,14 @@ import com.qnium.common.backend.exceptions.CommonException;
 public class DeleteHandler extends BaseDeleteHandler {
     
     @Override
-     public CountResponseMessage processRequest(RequestMessage<DeleteRequestParameters> request) throws IOException, CommonException {
+     public CountResponseMessage processRequest(RequestMessage<List> request) throws IOException, CommonException {
        try
        {
-           RequestMessage<DeleteRequestParameters> req = (RequestMessage<DeleteRequestParameters>)request;
+           //RequestMessage<DeleteRequestParameters> req = (RequestMessage<DeleteRequestParameters>)request;
            
-           IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(req.entityName);
+           IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(request.entityName);
            
-           em.delete(req.data.entities);
+           em.delete(request.data);
            
            return new CountResponseMessage(em.getCount());
        }

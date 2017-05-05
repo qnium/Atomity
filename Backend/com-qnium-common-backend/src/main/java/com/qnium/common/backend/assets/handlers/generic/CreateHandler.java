@@ -23,14 +23,14 @@ public class CreateHandler extends BaseCreateHandler {
 
    
     @Override
-    public CountResponseMessage processRequest(RequestMessage<CreateRequestParameters> request) throws IOException, CommonException {
+    public CountResponseMessage processRequest(RequestMessage request) throws IOException, CommonException {
        try
        {
-           RequestMessage<CreateRequestParameters> req = (RequestMessage<CreateRequestParameters>)request;
+           //RequestMessage<CreateRequestParameters> req = (RequestMessage<CreateRequestParameters>)request;
            
-           IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(req.entityName);
+           IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(request.entityName);
            
-           em.create(req.data.entity);
+           em.create(request.data);
            
            return new CountResponseMessage(em.getCount());
        }
