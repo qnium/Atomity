@@ -1,9 +1,9 @@
 {
-  "name": "react-test",
+  "name": "atomity-frontend-react-example",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "atomity-react": "git+https://github.com/qnium/AtomityReact.git",
+    "atomity-frontend-react": "git+https://github.com/qnium/AtomityReact.git",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "react": "^15.4.2",

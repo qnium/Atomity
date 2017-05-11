@@ -1,7 +1,7 @@
 import EditEmployeeForm from '../dialogs/EditEmployeeForm';
 import EmployeeNotificationForm from '../dialogs/EmployeeNotificationForm';
-import {DialogService} from 'atomity-core';
-import {DialogResult} from 'atomity-react';
+import {DialogService} from 'atomity-frontend-common';
+import {DialogResult} from 'atomity-frontend-react';
 
 let EditEmployeeWF =
 {

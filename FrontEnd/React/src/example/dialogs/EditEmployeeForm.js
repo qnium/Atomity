@@ -6,7 +6,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import EditDepartmentWF from '../workflows/EditDepartmentWF';
-import { QForm, QFormControl, QInputControl, QSelectControl } from 'atomity-react';
+import { QForm, QFormControl, QInputControl, QSelectControl } from 'atomity-frontend-react';
 
 class EditEmployeeForm extends React.Component
 {

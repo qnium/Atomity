@@ -9,12 +9,12 @@ import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter,
-    QRowChecker, QGroupActions, DeleteConfirmationWF } from 'atomity-react';
-import { ListControllerEvents, DataProviderRegistry, DialogService } from 'atomity-core';
+    QRowChecker, QGroupActions, DeleteConfirmationWF } from 'atomity-frontend-react';
+import { ListControllerEvents, DataProviderRegistry, DialogService } from 'atomity-frontend-common';
 // eslint-disable-next-line
-import { DataProviderJSONFile } from 'atomity-core';
+import { DataProviderJSONFile } from 'atomity-frontend-common';
 // eslint-disable-next-line
-import { DataProviderJSONService } from 'atomity-core';
+import { DataProviderJSONService } from 'atomity-frontend-common';
 
 import moment from 'moment';
 import 'moment-timezone';

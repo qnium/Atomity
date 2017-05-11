@@ -1,6 +1,6 @@
 import AddDepartmentForm from '../dialogs/AddDepartmentForm';
-import {DialogService} from 'atomity-core';
-import {DialogResult} from 'atomity-react';
+import {DialogService} from 'atomity-frontend-common';
+import {DialogResult} from 'atomity-frontend-react';
 import moment from 'moment';
 
 let AddDepartmentWF =
