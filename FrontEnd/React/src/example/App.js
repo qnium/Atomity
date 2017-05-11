@@ -10,7 +10,7 @@ import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter,
     QRowChecker, QGroupActions, DeleteConfirmationWF } from 'atomity-react';
-import { ListControllerEvents, DataProviderRegistry } from 'atomity-core';
+import { ListControllerEvents, DataProviderRegistry, DialogService } from 'atomity-core';
 // eslint-disable-next-line
 import { DataProviderJSONFile } from 'atomity-core';
 // eslint-disable-next-line
@@ -23,6 +23,11 @@ import AddEmployeeWF from './workflows/AddEmployeeWF'
 import EditEmployeeWF from './workflows/EditEmployeeWF'
 import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
+import MessageForm from './dialogs/MessageForm';
+
+let DefaultErrorHandler = function(errorMessage) {
+    DialogService.showDialog(MessageForm, {title: "Error...", message: errorMessage});
+}
 
 import './css/index.css';
 
@@ -34,8 +39,8 @@ class App extends Component
   	this.state = { };
     moment.tz.setDefault("America/New_York");
 
-    let dataProv = new DataProviderJSONFile("test_data");
-    //let dataProv = new DataProviderJSONService({apiEndpoint: "http://127.0.0.1:8080/api"});
+    //let dataProv = new DataProviderJSONFile("test_data");
+    let dataProv = new DataProviderJSONService({apiEndpoint: "http://127.0.0.1:8080/api", errorHandler: DefaultErrorHandler});
     DataProviderRegistry.add(dataProv);
   }
 
