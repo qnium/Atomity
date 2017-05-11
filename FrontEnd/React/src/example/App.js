@@ -9,8 +9,8 @@ import Col from 'react-bootstrap/lib/Col';
 import Badge from 'react-bootstrap/lib/Badge';
 
 import { QAction, QTable, QTableHeader, QColumn, QPagination, QProgressIndicator, QInputFilter, QSelectFilter, QDateFilter,
-    QRowChecker, QGroupActions, DeleteConfirmationWF } from 'atomity-frontend-react';
-import { ListControllerEvents, DataProviderRegistry, DialogService } from 'atomity-frontend-common';
+    QRowChecker, QGroupActions, DeleteConfirmationWF, DialogService } from 'atomity-frontend-react';
+import { ListControllerEvents, DataProviderRegistry } from 'atomity-frontend-common';
 // eslint-disable-next-line
 import { DataProviderJSONFile } from 'atomity-frontend-common';
 // eslint-disable-next-line

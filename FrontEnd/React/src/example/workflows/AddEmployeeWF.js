@@ -1,6 +1,5 @@
 import AddEmployeeForm from '../dialogs/AddEmployeeForm';
-import {DialogService} from 'atomity-frontend-common';
-import {DialogResult} from 'atomity-frontend-react';
+import {DialogService, DialogResult} from 'atomity-frontend-react';
 
 let AddDepartmentWF =
 {
