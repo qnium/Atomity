@@ -7,10 +7,19 @@
     <packaging>jar</packaging>
     <distributionManagement>
     <repository>
-        <id>libs</id>
-        <name>libs-release-local</name>
-        <url>http://localhost:8081/artifactory/libs-release-local</url>
-    </repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>qnium-maven-releases</id>
+            <name>QNIUM Maven releases</name>
+            <url>http://mvn.qnium.com/repository/maven-releases/</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>qnium-maven-snapshots</id>
+            <name>QNIUM Maven snapshots</name>
+            <url>http://mvn.qnium.com/repository/maven-snapshots/</url>
+            <layout>default</layout>
+        </snapshotRepository>
     </distributionManagement>
     <dependencies>
         <dependency>

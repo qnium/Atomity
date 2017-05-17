@@ -3,13 +3,29 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com-qnium-common-validation</groupId>
     <artifactId>com-qnium-common-vallidation</artifactId>
-    <version>1.1</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+	<distributionManagement>
+    <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>qnium-maven-releases</id>
+            <name>QNIUM Maven releases</name>
+            <url>http://mvn.qnium.com/repository/maven-releases/</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>qnium-maven-snapshots</id>
+            <name>QNIUM Maven snapshots</name>
+            <url>http://mvn.qnium.com/repository/maven-snapshots/</url>
+            <layout>default</layout>
+        </snapshotRepository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>com.qnium</groupId>
             <artifactId>com-qnium-common-backend</artifactId>
-            <version>1.1</version>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
