@@ -35,7 +35,7 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>com.qnium</groupId>
+            <groupId>com-qnium-common</groupId>
             <artifactId>com-qnium-common-backend</artifactId>
             <version>1.2-SNAPSHOT</version>
         </dependency>
