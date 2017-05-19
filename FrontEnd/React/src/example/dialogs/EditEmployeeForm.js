@@ -50,8 +50,8 @@ class EditEmployeeForm extends React.Component
                     <FormGroup controlId="2">
                         <ControlLabel>Department</ControlLabel>
                         <InputGroup>                                                
-                            <QFormControl id="2" type={QSelectControl} bindingField="department" relatedEntitiesName="department" readAction="read"
-                                valueField="id" displayField="name" onChange={this.depChanged.bind(this)} onInit={selectedItem => this.setState({selectedDep: selectedItem})} >
+                            <QFormControl id="2" type={QSelectControl} bindingField="department" foreignField="id" relatedEntitiesName="department" readAction="read"
+                                onChange={this.depChanged.bind(this)} onInit={selectedItem => this.setState({selectedDep: selectedItem})} >
                                     <option value="">--Select department--</option>
                             </QFormControl>
                             <InputGroup.Button>
