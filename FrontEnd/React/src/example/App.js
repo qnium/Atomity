@@ -25,6 +25,7 @@ import AddDepartmentWF from './workflows/AddDepartmentWF'
 import EditDepartmentWF from './workflows/EditDepartmentWF'
 import MessageForm from './dialogs/MessageForm';
 
+// eslint-disable-next-line
 let DefaultErrorHandler = function(errorMessage) {
     DialogService.showDialog(MessageForm, {title: "Error...", message: errorMessage});
 }
@@ -39,8 +40,8 @@ class App extends Component
   	this.state = { };
     moment.tz.setDefault("America/New_York");
 
-    //let dataProv = new DataProviderJSONFile("test_data");
-    let dataProv = new DataProviderJSONService({apiEndpoint: "http://127.0.0.1:8080/api", errorHandler: DefaultErrorHandler});
+    let dataProv = new DataProviderJSONFile("test_data");
+    //let dataProv = new DataProviderJSONService({apiEndpoint: "http://127.0.0.1:8080/api", errorHandler: DefaultErrorHandler});
     DataProviderRegistry.add(dataProv);
   }
 
@@ -99,7 +100,7 @@ class App extends Component
                                     <QTableHeader sortingField="email">Email</QTableHeader>
                                     <QTableHeader sortingField="gender">Gender</QTableHeader>
                                     <QTableHeader sortingField="department_id">Custom</QTableHeader>
-                                    <QTableHeader></QTableHeader>
+                                    <QTableHeader />
                                     <QColumn><QRowChecker /></QColumn>
                                     <QColumn fieldName="id" />
                                     <QColumn fieldName="email" />
