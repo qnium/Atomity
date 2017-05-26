@@ -288,6 +288,12 @@ public class EntityManager<T> implements IEntityManager<T>
                                 }
                                 whereConditions.add(genericWH.in(f.field, values));
                                 break;
+                            case FieldOperations.LE:
+                                whereConditions.add(genericWH.le(f.field, f.getIntValue()));
+                                break;
+                            case FieldOperations.GE:
+                                whereConditions.add(genericWH.ge(f.field, f.getIntValue()));
+                                break;
                         }
                     }
                 }

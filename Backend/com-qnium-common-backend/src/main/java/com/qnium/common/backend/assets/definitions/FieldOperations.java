@@ -18,4 +18,6 @@ public class FieldOperations {
     public static final String DISTINCT = "distinct";
     public static final String IN = "in";
     public static final String NE = "ne";
+    public static final String LE = "le";
+    public static final String GE = "ge";
 }
