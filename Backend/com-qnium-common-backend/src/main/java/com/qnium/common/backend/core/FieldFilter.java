@@ -5,6 +5,9 @@
  */
 package com.qnium.common.backend.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qnium.common.backend.exceptions.CommonException;
 import java.time.Instant;
 
@@ -22,13 +25,18 @@ public class FieldFilter<T>
     {
     }
     
-    public FieldFilter(String field, String operation, T value)
+    @JsonCreator
+    public FieldFilter(
+            @JsonProperty("field")String field,
+            @JsonProperty("operation")String operation,
+            @JsonProperty("value")T value)
     {
         this.field = field;
         this.operation = operation;
         this.value = value;
     }
     
+    @JsonIgnore
     public Integer getIntValue() throws CommonException {
         if (value instanceof Integer) {
             return (Integer)value;
@@ -52,6 +60,7 @@ public class FieldFilter<T>
         }
     }
     
+    @JsonIgnore
     public Instant getDateTimeValue() throws CommonException {
         if (value instanceof String) {
             try {
@@ -75,6 +84,7 @@ public class FieldFilter<T>
         }
     }
     
+    @JsonIgnore
     public Boolean getBooleanValue() throws CommonException {
         if (value instanceof Boolean) {
             return (Boolean)value;
