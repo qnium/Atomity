@@ -288,6 +288,13 @@ public class EntityManager<T> implements IEntityManager<T>
                                 }
                                 whereConditions.add(genericWH.in(f.field, values));
                                 break;
+                            case FieldOperations.NOT_IN:
+                                List excludedValues = (List)f.value;
+                                if(!excludedValues.isEmpty())
+                                {
+                                    whereConditions.add(genericWH.not().in(f.field, excludedValues));
+                                }
+                                break;
                             case FieldOperations.LE:
                                 whereConditions.add(genericWH.le(f.field, f.getIntValue()));
                                 break;
