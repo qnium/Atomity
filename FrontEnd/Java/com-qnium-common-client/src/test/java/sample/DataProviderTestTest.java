@@ -5,6 +5,7 @@
  */
 package sample;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.qnium.common.backend.assets.dataobjects.CollectionResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.ObjectResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.ResponseMessage;
@@ -34,10 +35,10 @@ public class DataProviderTestTest extends TestCase {
         
         Letter letter = new Letter();        
         
-        CollectionResponseMessage<Letter> a = dp.<CollectionResponseMessage<Letter>,Letter>executeAction("letter", "read", letter);
+        CollectionResponseMessage<Letter> a = dp.executeAction("letter", "read", letter, new TypeReference<CollectionResponseMessage<Letter>>() {});
         
         assertEquals(a.errorCode, 0);
-        assertEquals(a.error, "Low level error.");
+        assertEquals(a.error, null);
     }
 
    

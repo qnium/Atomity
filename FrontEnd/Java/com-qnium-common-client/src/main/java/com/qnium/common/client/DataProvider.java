@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
+import com.qnium.common.backend.assets.dataobjects.CollectionResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -51,12 +52,12 @@ public class DataProvider {
     {
         this.sessionKey = sessionKey;
         this.apiEndpoint = apiEndpoint;
-        this.timeout = timeout<=0 ? timeout : DEFAULT_TIMEOUT;
+        this.timeout = timeout <= 0 ? timeout : DEFAULT_TIMEOUT;
 
     }
     private final String USER_AGENT = "Mozilla/5.0";
-    public <O, I> O executeAction(String entity, String action, I data) throws UnsupportedEncodingException, IOException, Exception {
-            RequestMessage<I> request = new RequestMessage<>(data);
+    public <O> O executeAction(String entity, String action, Object data, TypeReference<O> responseType) throws UnsupportedEncodingException, IOException, Exception {
+            RequestMessage request = new RequestMessage<>(data);
             request.action = action;
             request.entityName = entity;
             request.sessionKey = this.sessionKey;      
@@ -86,10 +87,10 @@ public class DataProvider {
             if (responseCode!=200)
                 throw new Exception("responseCode!=200");
             
-            TypeReference responseMessageType = new TypeReference<O>() {};
+            //TypeReference responseMessageType = new TypeReference<O>() {};
             String result = CharStreams.toString(new InputStreamReader(
       con.getInputStream(), Charsets.UTF_8));
-            O response = mapper.readValue(result,responseMessageType);
+            O response = (O) mapper.readValue(result, responseType);
             return response;
             
     }   
