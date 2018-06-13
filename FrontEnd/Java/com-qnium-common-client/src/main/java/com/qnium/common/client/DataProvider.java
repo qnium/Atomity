@@ -39,7 +39,7 @@ public class DataProvider {
     public DataProvider(String sessionKey, String apiEndpoint, Integer timeout) {
         this.sessionKey = sessionKey;
         this.apiEndpoint = apiEndpoint;
-        this.timeout = timeout <= 0 ? timeout : DEFAULT_TIMEOUT;
+        this.timeout = timeout >= 0 ? timeout : DEFAULT_TIMEOUT;
 
     }
     private final String USER_AGENT = "Mozilla/5.0";
