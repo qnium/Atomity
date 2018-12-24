@@ -21,4 +21,5 @@ public class FieldOperations {
     public static final String LE = "le";
     public static final String GE = "ge";
     public static final String NOT_IN = "not_in";
+    public static final String NOT_NULL = "not_null";
 }

@@ -235,6 +235,9 @@ public class EntityManager<T> implements IEntityManager<T>
                             case FieldOperations.NE:
                                 whereConditions.add(genericWH.ne(f.field, f.value));
                                 break;
+                            case FieldOperations.NOT_NULL:
+                                whereConditions.add(genericWH.isNotNull(f.field));
+                                break;
                             case FieldOperations.LIKE:
                                 String likeValue = "%" + f.value + "%";
                                 List<Where<T, Long>> likeCondList = new ArrayList<>();
@@ -315,6 +318,9 @@ public class EntityManager<T> implements IEntityManager<T>
         if (count > 0) {
             genericQB = genericQB.offset(startIndex).limit(count);
         }
+        
+        String statement = genericQB.prepareStatementString();
+        statement = "";
         
         result.data = genericQB.query();
         
