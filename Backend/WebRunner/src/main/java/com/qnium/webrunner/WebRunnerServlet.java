@@ -21,6 +21,6 @@ public class WebRunnerServlet extends HttpServlet
      public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
      {
          String path = req.getPathInfo();
-         resp.getWriter().println("Path is: " + path + "params: " + req.getParameterMap());
+         Router.getInstance().processRoute(path, req.getParameterMap(), resp.getWriter());
      }
 }

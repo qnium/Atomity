@@ -12,16 +12,11 @@ import java.util.logging.Logger;
  *
  * @author admin
  */
-public class Request<T> {
+public class Request {
     public String path;
-    public T data;
     
-    public Request(Class<T> dataClass)
+    public Request(String path)
     {
-        try {
-            data = dataClass.getDeclaredConstructor().newInstance(null);
-        } catch (Exception ex) {
-            Logger.getLogger(Request.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.path = path;
     }
 }

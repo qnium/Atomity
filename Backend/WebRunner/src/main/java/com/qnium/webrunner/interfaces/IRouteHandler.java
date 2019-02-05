@@ -6,6 +6,7 @@
 package com.qnium.webrunner.interfaces;
 
 import com.qnium.webrunner.Request;
+import java.io.PrintWriter;
 
 /**
  *
@@ -13,6 +14,6 @@ import com.qnium.webrunner.Request;
  */
 public interface IRouteHandler<T> {
     
-    public void handle(Request<T> request);
+    public void handle(Request request, T params, PrintWriter out);
     
 }
