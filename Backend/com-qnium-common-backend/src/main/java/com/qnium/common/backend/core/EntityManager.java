@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.xml.bind.DatatypeConverter;
 import com.qnium.common.backend.assets.interfaces.IEntityInitializer;
 import com.qnium.common.backend.exceptions.CommonException;
 import java.lang.reflect.Array;
