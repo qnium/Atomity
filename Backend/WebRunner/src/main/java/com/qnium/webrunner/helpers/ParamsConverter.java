@@ -5,6 +5,7 @@
  */
 package com.qnium.webrunner.helpers;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,15 +22,18 @@ public class ParamsConverter {
     
     static final Function<String, Integer> intConverter = (param) -> Integer.parseInt(param);
     static final Function<String, Long> longConverter = (param) -> Long.parseLong(param);
-    private static Function<String, Boolean> boolConverter = (param) -> Boolean.parseBoolean(param);
+    static final Function<String, Boolean> boolConverter = (param) -> Boolean.parseBoolean(param);
     
     static {
          _converters.put(Integer.class, intConverter);
          _converters.put(int.class, intConverter);
+         
          _converters.put(Long.class, longConverter);
          _converters.put(long.class, longConverter);
+
          _converters.put(Boolean.class, boolConverter);
          _converters.put(boolean.class, boolConverter);
+         
     }
    
     
@@ -55,19 +59,25 @@ public class ParamsConverter {
                 if (field.getType().isArray())
                 {
                     
-                    if (field.getType() == String.class)
+                    if (field.getType() == String[].class)
                     {
                         field.set(result, paramStrings);
                         continue;
                     }
                     
-                    Function<String, ?> converter = _converters.get(field.getType());
-                    Object[] values = Stream.of(paramStrings).map(converter).toArray();
+                    Function<String, ?> converter = _converters.get(field.getType().getComponentType());
                     
-                    field.set(result, values);
+                    Object array = Array.newInstance(field.getType().getComponentType(), paramStrings.length);
+                    
+                    for(int i = 0; i < paramStrings.length; i ++ )
+                    {
+                        Array.set(array, i, converter.apply(paramStrings[i]));
+                    }
+                    
+                    field.set(result, array);
                 } else {
                     //if (field)
-                    if (paramStrings.length > 0)
+                    if (paramStrings.length > 1)
                         throw new Exception(String.format("Multiple parameters '%s'", key));
                     
                     if (field.getType() == String.class)
@@ -76,7 +86,8 @@ public class ParamsConverter {
                         continue;
                     }
                     
-                    field.set(result, params.get(key));
+                    Function<String, ?> converter = _converters.get(field.getType());
+                    field.set(result, converter.apply(paramStrings[0]));
                 }
                 
             }

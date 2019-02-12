@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class TestParamsConverter {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void SimpleTest() throws Exception {
+    public void BasicConversionTest() throws Exception {
         
         Map<String, String[]> data = new HashMap();
         
@@ -55,6 +56,10 @@ public class TestParamsConverter {
         data.put("isThere", new String[] {"true"});
         
         TestParams params = (TestParams) ParamsConverter.convert(data, TestParams.class);
-        assertEquals(params, "OK");
+        assertEquals("String param", params.name, "OK");
+        assertEquals("Int param", params.id, 2);
+        Assert.assertArrayEquals("String array param", new String [] {"OK1", "OK2", "OK3"}, params.things);
+        Assert.assertArrayEquals(new int[] {0,1,2}, params.list);
+        Assert.assertTrue(params.isThere);
     }
 }

@@ -10,9 +10,9 @@ package ParamSonverter;
  * @author admin
  */
 public class TestParams {
-    String name;
-    int id;
-    String[] things;
-    int[] list;
-    boolean isThere;
+    public String name;
+    public int id;
+    public String[] things;
+    public int[] list;
+    public boolean isThere;
 }

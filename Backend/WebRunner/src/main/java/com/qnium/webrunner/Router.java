@@ -6,6 +6,7 @@
 package com.qnium.webrunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qnium.webrunner.helpers.ParamsConverter;
 import com.qnium.webrunner.interfaces.IRouteHandler;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -58,12 +59,11 @@ public class Router {
                try {
                    
                    final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-                   Object paramsObject = mapper.convertValue(params, handlerWrapper._dataClass);
+                   Object paramsObject = handlerWrapper._dataClass != null ? ParamsConverter.convert(params, handlerWrapper._dataClass) : null;
                    handlerWrapper._handler.handle(new Request(route), paramsObject , out);
-                   //Request request = new Request(String.class);
-                   //handler.handle();
                } catch (Exception ex) {
-                   Logger.getLogger(Router.class.getName()).log(Level.SEVERE, null, ex);
+                   Logger.getLogger(Router.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+                   ex.printStackTrace();
                }
            }
         }
