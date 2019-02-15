@@ -22,7 +22,24 @@ import java.util.logging.Logger;
  */
 public class Router {
     
+    public class ROUTE{
+        public static final String RT_ERROR = "RT_ERROR";
+        public static final String RT_NOT_FOUND = "RT_NOT_FOUND";
+        public static final String RT_DEFAULT = "RT_DEFAULT";
+    }
+    
     ConcurrentHashMap<String, RouteHandlerWrapper> _routes = new ConcurrentHashMap<>();
+    
+    private String _staticPath;
+
+    public String getStaticPath() {
+        return _staticPath;
+    }
+        
+    public void setStaticPath(String path)
+    {
+        this._staticPath = path;
+    }
     
     private Router() {
     }
@@ -36,10 +53,19 @@ public class Router {
         private static final Router INSTANCE = new Router();
     }
     
+    
     public <T> void route(String route, IRouteHandler<T> handler) throws Exception
     {
         this.route(route, handler, null);
     }
+    
+//    public <T> void route(ROUTE route, IRouteHandler<T> handler, Class<T> dataClass) throws Exception
+//    {
+//        synchronized(_routes)
+//        {
+//            _routes.put(route.toString(), new RouteHandlerWrapper(handler, dataClass));
+//        }
+//    }
     
     public <T> void route(String route, IRouteHandler<T> handler, Class<T> dataClass) throws Exception
     {
@@ -54,11 +80,14 @@ public class Router {
        synchronized(_routes)
         {
            RouteHandlerWrapper handlerWrapper = _routes.get(route);
+           if (handlerWrapper == null)
+           {
+               handlerWrapper = _routes.get(ROUTE.RT_DEFAULT.toString());
+           }
+           
            if (handlerWrapper != null)
            {
                try {
-                   
-                   final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
                    Object paramsObject = handlerWrapper._dataClass != null ? ParamsConverter.convert(params, handlerWrapper._dataClass) : null;
                    handlerWrapper._handler.handle(new Request(route), paramsObject , out);
                } catch (Exception ex) {
