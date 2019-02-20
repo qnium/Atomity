@@ -15,4 +15,5 @@ public class MediaTypes {
     public static final String TEXT_JS = "text/javascript";
     public static final String IMAGE_PNG = "image/png";
     public static final String TEXT_HTML = "text/html";
+    public static final String IMAGE_SVG = "image/svg+xml";
 }

@@ -32,6 +32,7 @@ public class WebRunnerServlet extends HttpServlet
          TYPES.put("jpeg", MediaTypes.IMAGE_JPEG);
          TYPES.put("png", MediaTypes.IMAGE_PNG);
          TYPES.put("html", MediaTypes.TEXT_HTML);
+         TYPES.put("svg", MediaTypes.IMAGE_SVG);
      }
     //process the application path
      @Override
@@ -40,6 +41,7 @@ public class WebRunnerServlet extends HttpServlet
          if (!doGetStatic(Router.getInstance().getStaticPath(), req, resp))
          {
             String path = req.getPathInfo();
+            resp.setContentType("text/html; charset=utf-8");
             Router.getInstance().processRoute(path, req.getParameterMap(), resp.getWriter());
          }
      }

@@ -14,6 +14,6 @@ import java.io.PrintWriter;
  */
 public interface IRouteHandler<T> {
     
-    public void handle(Request request, T params, PrintWriter out);
+    public void handle(Request request, T params, PrintWriter out) throws Exception;
     
 }
