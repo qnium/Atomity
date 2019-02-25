@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-        
-        
+
+
 /**
  *
  * @author admin
@@ -24,7 +24,7 @@ public class WebRunnerServlet extends HttpServlet
 {
     
      static final HashMap<String, String> TYPES = new HashMap();
-     
+
      static {
          TYPES.put("js", MediaTypes.TEXT_JS);
          TYPES.put("css", MediaTypes.TEXT_CSS);
@@ -45,19 +45,19 @@ public class WebRunnerServlet extends HttpServlet
             Router.getInstance().processRoute(path, req.getParameterMap(), resp.getWriter());
          }
      }
-     
+
      public boolean doGetStatic(String filePath, HttpServletRequest req, HttpServletResponse resp)
      {
          String ext = req.getPathInfo().substring(req.getPathInfo().lastIndexOf(".") + 1);
-         
+
          String type = TYPES.get(ext);
-         
+
          if (type == null)
              return false;
-         
+
          resp.setStatus(HttpServletResponse.SC_OK);
          resp.setContentType(type);
-         
+
          try {
              FileInputStream in = new FileInputStream(filePath + req.getPathInfo());
              resp.getOutputStream().write(in.readAllBytes());
@@ -65,7 +65,7 @@ public class WebRunnerServlet extends HttpServlet
              Logger.getLogger(WebRunnerServlet.class.getName()).log(Level.SEVERE, null, ex);
              return false;
          }
-         
+
          return true;
      }
 }
