@@ -22,13 +22,26 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  *
  * @author user
  */
-public class DataProvider {
-
+public class DataProvider<T> {
+    
+    private static final HashMap<Class, DataProvider> instances = new HashMap<>();
+    private T _t;
+    
+    public static synchronized <T> DataProvider<T> getInstance(Class<T> t)
+    {
+        if(!instances.containsKey(t)) {
+            instances.put(t, new DataProvider(t));
+        }
+        
+        return instances.get(t);
+    }
+    
     static Integer DEFAULT_TIMEOUT = 20000;
     static String TIMEOUT_ERROR_MESSAGE = "Request timed out. Please check your Internet connection.";
 
@@ -36,12 +49,16 @@ public class DataProvider {
     String apiEndpoint;
     Integer timeout;
 
-    public DataProvider(String sessionKey, String apiEndpoint, Integer timeout) {
+    public DataProvider(Class<T> t) {
         this.sessionKey = sessionKey;
         this.apiEndpoint = apiEndpoint;
         this.timeout = timeout >= 0 ? timeout : DEFAULT_TIMEOUT;
 
     }
+    
+    
+    
+    
     private final String USER_AGENT = "Mozilla/5.0";
 //    public <O> O executeAction(String entity, String action, Object data, TypeReference<O> responseType) throws UnsupportedEncodingException, IOException, Exception {
 

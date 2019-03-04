@@ -49,3 +49,4 @@ Temporary Items
 node_modules
 target
 backend-db.sqlite
+/Backend/WebRunner/nbproject/

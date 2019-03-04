@@ -31,6 +31,7 @@ public class Router {
     ConcurrentHashMap<String, RouteHandlerWrapper> _routes = new ConcurrentHashMap<>();
     
     private String _staticPath;
+    private String _basePath;
 
     public String getStaticPath() {
         return _staticPath;
@@ -39,6 +40,15 @@ public class Router {
     public void setStaticPath(String path)
     {
         this._staticPath = path;
+    }
+    
+    public String getBasePath() {
+        return _basePath;
+    }
+        
+    public void setBasePath(String path)
+    {
+        this._basePath = path;
     }
     
     private Router() {
