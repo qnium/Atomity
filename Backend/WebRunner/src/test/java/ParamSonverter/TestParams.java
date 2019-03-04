@@ -5,6 +5,8 @@
  */
 package ParamSonverter;
 
+import java.time.Instant;
+
 /**
  *
  * @author admin
@@ -15,4 +17,6 @@ public class TestParams {
     public String[] things;
     public int[] list;
     public boolean isThere;
+    public Instant singleInstant;
+    public Instant[] instantList;
 }
