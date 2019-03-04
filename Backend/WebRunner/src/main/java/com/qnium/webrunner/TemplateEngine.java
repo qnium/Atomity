@@ -30,7 +30,7 @@ public class TemplateEngine {
     
     public Document load(String path) throws IOException
     {
-        File template = new File(Router.getInstance().getStaticPath() + "calendar.html");
+        File template = new File(Router.getInstance().getStaticPath() + path);
         Document doc = Jsoup.parse(template, "UTF-8", "");
         doc.head().children().first().before("<base href=\"" + Router.getInstance().getBasePath() + "\"/>");
         return doc;

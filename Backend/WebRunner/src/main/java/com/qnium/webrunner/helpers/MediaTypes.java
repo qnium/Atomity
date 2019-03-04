@@ -16,4 +16,12 @@ public class MediaTypes {
     public static final String IMAGE_PNG = "image/png";
     public static final String TEXT_HTML = "text/html";
     public static final String IMAGE_SVG = "image/svg+xml";
+    
+    public static final String FONT_OTF = "font/otf";
+    public static final String FONT_SFNT = "font/sfnt";
+    public static final String FONT_TTF = "image/svg+xml";
+    public static final String FONT_WOFF = "image/svg+xml";
+    public static final String FONT_WOFF2 = "image/svg+xml";
+    public static final String FONT_EOT = "application/vnd.ms-fontobject";
+    
 }

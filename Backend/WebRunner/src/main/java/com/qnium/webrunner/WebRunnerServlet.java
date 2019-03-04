@@ -33,6 +33,13 @@ public class WebRunnerServlet extends HttpServlet
          TYPES.put("png", MediaTypes.IMAGE_PNG);
          TYPES.put("html", MediaTypes.TEXT_HTML);
          TYPES.put("svg", MediaTypes.IMAGE_SVG);
+         
+         TYPES.put("eot", MediaTypes.FONT_EOT);
+         TYPES.put("otf", MediaTypes.FONT_OTF);
+         TYPES.put("sfnt", MediaTypes.FONT_SFNT);
+         TYPES.put("ttf", MediaTypes.FONT_TTF);
+         TYPES.put("woff", MediaTypes.FONT_WOFF);
+         TYPES.put("woff2", MediaTypes.FONT_WOFF2);
      }
     //process the application path
      @Override
