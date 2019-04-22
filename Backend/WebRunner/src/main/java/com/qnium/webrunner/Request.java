@@ -5,18 +5,20 @@
  */
 package com.qnium.webrunner;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author admin
  */
 public class Request {
     public String path;
+    public String query;
     
-    public Request(String path)
-    {
+    public Request(String path) {
+        this(path, null);
+    }
+    
+    public Request(String path, String query) {
         this.path = path;
+        this.query = query;
     }
 }
