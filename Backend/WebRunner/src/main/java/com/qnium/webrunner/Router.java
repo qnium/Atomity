@@ -85,7 +85,7 @@ public class Router {
         }
     }
     
-    protected void processRoute(String route, Map<String, String[]> params, PrintWriter out)
+    protected void processRoute(String route, String query, Map<String, String[]> params, PrintWriter out)
     {
        synchronized(_routes)
         {
@@ -99,7 +99,7 @@ public class Router {
            {
                try {
                    Object paramsObject = handlerWrapper._dataClass != null ? ParamsConverter.convert(params, handlerWrapper._dataClass) : null;
-                   handlerWrapper._handler.handle(new Request(route), paramsObject , out);
+                   handlerWrapper._handler.handle(new Request(route, query), paramsObject , out);
                } catch (Exception ex) {
                    Logger.getLogger(Router.class.getName()).log(Level.SEVERE, null, ex.getMessage());
                    ex.printStackTrace();

@@ -48,8 +48,9 @@ public class WebRunnerServlet extends HttpServlet
          if (!doGetStatic(Router.getInstance().getStaticPath(), req, resp))
          {
             String path = req.getPathInfo();
+            String queryString = req.getQueryString();
             resp.setContentType("text/html; charset=utf-8");
-            Router.getInstance().processRoute(path, req.getParameterMap(), resp.getWriter());
+            Router.getInstance().processRoute(path, queryString, req.getParameterMap(), resp.getWriter());
          }
      }
 
