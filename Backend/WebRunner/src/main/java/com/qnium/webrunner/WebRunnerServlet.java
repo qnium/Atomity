@@ -67,7 +67,9 @@ public class WebRunnerServlet extends HttpServlet
 
          try {
              FileInputStream in = new FileInputStream(filePath + req.getPathInfo());
-             resp.getOutputStream().write(in.readAllBytes());
+             //resp.getOutputStream().write(in.readAllBytes()); Valid only for JDK 11
+             byte[] bytes = new byte[in.available()];
+             resp.getOutputStream().write(bytes);
          } catch (Exception ex) {
              Logger.getLogger(WebRunnerServlet.class.getName()).log(Level.SEVERE, null, ex);
              return false;
