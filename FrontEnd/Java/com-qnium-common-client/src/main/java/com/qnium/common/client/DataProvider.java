@@ -7,13 +7,20 @@ package com.qnium.common.client;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
+import com.qnium.common.backend.assets.dataobjects.CollectionResponseMessage;
+import com.qnium.common.backend.assets.dataobjects.CountResponseMessage;
+import com.qnium.common.backend.assets.dataobjects.CreateRequestParameters;
+import com.qnium.common.backend.assets.dataobjects.ReadRequestParameters;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
+import com.qnium.common.backend.core.FieldFilter;
 import com.qnium.common.client.exceptions.DataProviderException;
 import com.qnium.common.definitions.ErrorCode;
 import java.io.IOException;
@@ -23,6 +30,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -31,7 +39,9 @@ import java.util.HashMap;
 public class DataProvider<T> {
     
     private static final HashMap<Class, DataProvider> instances = new HashMap<>();
-    private T _t;
+    private Class<T> _t;
+    private JavaType returnReadType;
+    private String _entity;
     
     public static synchronized <T> DataProvider<T> getInstance(Class<T> t)
     {
@@ -45,24 +55,44 @@ public class DataProvider<T> {
     static Integer DEFAULT_TIMEOUT = 20000;
     static String TIMEOUT_ERROR_MESSAGE = "Request timed out. Please check your Internet connection.";
 
-    String sessionKey;
-    String apiEndpoint;
+    static String sessionKey;
+    static String _apiEndpoint;
     Integer timeout;
 
     public DataProvider(Class<T> t) {
+        _t = t;
+        this.returnReadType = TypeFactory.defaultInstance().constructParametricType(CollectionResponseMessage.class, _t);
         this.sessionKey = sessionKey;
-        this.apiEndpoint = apiEndpoint;
-        this.timeout = timeout >= 0 ? timeout : DEFAULT_TIMEOUT;
-
+        this.timeout = (timeout != null && timeout >= 0) ? timeout : DEFAULT_TIMEOUT;
     }
     
+    public CollectionResponseMessage<T> read(String entity, String action, long startIndex, long count, List<FieldFilter> filter) throws DataProviderException
+    {
+        ReadRequestParameters req = new ReadRequestParameters();
+        req.startIndex = startIndex;
+        req.count = count;
+        req.filter = filter;
+        
+        return this.executeAction(entity, action, req, returnReadType);
+    }
     
-    
+    public CountResponseMessage create(String entity, String action, T data) throws DataProviderException
+    {
+        CreateRequestParameters req = new CreateRequestParameters<T>();
+        req.entity = data;
+        
+        return this.executeAction(entity, action, req, new TypeReference<CountResponseMessage>(){});
+    }
     
     private final String USER_AGENT = "Mozilla/5.0";
 //    public <O> O executeAction(String entity, String action, Object data, TypeReference<O> responseType) throws UnsupportedEncodingException, IOException, Exception {
 
+    
     public <O> O executeAction(String entity, String action, Object data, TypeReference<O> responseType) throws DataProviderException {
+        return executeAction(entity, action, data, TypeFactory.defaultInstance().constructType(responseType));
+    }
+    
+    public <O> O executeAction(String entity, String action, Object data, JavaType responseType) throws DataProviderException {
         RequestMessage request = new RequestMessage<>(data);
         request.action = action;
         request.entityName = entity;
@@ -76,7 +106,7 @@ public class DataProvider<T> {
         mapper.disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS);
         mapper.registerModule(new JavaTimeModule());
 
-        String url = this.apiEndpoint;
+        String url = _apiEndpoint;
 
         URL obj;
         HttpURLConnection con;
@@ -135,11 +165,11 @@ public class DataProvider<T> {
         }
     }
 
-    void Init(String apiEndpoint) {
-        this.apiEndpoint = apiEndpoint;
+    public static void Init(String apiEndpoint) {
+        _apiEndpoint = apiEndpoint;
     }
 
-    void setSessionKey(String key) {
-        this.sessionKey = key;
+    public static void setSessionKey(String key) {
+        sessionKey = key;
     }
 }
