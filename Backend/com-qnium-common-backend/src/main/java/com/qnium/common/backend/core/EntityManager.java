@@ -218,9 +218,9 @@ public class EntityManager<T> implements IEntityManager<T> {
                             case FieldOperations.LIKE:
                                 String likeValue = "%" + f.value + "%";
                                 List<Where<T, Long>> likeCondList = new ArrayList<>();
-                                SelectArg selectArg = new SelectArg();
-                                selectArg.setValue(likeValue);
                                 for (String name : fieldNames) {
+                                    SelectArg selectArg = new SelectArg();
+                                    selectArg.setValue(likeValue);
                                     likeCondList.add(genericWH.like(name, selectArg));
                                 }
                                 whereConditions.add(combineWithOr(genericWH, likeCondList));
