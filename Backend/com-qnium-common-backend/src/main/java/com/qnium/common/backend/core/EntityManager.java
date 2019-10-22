@@ -34,6 +34,7 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Timer;
 
 /**
  *
@@ -73,7 +74,7 @@ public class EntityManager<T> implements IEntityManager<T> {
             }
         }
 
-        //new Timer().scheduleAtFixedRate(new ConnectionUpdater(genericDao), 1 * 60 * 60 * 1000, 1 * 60 * 60 * 1000);
+        new Timer().scheduleAtFixedRate(new ConnectionUpdater(genericDao), 1 * 60 * 60 * 1000, 1 * 60 * 60 * 1000);
     }
 
     @Override
