@@ -6,13 +6,19 @@
 
 package com.qnium.common.backend.core;
 
+import com.qnium.common.backend.assets.interfaces.ICommonRequestHandler;
+import com.qnium.common.backend.assets.interfaces.ICommonResponseHandler;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
-public class HandlersManager {
+public class HandlersManager<TCommonHandlerContext> {
     private static HandlersManager _instance = null;
     
     HashMap<String, HandlerWrapper> _hashHandlers;
+    List<ICommonRequestHandler> _commonReqeustHandlers;
+    List<ICommonResponseHandler> _commonResponseHandlers;
     
     public static synchronized HandlersManager getInstance()
     {
@@ -27,6 +33,24 @@ public class HandlersManager {
     private HandlersManager()
     {   
         _hashHandlers = new HashMap<>();
+        _commonReqeustHandlers = new ArrayList();
+        _commonResponseHandlers = new ArrayList();
+    }
+    
+    public void addCommonRequestHandler(ICommonRequestHandler<TCommonHandlerContext> handler) {
+        _commonReqeustHandlers.add(handler);
+    }
+    
+    public List<ICommonRequestHandler> getCommonRequestHandlers() {
+        return _commonReqeustHandlers;
+    }
+    
+    public void addCommonResponseHandler(ICommonResponseHandler<TCommonHandlerContext> handler) {
+        _commonResponseHandlers.add(handler);
+    }
+    
+    public List<ICommonResponseHandler> getCommonResponseHandlers() {
+        return _commonResponseHandlers;
     }
     
     public HandlerWrapper getHandler(String action)

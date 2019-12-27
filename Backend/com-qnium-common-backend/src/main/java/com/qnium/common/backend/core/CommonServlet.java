@@ -13,13 +13,18 @@ import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.qnium.common.backend.assets.dataobjects.CommonHandlerRequest;
+import com.qnium.common.backend.assets.dataobjects.CommonHandlerResponse;
 import com.qnium.common.backend.assets.dataobjects.RequestMessage;
 import com.qnium.common.backend.assets.dataobjects.ResponseMessage;
+import com.qnium.common.backend.assets.interfaces.ICommonRequestHandler;
+import com.qnium.common.backend.assets.interfaces.ICommonResponseHandler;
 import com.qnium.common.backend.exceptions.CommonException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,17 +63,33 @@ public class CommonServlet extends HttpServlet
             String json = requestReader.readLine();
             RequestMessage mainMessage = mapper.readValue(json, RequestMessage.class);
             action = mainMessage.entityName + "." + mainMessage.action;
-            response.setContentType("application/json");            
-            
-            AuthManager.getInstance().checkPermission(mainMessage.sessionKey, mainMessage.entityName, mainMessage.action);
             
             HandlerWrapper wrapper = HandlersManager.getInstance().getHandler(action);
             if (wrapper == null){
                 throw (new Exception("no handler for " + action));
             }
-            Object requestMessage = mapper.readValue(json, wrapper.getRequest());
-            Object responseMessage = wrapper.getHandler().process(requestMessage);
             
+            Object requestMessage = mapper.readValue(json, wrapper.getRequest());
+
+            CommonHandlerRequest commonHandlerRequest = new CommonHandlerRequest();
+            commonHandlerRequest.request = (RequestMessage)requestMessage;
+            List<ICommonRequestHandler> commonRequestHandlers = HandlersManager.getInstance().getCommonRequestHandlers();
+            for (ICommonRequestHandler handler : commonRequestHandlers) {
+                commonHandlerRequest = handler.process(commonHandlerRequest);
+            }            
+            
+            AuthManager.getInstance().checkPermission(mainMessage.sessionKey, mainMessage.entityName, mainMessage.action);
+
+            Object responseMessage = wrapper.getHandler().process(commonHandlerRequest.request);
+            
+            CommonHandlerResponse commonHandlerResponse = new CommonHandlerResponse();
+            commonHandlerResponse.response = responseMessage;
+            List<ICommonResponseHandler> commonResponseHandlers = HandlersManager.getInstance().getCommonResponseHandlers();
+            for (ICommonResponseHandler handler : commonResponseHandlers) {
+                commonHandlerResponse = handler.process(commonHandlerRequest, commonHandlerResponse);
+            }            
+            
+            response.setContentType("application/json");            
             mapper.writeValue(response.getOutputStream(), responseMessage);            
         }
         catch (Exception ex)
