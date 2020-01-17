@@ -7,10 +7,12 @@ package com.qnium.common.backend.core;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.qnium.common.backend.assets.definitions.EntityInitializer;
 import com.qnium.common.backend.assets.definitions.EntityHandlerType;
@@ -54,15 +56,38 @@ public class EntityManager<T> implements IEntityManager<T> {
 
         return instances.get(t);
     }
+    
+    private static ConnectionSource _connectionSource;
+    
+    private static synchronized ConnectionSource getConnectionSource() throws SQLException
+    {
+        if (_connectionSource == null)
+        {
+            // pooled connection source
+            JdbcPooledConnectionSource pooledConnectionSource = new JdbcPooledConnectionSource(ConfigManager.getInstance().getDatabaseURL());
+            pooledConnectionSource.setMaxConnectionAgeMillis(5 * 60 * 1000); //5 minutes
+            // change the check-every milliseconds from 30 seconds to 60
+            pooledConnectionSource.setCheckConnectionsEveryMillis(60 * 1000);
+            // for extra protection, enable the testing of connections
+            // right before they are handed to the user
+            pooledConnectionSource.setTestBeforeGet(true);
+            pooledConnectionSource.setMaxConnectionsFree(100);
+            _connectionSource = pooledConnectionSource;
+        }
+        
+        return _connectionSource;
+    }
 
     private <T1> EntityManager(Class<T> t) throws SQLException {
         handlers = new ArrayList();
 
-        RestorableConnectionSource connectionSource = new RestorableConnectionSource(ConfigManager.getInstance().getDatabaseURL());
-        genericDao = DaoManager.createDao(connectionSource, t);
+        //RestorableConnectionSource connectionSource = new RestorableConnectionSource(ConfigManager.getInstance().getDatabaseURL());
+        
+        genericDao = DaoManager.createDao(getConnectionSource(), t);
+        //connectionSource.
 
         if (!genericDao.isTableExists()) {
-            TableUtils.createTable(connectionSource, t);
+            TableUtils.createTable(getConnectionSource(), t);
 
             EntityInitializer annotation = t.getAnnotation(EntityInitializer.class);
             if (annotation != null) {
