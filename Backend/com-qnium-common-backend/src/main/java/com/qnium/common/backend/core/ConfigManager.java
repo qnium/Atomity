@@ -15,6 +15,7 @@ public class ConfigManager
     
     private String databaseURL;
     private String databaseDriverName;
+    private int maximumPoolSize = 1500;
     
     public static synchronized ConfigManager getInstance()
     {
@@ -43,5 +44,13 @@ public class ConfigManager
 
     public void setDatabaseDriverName(String databaseDriverName) {
         this.databaseDriverName = databaseDriverName;
+    }
+    
+    public void setMaximumPoolSize(int maximumPoolSize) {
+        this.maximumPoolSize = maximumPoolSize;
+    }
+    
+    public int getMaximumPoolSize() {
+        return maximumPoolSize;
     }
 }

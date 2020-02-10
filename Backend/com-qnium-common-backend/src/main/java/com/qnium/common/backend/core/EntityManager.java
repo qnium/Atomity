@@ -63,7 +63,7 @@ public class EntityManager<T> implements IEntityManager<T> {
     static {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(ConfigManager.getInstance().getDatabaseURL());
-        dataSource.setMaximumPoolSize(1500);
+        dataSource.setMaximumPoolSize(ConfigManager.getInstance().getMaximumPoolSize());
         dataSource.setMinimumIdle(0);
         //dataSource.setIdleTimeout(1);
         //dataSource.setMaxLifetime(1);
