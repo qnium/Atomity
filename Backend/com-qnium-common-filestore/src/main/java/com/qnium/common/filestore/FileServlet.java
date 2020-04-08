@@ -49,19 +49,21 @@ public class FileServlet extends HttpServlet
                 downloadingData = fileManager.readFile(fileRecordId);
                 response.setContentType(fileManager.getFileRecord(fileRecordId).type);
                 
-                /*
-                 * Content-Disposition header value is set to be able to handle
-                 * files with non-ASCII names.
-                 */
-//                String encodedFileName = URLEncoder
-//                    .encode(file.originalFileName, StandardCharsets.UTF_8.name())
-//                    // Spaces should remain as such, not converted to plus signs
-//                    .replace("+", "%20");
-//                String originalFileName = "filename=" + encodedFileName + "; ";
-//                String utf8FileName = "filename*=UTF-8''" + encodedFileName;
-//                response.setHeader("Content-Disposition", "attachment;" + originalFileName + utf8FileName);                
-//                response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, X-Requested-With");
-//                response.addHeader("Access-Control-Allow-Methods", "GET, POST, HEAD");
+                String downloadableMode = request.getParameter("downloadable");
+                if(downloadableMode != null && downloadableMode.equalsIgnoreCase("true")) {
+                    /*
+                     * Content-Disposition header value is set to be able to handle
+                     * files with non-ASCII names.
+                     */
+                    String encodedFileName = URLEncoder.encode(file.originalFileName, StandardCharsets.UTF_8.name())
+                        // Spaces should remain as such, not converted to plus signs
+                        .replace("+", "%20");
+                    String originalFileName = "filename=" + encodedFileName + "; ";
+                    String utf8FileName = "filename*=UTF-8''" + encodedFileName;
+                    response.setHeader("Content-Disposition", "attachment;" + originalFileName + utf8FileName);                
+                    response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, X-Requested-With");
+                    response.addHeader("Access-Control-Allow-Methods", "GET, POST, HEAD");
+                }
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.getOutputStream().write(downloadingData);                                
             } else {
