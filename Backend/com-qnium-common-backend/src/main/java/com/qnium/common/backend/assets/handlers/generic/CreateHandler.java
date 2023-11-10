@@ -30,6 +30,11 @@ public class CreateHandler extends BaseCreateHandler {
            
            IEntityManager em = EntityManagerStorage.getInstance().getEntityManager(request.entityName);
            
+           if (em == null) 
+           {
+               throw new CommonException(0, String.format("Entity manager not found: %s", request.entityName));
+           }
+           
            em.create(request.data);
            
            return new CountResponseMessage(em.getCount());

@@ -6,7 +6,7 @@
 
 import com.qnium.common.backend.assets.dataobjects.CollectionResponseMessage;
 import com.qnium.common.backend.assets.dataobjects.ReadRequestParameters;
-import com.qnium.common.client.DataProvider;
+import com.qnium.common.client.GenericDataProvider;
 import com.qnium.common.client.exceptions.DataProviderException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -48,8 +48,8 @@ public class ConnectionTest {
     //
      //@Test
      public void tryeExec() throws DataProviderException {
-        DataProvider.Init("http://localhost:8080/api");
-        DataProvider<TestData> provider = DataProvider.getInstance(TestData.class);
+        //GenericDataProvider.Init("http://localhost:8080/api");
+        GenericDataProvider<TestData> provider = GenericDataProvider.getInstance(TestData.class);
         ReadRequestParameters req = new ReadRequestParameters();
         req.startIndex = 0;
         req.count = 0;
